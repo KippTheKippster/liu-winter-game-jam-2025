@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgv3fahtgdqm"]
+
+[ext_resource type="Material" uid="uid://8nfu2kuerhhg" path="res://entities/effects/ui/colorful_text_material.tres" id="1_kq22h"]
+[ext_resource type="Script" uid="uid://krdoqinyjsaw" path="res://ui/misc/floating label/floating_label.gd" id="1_mowsi"]
+
+[node name="FloatingLabel" type="Label"]
+z_index = 1
+material = ExtResource("1_kq22h")
+offset_right = 23.0
+offset_bottom = 8.0
+text = "Text"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_mowsi")
+
+[node name="FreeTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="FreeTimer" to="." method="_on_free_timer_timeout"]

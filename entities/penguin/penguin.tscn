@@ -1,0 +1,367 @@
+[gd_scene load_steps=36 format=3 uid="uid://d4ac7bikwtscv"]
+
+[ext_resource type="Script" uid="uid://d2fxbd6ulm03" path="res://entities/penguin/penguin.gd" id="1_a0yya"]
+[ext_resource type="Texture2D" uid="uid://i4w0p1oyi77" path="res://entities/penguin/assets/penguin.png" id="1_r5j68"]
+[ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="2_0dlp7"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical/vertical.gd" id="3_no72d"]
+[ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_ourdf"]
+[ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="3_xlgo3"]
+[ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="4_lsgwc"]
+[ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="4_uw7px"]
+[ext_resource type="Script" uid="uid://bjvap0o6v1sq7" path="res://addons/godot_state_charts/parallel_state.gd" id="5_28o2q"]
+[ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="5_ruenj"]
+[ext_resource type="Script" uid="uid://dyi7lv20qiks3" path="res://addons/godot_state_charts/atomic_state.gd" id="5_vskbl"]
+[ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="7_ci46k"]
+[ext_resource type="Resource" uid="uid://gs4g17pohifk" path="res://entities/penguin/expression guards/action_target_attack.tres" id="13_8ksvf"]
+[ext_resource type="Resource" uid="uid://bcbctg5xgyu8n" path="res://entities/penguin/expression guards/action_target_walk.tres" id="14_fec4a"]
+[ext_resource type="Resource" uid="uid://8lenkphdvuqd" path="res://entities/penguin/expression guards/action_target_idle.tres" id="15_8ksvf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vskbl"]
+radius = 2.0
+
+[sub_resource type="Animation" id="Animation_r5j68"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_vskbl"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_a0yya"]
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 2]
+}
+
+[sub_resource type="Animation" id="Animation_0dlp7"]
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uw7px"]
+_data = {
+&"idle": SubResource("Animation_r5j68"),
+&"idle_carry": SubResource("Animation_vskbl"),
+&"walk": SubResource("Animation_a0yya"),
+&"walk_carry": SubResource("Animation_0dlp7")
+}
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_c5178"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a0yya"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ruenj"]
+animation = &"idle_carry"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_xlgo3"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_uw7px"]
+graph_offset = Vector2(-313.465, 38.7077)
+nodes/carry_blend/node = SubResource("AnimationNodeBlend2_c5178")
+nodes/carry_blend/position = Vector2(40, 140)
+nodes/idle_animation/node = SubResource("AnimationNodeAnimation_a0yya")
+nodes/idle_animation/position = Vector2(-240, 140)
+nodes/idle_carry_animation/node = SubResource("AnimationNodeAnimation_ruenj")
+nodes/idle_carry_animation/position = Vector2(-240, 320)
+nodes/output/position = Vector2(400, 140)
+nodes/time_scale/node = SubResource("AnimationNodeTimeScale_xlgo3")
+nodes/time_scale/position = Vector2(220, 140)
+node_connections = [&"carry_blend", 0, &"idle_animation", &"carry_blend", 1, &"idle_carry_animation", &"output", 0, &"time_scale", &"time_scale", 0, &"carry_blend"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_jaji5"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_0dlp7"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vskbl"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8ksvf"]
+animation = &"walk_carry"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ci46k"]
+graph_offset = Vector2(-319.727, 17.9091)
+nodes/carry_blend/node = SubResource("AnimationNodeBlend2_jaji5")
+nodes/carry_blend/position = Vector2(40, 140)
+nodes/output/position = Vector2(360, 140)
+nodes/time_scale/node = SubResource("AnimationNodeTimeScale_0dlp7")
+nodes/time_scale/position = Vector2(200, 140)
+nodes/walk_animation/node = SubResource("AnimationNodeAnimation_vskbl")
+nodes/walk_animation/position = Vector2(-200, 140)
+nodes/walk_carry_animation/node = SubResource("AnimationNodeAnimation_8ksvf")
+nodes/walk_carry_animation/position = Vector2(-200, 320)
+node_connections = [&"carry_blend", 0, &"walk_animation", &"carry_blend", 1, &"walk_carry_animation", &"output", 0, &"time_scale", &"time_scale", 0, &"carry_blend"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ci46k"]
+advance_mode = 2
+advance_expression = "not velocity.is_zero_approx()"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_28o2q"]
+advance_mode = 2
+advance_expression = "velocity.is_zero_approx()"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_no72d"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_vskbl"]
+states/idle_blend_tree/node = SubResource("AnimationNodeBlendTree_uw7px")
+states/idle_blend_tree/position = Vector2(350, 100)
+states/walk_blend_tree/node = SubResource("AnimationNodeBlendTree_ci46k")
+states/walk_blend_tree/position = Vector2(537, 100)
+transitions = ["idle_blend_tree", "walk_blend_tree", SubResource("AnimationNodeStateMachineTransition_ci46k"), "walk_blend_tree", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_28o2q"), "Start", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_no72d")]
+
+[node name="Penguin" type="CharacterBody2D"]
+script = ExtResource("1_a0yya")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vskbl")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_vskbl")
+
+[node name="Creature" type="Node2D" parent="Area2D" node_paths=PackedStringArray("health_instance")]
+script = ExtResource("2_0dlp7")
+health_instance = NodePath("../HealthInstance")
+metadata/_custom_type_script = ExtResource("2_0dlp7")
+
+[node name="HealthInstance" type="Node2D" parent="Area2D"]
+script = ExtResource("3_ourdf")
+damage_mask = 3
+metadata/_custom_type_script = ExtResource("3_ourdf")
+
+[node name="DamageInstance" type="Node2D" parent="Area2D"]
+script = ExtResource("4_lsgwc")
+damage_layer = 1
+metadata/_custom_type_script = ExtResource("4_lsgwc")
+
+[node name="Vertical" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_no72d")
+gravity = 490.0
+metadata/_custom_type_script = ExtResource("3_no72d")
+
+[node name="FlipGroup" type="Node2D" parent="Vertical"]
+unique_name_in_owner = true
+script = ExtResource("5_ruenj")
+metadata/_custom_type_script = ExtResource("5_ruenj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Vertical/FlipGroup"]
+texture_filter = 1
+texture = ExtResource("1_r5j68")
+offset = Vector2(-0.5, -2.5)
+hframes = 3
+vframes = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://entities/penguin/assets",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/penguin/assets/penguin.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "c7fca6b23e6174d9169655171b43cfd6"
+
+[node name="CarryItemSprite" type="Sprite2D" parent="Vertical/FlipGroup"]
+unique_name_in_owner = true
+position = Vector2(0, -9)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+active = false
+root_node = NodePath("../Vertical/FlipGroup/Sprite2D")
+libraries = {
+&"": SubResource("AnimationLibrary_uw7px")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("%FlipGroup/Sprite2D")
+tree_root = SubResource("AnimationNodeStateMachine_vskbl")
+advance_expression_base_node = NodePath("..")
+anim_player = NodePath("../AnimationPlayer")
+parameters/idle_blend_tree/carry_blend/blend_amount = 0.0
+parameters/idle_blend_tree/time_scale/scale = false
+parameters/walk_blend_tree/carry_blend/blend_amount = 0.0
+parameters/walk_blend_tree/time_scale/scale = 0.7
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("3_xlgo3")
+initial_expression_properties = {
+&"action_target": &"idle"
+}
+metadata/_custom_type_script = ExtResource("3_xlgo3")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("5_28o2q")
+
+[node name="Task" type="Node" parent="StateChart/Root"]
+script = ExtResource("4_uw7px")
+initial_state = NodePath("Carry")
+
+[node name="Idle" type="Node" parent="StateChart/Root/Task"]
+script = ExtResource("5_vskbl")
+
+[node name="Travel" type="Node" parent="StateChart/Root/Task"]
+script = ExtResource("5_vskbl")
+
+[node name="Attack" type="Node" parent="StateChart/Root/Task"]
+script = ExtResource("5_vskbl")
+
+[node name="Carry" type="Node" parent="StateChart/Root/Task"]
+script = ExtResource("5_vskbl")
+
+[node name="TaskAttackRequest" type="Node" parent="StateChart/Root/Task"]
+script = ExtResource("7_ci46k")
+to = NodePath("../Attack")
+event = &"task_attack_request"
+delay_in_seconds = "0.0"
+
+[node name="TaskIdleRequest" type="Node" parent="StateChart/Root/Task"]
+script = ExtResource("7_ci46k")
+to = NodePath("../Idle")
+event = &"task_idle_request"
+delay_in_seconds = "0.0"
+
+[node name="TaskTravelRequest" type="Node" parent="StateChart/Root/Task"]
+script = ExtResource("7_ci46k")
+to = NodePath("../Travel")
+event = &"task_travel_request"
+delay_in_seconds = "0.0"
+
+[node name="Action" type="Node" parent="StateChart/Root"]
+script = ExtResource("4_uw7px")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root/Action"]
+script = ExtResource("5_vskbl")
+
+[node name="ActionTargetAttack" type="Node" parent="StateChart/Root/Action/Idle"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Attack")
+guard = ExtResource("13_8ksvf")
+delay_in_seconds = "0.0"
+
+[node name="ActionTargetWalk" type="Node" parent="StateChart/Root/Action/Idle"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Walk")
+guard = ExtResource("14_fec4a")
+delay_in_seconds = "0.0"
+
+[node name="Walk" type="Node" parent="StateChart/Root/Action"]
+script = ExtResource("5_vskbl")
+
+[node name="ActionTargetAttack" type="Node" parent="StateChart/Root/Action/Walk"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Attack")
+guard = ExtResource("13_8ksvf")
+delay_in_seconds = "0.0"
+
+[node name="ActionTargetIdle" type="Node" parent="StateChart/Root/Action/Walk"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Idle")
+guard = ExtResource("15_8ksvf")
+delay_in_seconds = "0.0"
+
+[node name="Attack" type="Node" parent="StateChart/Root/Action"]
+script = ExtResource("5_vskbl")
+
+[node name="ActionAttackConclude" type="Node" parent="StateChart/Root/Action/Attack"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Cooldown")
+event = &"action_attack_conclude"
+delay_in_seconds = "0.0"
+
+[node name="Cooldown" type="Node" parent="StateChart/Root/Action"]
+script = ExtResource("5_vskbl")
+
+[node name="Wait" type="Node" parent="StateChart/Root/Action/Cooldown"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Idle")
+delay_in_seconds = "0.5"
+
+[node name="ExtraState" type="Node" parent="StateChart/Root"]
+script = ExtResource("4_uw7px")
+initial_state = NodePath("None")
+
+[node name="None" type="Node" parent="StateChart/Root/ExtraState"]
+script = ExtResource("5_vskbl")
+
+[node name="ExtraStateCarryRequest" type="Node" parent="StateChart/Root/ExtraState/None"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Carry")
+event = &"extra_state_carry_request"
+delay_in_seconds = "0.0"
+
+[node name="Carry" type="Node" parent="StateChart/Root/ExtraState"]
+script = ExtResource("5_vskbl")
+
+[node name="ExtraStateNoneRequest" type="Node" parent="StateChart/Root/ExtraState/Carry"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../None")
+event = &"extra_state_none_request"
+delay_in_seconds = "0.0"
+
+[connection signal="state_processing" from="StateChart/Root/Task/Idle" to="." method="_on_task_idle_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Task/Travel" to="." method="_on_task_travel_state_entered"]
+[connection signal="state_processing" from="StateChart/Root/Task/Travel" to="." method="_on_task_travel_state_processing"]
+[connection signal="state_exited" from="StateChart/Root/Task/Attack" to="." method="_on_task_attack_state_exited"]
+[connection signal="state_processing" from="StateChart/Root/Task/Attack" to="." method="_on_task_attack_state_processing"]
+[connection signal="state_processing" from="StateChart/Root/Task/Carry" to="." method="_on_task_carry_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Action/Idle" to="." method="_on_action_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Action/Walk" to="." method="_on_action_walk_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Action/Attack" to="." method="_on_action_attack_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/ExtraState/Carry" to="." method="_on_extra_state_carry_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/ExtraState/Carry" to="." method="_on_extra_state_carry_state_exited"]

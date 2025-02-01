@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://jeux3o6ru03p"]
+
+[ext_resource type="Texture2D" uid="uid://c2r0c7bxbrlse" path="res://addons/canvas_transform_menu/icons/VisibleOnScreenNotifier2D.svg" id="1_gaeox"]
+
+[node name="VisibleOnScreenNotifier2DMenu" type="MenuButton"]
+offset_right = 28.0
+offset_bottom = 22.0
+text = "VisibleOnScreenNotifier2D"
+icon = ExtResource("1_gaeox")
+item_count = 1
+popup/item_0/text = "Rect to CanvasItem  Boundary"

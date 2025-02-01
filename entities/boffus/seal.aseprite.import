@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dqx3a8k3hy0po"
+path="res://.godot/imported/seal.aseprite-84300c54b396ec25114c1805f0017fd8.res"
+
+[deps]
+
+source_file="res://entities/boffus/seal.aseprite"
+dest_files=["res://.godot/imported/seal.aseprite-84300c54b396ec25114c1805f0017fd8.res"]
+
+[params]
+

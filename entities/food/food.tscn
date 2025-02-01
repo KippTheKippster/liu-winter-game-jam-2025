@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwxtrccdrpoyl"]
+
+[ext_resource type="Texture2D" uid="uid://l8ujhgbcecqw" path="res://entities/food/assets/meat.png" id="1_tn4ro"]
+[ext_resource type="Script" uid="uid://05sau6uwon6x" path="res://components/carriable/carriable.gd" id="2_e3u66"]
+
+[node name="Food" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_tn4ro")
+offset = Vector2(0, -2)
+
+[node name="Carriable" type="Node2D" parent="."]
+script = ExtResource("2_e3u66")
+carry_item_texture = ExtResource("1_tn4ro")
+carry_item_offset = Vector2(0, -2)

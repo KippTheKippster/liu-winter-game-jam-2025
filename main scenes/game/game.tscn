@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://doiwfgk1hy5nb"]
+
+[ext_resource type="Script" uid="uid://dya4stv6au8tw" path="res://main scenes/game/game.gd" id="1_mm5ki"]
+[ext_resource type="PackedScene" uid="uid://cyvjgw6e8qecv" path="res://ui/hud/hud.tscn" id="1_qoleo"]
+[ext_resource type="PackedScene" uid="uid://b5gpnufehivyj" path="res://ui/pause menu/pause_menu.tscn" id="2_6qgw3"]
+[ext_resource type="PackedScene" uid="uid://cm3rtksqgg3lu" path="res://entities/effects/snow_fall_particles/snow_fall_particles.tscn" id="2_orik2"]
+[ext_resource type="AudioStream" uid="uid://chkf6omxlyit8" path="res://audio/wind.ogg" id="5_np0q0"]
+[ext_resource type="PackedScene" uid="uid://cg32rxn6me2vm" path="res://entities/player camera/player_camera.tscn" id="5_orik2"]
+
+[node name="Game" type="Node"]
+process_mode = 3
+script = ExtResource("1_mm5ki")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="BackgroundColor" type="ColorRect" parent="BackgroundLayer"]
+z_index = -10
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.133333, 0.12549, 0.203922, 1)
+metadata/_edit_lock_ = true
+
+[node name="WeatherLayer" type="CanvasLayer" parent="."]
+
+[node name="SnowFallParticles" parent="WeatherLayer" instance=ExtResource("2_orik2")]
+position = Vector2(88, -8)
+
+[node name="UiLayer" type="CanvasLayer" parent="."]
+
+[node name="Hud" parent="UiLayer" node_paths=PackedStringArray("game") instance=ExtResource("1_qoleo")]
+z_index = 200
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+game = NodePath("../..")
+metadata/_edit_lock_ = true
+
+[node name="PauseMenu" parent="UiLayer" instance=ExtResource("2_6qgw3")]
+unique_name_in_owner = true
+metadata/_edit_lock_ = true
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="WindAudio" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("5_np0q0")
+autoplay = true
+bus = &"Ambient"
+
+[node name="LevelContainer" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="PlayerCamera" parent="LevelContainer" instance=ExtResource("5_orik2")]
+anchor_mode = 0

@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d0tl8r384uk80"]
+
+[ext_resource type="Shader" uid="uid://8atu57umaypg" path="res://ui/transition screen/mosaic_shader.gdshader" id="1_s4nvx"]
+
+[resource]
+shader = ExtResource("1_s4nvx")

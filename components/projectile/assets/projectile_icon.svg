@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16.0px"
+   height="16.0px"
+   viewBox="0 0 16.0 16.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="Projectile2DIcon.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview41168"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="true"
+     inkscape:zoom="22.627417"
+     inkscape:cx="8.9714173"
+     inkscape:cy="8.0875338"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid41291"
+       empspacing="4"
+       spacingx="0.25"
+       spacingy="0.25" />
+  </sodipodi:namedview>
+  <defs
+     id="defs41163" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path42082"
+       style="fill:#8da5f3;fill-rule:evenodd;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.4;paint-order:markers stroke fill;fill-opacity:1"
+       d="M 7.25 5.0625 C 7.0625004 5.0625 6.8749998 5.1250001 6.75 5.25 L 2.125 9.875 L 6.125 13.875 L 10.75 9.25 C 11 9.0000004 11 8.4999996 10.75 8.25 L 7.75 5.25 C 7.6250002 5.1250002 7.4374996 5.0625 7.25 5.0625 z M 7.0234375 6.1386719 C 7.093933 6.1420288 7.1718751 6.1718751 7.25 6.25 C 7.4999997 6.4999997 7.25 6.75 7.25 6.75 L 4.25 9.75 C 4.25 9.75 4.0012596 9.9985094 3.7519531 9.7519531 L 3.75 9.75 C 3.5015099 9.4987597 3.75 9.25 3.75 9.25 L 6.75 6.25 C 6.75 6.25 6.8683473 6.1312866 7.0234375 6.1386719 z M 1.875 10.125 L 1 11 L 5 15 L 5.875 14.125 L 1.875 10.125 z " />
+    <path
+       style="fill:#8da5f3;fill-opacity:1;fill-rule:evenodd;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.4;paint-order:markers stroke fill"
+       d="m 8,5 3,3 C 13,6 14,5 14,2 11,2 10,3 8,5 Z"
+       id="path42084"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.4;paint-order:markers stroke fill"
+       d="m -3.7502878,4 c 0.25,0.25 0,0.5 0,0.5 l -3,3 c 0,0 -0.25,0.25 -0.5,0 l 0.00195,0.00195 C -7.5002878,7.25 -7.2502878,7 -7.2502878,7 l 3,-3 c 0,0 0.25,-0.25 0.5,0"
+       id="path59481"
+       sodipodi:nodetypes="cccccccc" />
+  </g>
+</svg>

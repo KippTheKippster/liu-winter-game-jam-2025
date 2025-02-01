@@ -1,0 +1,139 @@
+[gd_scene load_steps=9 format=3 uid="uid://pgubkf04gmmt"]
+
+[ext_resource type="PackedScene" uid="uid://c4vwlvp4nkygl" path="res://levels/level_template.tscn" id="1_xh6sb"]
+[ext_resource type="PackedScene" uid="uid://c56uuvk1wh8tk" path="res://entities/props/tree/tree.tscn" id="3_io8uw"]
+[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin.tscn" id="3_y34ju"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="4_y34ju"]
+[ext_resource type="PackedScene" uid="uid://wwoo0xbgbrpv" path="res://entities/props/wall/snow_wall.tscn" id="5_po88e"]
+[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/food/food.tscn" id="6_44t5x"]
+[ext_resource type="PackedScene" uid="uid://bi80q0c1kcjm" path="res://entities/boffus/boffus.tscn" id="7_wtxts"]
+[ext_resource type="PackedScene" uid="uid://d1ukp6d0k6q5k" path="res://entities/enemies/tree mimic/tree_mimic.tscn" id="8_jrmpr"]
+
+[node name="Level001" instance=ExtResource("1_xh6sb")]
+y_sort_enabled = true
+
+[node name="TreeMimic" parent="." index="0" instance=ExtResource("8_jrmpr")]
+position = Vector2(40, 56)
+
+[node name="Tree" parent="." index="1" instance=ExtResource("3_io8uw")]
+position = Vector2(39, 102)
+type = 1
+
+[node name="Tree2" parent="." index="2" instance=ExtResource("3_io8uw")]
+position = Vector2(69, 84)
+type = 2
+
+[node name="Tree3" parent="." index="3" instance=ExtResource("3_io8uw")]
+position = Vector2(10, 66)
+
+[node name="Tree4" parent="." index="4" instance=ExtResource("3_io8uw")]
+position = Vector2(26, 20)
+type = 2
+
+[node name="Tree5" parent="." index="5" instance=ExtResource("3_io8uw")]
+position = Vector2(68, 53)
+type = 1
+
+[node name="TreeSprite" parent="Tree5" index="3"]
+frame = 1
+
+[node name="Tree6" parent="." index="6" instance=ExtResource("3_io8uw")]
+position = Vector2(82, 25)
+type = 2
+
+[node name="Tree7" parent="." index="7" instance=ExtResource("3_io8uw")]
+position = Vector2(109, 45)
+type = 2
+
+[node name="Tree8" parent="." index="8" instance=ExtResource("3_io8uw")]
+position = Vector2(105, 70)
+
+[node name="Tree9" parent="." index="9" instance=ExtResource("3_io8uw")]
+position = Vector2(88, 94)
+
+[node name="Tree10" parent="." index="10" instance=ExtResource("3_io8uw")]
+position = Vector2(133, 94)
+type = 2
+
+[node name="Tree11" parent="." index="11" instance=ExtResource("3_io8uw")]
+position = Vector2(142, 41)
+
+[node name="Tree12" parent="." index="12" instance=ExtResource("3_io8uw")]
+position = Vector2(122, 16)
+
+[node name="Penguin4" parent="." index="13" node_paths=PackedStringArray("carriable") instance=ExtResource("3_y34ju")]
+position = Vector2(16, 24)
+carriable = NodePath("../Food/Carriable")
+
+[node name="StateChartDebugger" parent="." index="14" instance=ExtResource("4_y34ju")]
+process_mode = 3
+visible = false
+z_index = 2843
+z_as_relative = false
+offset_left = 31.0
+offset_top = 1.0
+offset_right = 180.0
+offset_bottom = 178.0
+initial_node_to_watch = NodePath("../TreeMimic")
+
+[node name="SnowWall" parent="." index="15" instance=ExtResource("5_po88e")]
+position = Vector2(64, 0)
+
+[node name="SnowWall2" parent="." index="16" instance=ExtResource("5_po88e")]
+position = Vector2(56, 0)
+
+[node name="SnowWall3" parent="." index="17" instance=ExtResource("5_po88e")]
+position = Vector2(48, 0)
+
+[node name="SnowWall4" parent="." index="18" instance=ExtResource("5_po88e")]
+position = Vector2(40, 0)
+
+[node name="SnowWall5" parent="." index="19" instance=ExtResource("5_po88e")]
+position = Vector2(32, 0)
+
+[node name="SnowWall6" parent="." index="20" instance=ExtResource("5_po88e")]
+position = Vector2(24, 0)
+
+[node name="SnowWall7" parent="." index="21" instance=ExtResource("5_po88e")]
+position = Vector2(16, 0)
+
+[node name="SnowWall8" parent="." index="22" instance=ExtResource("5_po88e")]
+position = Vector2(8, 0)
+
+[node name="SnowWall9" parent="." index="23" instance=ExtResource("5_po88e")]
+
+[node name="SnowWall10" parent="." index="24" instance=ExtResource("5_po88e")]
+position = Vector2(0, 8)
+
+[node name="SnowWall11" parent="." index="25" instance=ExtResource("5_po88e")]
+position = Vector2(0, 16)
+
+[node name="SnowWall12" parent="." index="26" instance=ExtResource("5_po88e")]
+position = Vector2(0, 24)
+
+[node name="SnowWall13" parent="." index="27" instance=ExtResource("5_po88e")]
+position = Vector2(0, 32)
+
+[node name="SnowWall14" parent="." index="28" instance=ExtResource("5_po88e")]
+position = Vector2(0, 40)
+
+[node name="SnowWall15" parent="." index="29" instance=ExtResource("5_po88e")]
+position = Vector2(0, 48)
+
+[node name="SnowWall16" parent="." index="30" instance=ExtResource("5_po88e")]
+position = Vector2(0, 56)
+
+[node name="SnowWall17" parent="." index="31" instance=ExtResource("5_po88e")]
+position = Vector2(0, 64)
+
+[node name="SnowWall18" parent="." index="32" instance=ExtResource("5_po88e")]
+position = Vector2(0, 72)
+
+[node name="Food" parent="." index="33" instance=ExtResource("6_44t5x")]
+position = Vector2(48, 80)
+
+[node name="Boffus" parent="." index="34" instance=ExtResource("7_wtxts")]
+position = Vector2(52.9015, 24.9542)
+
+[editable path="Tree5"]
+[editable path="Food"]

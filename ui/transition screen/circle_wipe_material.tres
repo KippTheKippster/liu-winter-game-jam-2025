@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://e5jwpx28ph2u"]
+
+[ext_resource type="Shader" uid="uid://cuju1qy4h0gwh" path="res://ui/transition screen/circle_wipe_shader.gdshader" id="1_go0lj"]
+
+[resource]
+shader = ExtResource("1_go0lj")

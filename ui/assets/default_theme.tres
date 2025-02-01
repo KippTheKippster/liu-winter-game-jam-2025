@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dk7536op3hwx1"]
+
+[ext_resource type="FontFile" uid="uid://bcj5alg3b8vpq" path="res://ui/assets/8 bit hud/8_bit_hud.ttf" id="1_4kt2o"]
+
+[resource]
+default_font = ExtResource("1_4kt2o")
+default_font_size = 5

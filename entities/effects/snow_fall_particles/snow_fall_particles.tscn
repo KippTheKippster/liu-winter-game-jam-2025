@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm3rtksqgg3lu"]
+
+[ext_resource type="Texture2D" uid="uid://cpk78gfyxpeq6" path="res://entities/effects/snow_fall_particles/snow_particle.png" id="1_brdbm"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_brdbm"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(180, 1, 0)
+gravity = Vector3(-1, 3, 0)
+
+[node name="SnowFallParticles" type="GPUParticles2D"]
+amount = 128
+texture = ExtResource("1_brdbm")
+lifetime = 20.0
+preprocess = 20.0
+seed = 105502582
+process_material = SubResource("ParticleProcessMaterial_brdbm")

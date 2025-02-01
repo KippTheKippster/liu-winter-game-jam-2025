@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://c5yqx22x4vxaf"]
+
+[ext_resource type="Script" uid="uid://34prduk7flci" path="res://main scenes/prologue/prologue.gd" id="1_mskhm"]
+[ext_resource type="Texture2D" uid="uid://c7cgp87rg58mj" path="res://entities/boffus/seal.png" id="2_lodes"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lodes"]
+atlas = ExtResource("2_lodes")
+region = Rect2(0, 0, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6iuu"]
+atlas = ExtResource("2_lodes")
+region = Rect2(24, 0, 24, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4r5kt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lodes")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6iuu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Prologue" type="CanvasLayer"]
+script = ExtResource("1_mskhm")
+
+[node name="Seal" type="AnimatedSprite2D" parent="."]
+position = Vector2(136, 40)
+scale = Vector2(3.5, 3.5)
+sprite_frames = SubResource("SpriteFrames_4r5kt")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.0183538
+
+[node name="Label" type="Label" parent="."]
+offset_left = 8.0
+offset_right = 104.0
+offset_bottom = 66.0
+text = "The giant monster known as Boffus has awoken once again from his long slumber. "
+autowrap_mode = 3
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 72.0
+offset_right = 176.0
+offset_bottom = 179.0
+text = "The starving Boffus demands food from the local penguins, threatening to devour the poor penguins should his apetite not be satiated!"
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 128.0
+offset_right = 176.0
+offset_bottom = 235.0
+text = "It is up to you to command the penguins! Feed Boffus if you wish for the survival of the penguins"
+autowrap_mode = 3
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

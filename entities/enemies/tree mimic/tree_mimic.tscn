@@ -1,0 +1,327 @@
+[gd_scene load_steps=24 format=3 uid="uid://d1ukp6d0k6q5k"]
+
+[ext_resource type="Script" uid="uid://bbsl81r0wf2fj" path="res://entities/enemies/tree mimic/tree_mimic.gd" id="1_8px78"]
+[ext_resource type="Texture2D" uid="uid://be2ttm3fnpxo6" path="res://entities/enemies/tree mimic/tree_mimic.png" id="1_46bnf"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical/vertical.gd" id="1_u6grf"]
+[ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="2_stay0"]
+[ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="2_tol2w"]
+[ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_4j5ei"]
+[ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="3_lgdxk"]
+[ext_resource type="Script" uid="uid://dyi7lv20qiks3" path="res://addons/godot_state_charts/atomic_state.gd" id="4_f1x1y"]
+[ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="4_k5mec"]
+[ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="5_f1x1y"]
+[ext_resource type="Script" uid="uid://dtvh4vikgt2v" path="res://addons/godot_state_charts/animation_player_state.gd" id="6_0y8im"]
+[ext_resource type="Script" uid="uid://br85gcxolt6xv" path="res://addons/godot_state_charts/expression_guard.gd" id="12_4j5ei"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f1x1y"]
+radius = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0y8im"]
+
+[sub_resource type="Animation" id="Animation_46bnf"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageArea/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Vertical/TreeSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_tol2w"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vertical/TreeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_kjwmf"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vertical/TreeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_stay0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageArea/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_4j5ei"]
+length = 0.1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageArea/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Vertical/TreeSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_k5mec"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vertical/TreeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_i6slc"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vertical/TreeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kjwmf"]
+_data = {
+&"RESET": SubResource("Animation_stay0"),
+&"crouch": SubResource("Animation_k5mec"),
+&"hide": SubResource("Animation_46bnf"),
+&"idle": SubResource("Animation_tol2w"),
+&"jump": SubResource("Animation_i6slc"),
+&"land": SubResource("Animation_4j5ei"),
+&"stun": SubResource("Animation_kjwmf")
+}
+
+[sub_resource type="Resource" id="Resource_k5mec"]
+script = ExtResource("12_4j5ei")
+expression = "on_floor and vertical_velocity < 0"
+metadata/_custom_type_script = ExtResource("12_4j5ei")
+
+[node name="TreeMimic" type="CharacterBody2D"]
+script = ExtResource("1_8px78")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_f1x1y")
+
+[node name="TreeArea" type="Area2D" parent="."]
+
+[node name="Creature" type="Node2D" parent="TreeArea" node_paths=PackedStringArray("health_instance")]
+script = ExtResource("2_stay0")
+health_instance = NodePath("../HealthInstance")
+metadata/_custom_type_script = ExtResource("2_stay0")
+
+[node name="HealthInstance" type="Node2D" parent="TreeArea"]
+script = ExtResource("3_4j5ei")
+base_health = 30.0
+damage_mask = 5
+metadata/_custom_type_script = ExtResource("3_4j5ei")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TreeArea"]
+shape = SubResource("CircleShape2D_f1x1y")
+
+[node name="DamageArea" type="Area2D" parent="."]
+
+[node name="DamageInstance" type="Node2D" parent="DamageArea"]
+script = ExtResource("4_k5mec")
+damage_layer = 2
+metadata/_custom_type_script = ExtResource("4_k5mec")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+shape = SubResource("CircleShape2D_0y8im")
+disabled = true
+debug_color = Color(0.998504, 0, 0.151912, 0.121569)
+
+[node name="Vertical" type="Node2D" parent="."]
+script = ExtResource("1_u6grf")
+gravity = 100.0
+jump_speed = 60.0
+metadata/_custom_type_script = ExtResource("1_u6grf")
+
+[node name="TreeSprite" type="Sprite2D" parent="Vertical"]
+unique_name_in_owner = true
+texture_filter = 1
+texture = ExtResource("1_46bnf")
+offset = Vector2(0, -8)
+hframes = 3
+vframes = 2
+frame = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/enemies/tree mimic/tree_mimic.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "4ddd850766ca1fe12397ec77668462f1"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+deterministic = true
+libraries = {
+&"": SubResource("AnimationLibrary_kjwmf")
+}
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("2_tol2w")
+initial_expression_properties = {
+&"on_floor": true
+}
+metadata/_custom_type_script = ExtResource("2_tol2w")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("3_lgdxk")
+initial_state = NodePath("Hide")
+
+[node name="Hide" type="Node" parent="StateChart/Root"]
+script = ExtResource("3_lgdxk")
+initial_state = NodePath("Burrow")
+
+[node name="Burrow" type="Node" parent="StateChart/Root/Hide"]
+script = ExtResource("6_0y8im")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"hide"
+
+[node name="UnburrowRequest" type="Node" parent="StateChart/Root/Hide/Burrow"]
+script = ExtResource("5_f1x1y")
+to = NodePath("../../Unburrow")
+event = &"unburrow_request"
+delay_in_seconds = "0.0"
+
+[node name="Unburrow" type="Node" parent="StateChart/Root/Hide"]
+script = ExtResource("4_f1x1y")
+
+[node name="Wait" type="Node" parent="StateChart/Root/Hide/Unburrow"]
+script = ExtResource("5_f1x1y")
+to = NodePath("../../../Leap/Jump")
+delay_in_seconds = "1.0
+"
+
+[node name="Leap" type="Node" parent="StateChart/Root"]
+script = ExtResource("3_lgdxk")
+initial_state = NodePath("Crouch")
+
+[node name="Crouch" type="Node" parent="StateChart/Root/Leap"]
+script = ExtResource("6_0y8im")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"crouch"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Leap/Crouch"]
+script = ExtResource("5_f1x1y")
+to = NodePath("../../Jump")
+delay_in_seconds = "0.5"
+
+[node name="Jump" type="Node" parent="StateChart/Root/Leap"]
+script = ExtResource("6_0y8im")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"jump"
+
+[node name="OnFloor" type="Node" parent="StateChart/Root/Leap/Jump"]
+script = ExtResource("5_f1x1y")
+to = NodePath("../../../Land")
+guard = SubResource("Resource_k5mec")
+delay_in_seconds = "0.0"
+
+[node name="Land" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_0y8im")
+animation_player = NodePath("../../../AnimationPlayer")
+animation_name = &"land"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Land"]
+script = ExtResource("5_f1x1y")
+to = NodePath("../../Idle")
+delay_in_seconds = "0.3"
+
+[node name="Idle" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_0y8im")
+animation_player = NodePath("../../../AnimationPlayer")
+animation_name = &"idle"
+
+[node name="Transition" type="Node" parent="StateChart/Root/Idle"]
+script = ExtResource("5_f1x1y")
+to = NodePath("../../Leap")
+delay_in_seconds = "1.0"
+metadata/_custom_type_script = ExtResource("5_f1x1y")
+
+[connection signal="state_exited" from="StateChart/Root/Hide" to="." method="_on_hide_state_exited"]
+[connection signal="state_processing" from="StateChart/Root/Hide/Unburrow" to="." method="_on_unburrow_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Leap/Jump" to="." method="_on_jump_state_entered"]

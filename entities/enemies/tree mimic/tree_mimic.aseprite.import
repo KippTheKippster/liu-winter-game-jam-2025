@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cby7inrb6dxce"
+path="res://.godot/imported/tree_mimic.aseprite-3d86ed8e080d4c38cfb47b15bc0d5164.res"
+
+[deps]
+
+source_file="res://entities/enemies/tree mimic/tree_mimic.aseprite"
+dest_files=["res://.godot/imported/tree_mimic.aseprite-3d86ed8e080d4c38cfb47b15bc0d5164.res"]
+
+[params]
+
