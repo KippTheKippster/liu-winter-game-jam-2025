@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ExpressionGuard" load_steps=2 format=3 uid="uid://n6m6gq3lg0p6"]
+
+[ext_resource type="Script" uid="uid://br85gcxolt6xv" path="res://addons/godot_state_charts/expression_guard.gd" id="1_ysg6d"]
+
+[resource]
+script = ExtResource("1_ysg6d")
+expression = "on_floor and vertical_velocity <= 0"
+metadata/_custom_type_script = ExtResource("1_ysg6d")

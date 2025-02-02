@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@onready var creature: Creature = $TreeArea/Creature
 @onready var vertical: Vertical = $Vertical
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var state_chart: StateChart = $StateChart
@@ -10,6 +11,7 @@ var time_elapsed: float = 0.0
 
 func _ready() -> void:
 	state_chart.send_event.call_deferred("unburrow_request")
+	creature.get_next_creature_target()
 
 
 func _process(delta: float) -> void:

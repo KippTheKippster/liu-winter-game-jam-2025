@@ -1,0 +1,157 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgsisbnhd4atk"]
+
+[ext_resource type="PackedScene" uid="uid://wwoo0xbgbrpv" path="res://entities/props/wall/snow_wall.tscn" id="1_2om34"]
+[ext_resource type="Script" uid="uid://xbb3vbsmu1tp" path="res://components/maze/room.gd" id="1_oxlob"]
+[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin.tscn" id="2_g56y8"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="4_uy2hi"]
+
+[node name="RoomTemplate" type="Node2D"]
+y_sort_enabled = true
+metadata/_edit_vertical_guides_ = [64.0, 72.0]
+
+[node name="Room" type="Node2D" parent="." node_paths=PackedStringArray("walls")]
+script = ExtResource("1_oxlob")
+walls = {
+Vector2i(-1, -1): NodePath("../Walls/WallsUpLeft"),
+Vector2i(-1, 0): NodePath("../Walls/WallsLeft"),
+Vector2i(-1, 1): NodePath("../Walls/WallsDownLeft"),
+Vector2i(0, -1): NodePath("../Walls/WallsUp"),
+Vector2i(0, 1): NodePath("../Walls/WallsDown"),
+Vector2i(1, -1): NodePath("../Walls/WallUpRight"),
+Vector2i(1, 0): NodePath("../Walls/WallsRight"),
+Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
+}
+metadata/_custom_type_script = ExtResource("1_oxlob")
+
+[node name="Walls" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="WallsRight" type="Node2D" parent="Walls"]
+y_sort_enabled = true
+
+[node name="SnowWall" parent="Walls/WallsRight" instance=ExtResource("1_2om34")]
+position = Vector2(64, 8)
+
+[node name="SnowWall2" parent="Walls/WallsRight" instance=ExtResource("1_2om34")]
+position = Vector2(64, 16)
+
+[node name="SnowWall3" parent="Walls/WallsRight" instance=ExtResource("1_2om34")]
+position = Vector2(64, 24)
+
+[node name="SnowWall4" parent="Walls/WallsRight" instance=ExtResource("1_2om34")]
+position = Vector2(64, 32)
+
+[node name="SnowWall5" parent="Walls/WallsRight" instance=ExtResource("1_2om34")]
+position = Vector2(64, 40)
+
+[node name="SnowWall6" parent="Walls/WallsRight" instance=ExtResource("1_2om34")]
+position = Vector2(64, 48)
+
+[node name="SnowWall7" parent="Walls/WallsRight" instance=ExtResource("1_2om34")]
+position = Vector2(64, 56)
+
+[node name="WallsDownRight" type="Node2D" parent="Walls"]
+y_sort_enabled = true
+
+[node name="SnowWall" parent="Walls/WallsDownRight" instance=ExtResource("1_2om34")]
+position = Vector2(64, 64)
+
+[node name="WallsDown" type="Node2D" parent="Walls"]
+y_sort_enabled = true
+
+[node name="SnowWall" parent="Walls/WallsDown" instance=ExtResource("1_2om34")]
+position = Vector2(56, 64)
+
+[node name="SnowWall2" parent="Walls/WallsDown" instance=ExtResource("1_2om34")]
+position = Vector2(48, 64)
+
+[node name="SnowWall3" parent="Walls/WallsDown" instance=ExtResource("1_2om34")]
+position = Vector2(40, 64)
+
+[node name="SnowWall4" parent="Walls/WallsDown" instance=ExtResource("1_2om34")]
+position = Vector2(32, 64)
+
+[node name="SnowWall5" parent="Walls/WallsDown" instance=ExtResource("1_2om34")]
+position = Vector2(24, 64)
+
+[node name="SnowWall6" parent="Walls/WallsDown" instance=ExtResource("1_2om34")]
+position = Vector2(16, 64)
+
+[node name="SnowWall7" parent="Walls/WallsDown" instance=ExtResource("1_2om34")]
+position = Vector2(8, 64)
+
+[node name="WallsDownLeft" type="Node2D" parent="Walls"]
+y_sort_enabled = true
+
+[node name="SnowWall" parent="Walls/WallsDownLeft" instance=ExtResource("1_2om34")]
+position = Vector2(0, 64)
+
+[node name="WallsLeft" type="Node2D" parent="Walls"]
+y_sort_enabled = true
+
+[node name="SnowWall" parent="Walls/WallsLeft" instance=ExtResource("1_2om34")]
+position = Vector2(0, 56)
+
+[node name="SnowWall2" parent="Walls/WallsLeft" instance=ExtResource("1_2om34")]
+position = Vector2(0, 48)
+
+[node name="SnowWall3" parent="Walls/WallsLeft" instance=ExtResource("1_2om34")]
+position = Vector2(0, 40)
+
+[node name="SnowWall4" parent="Walls/WallsLeft" instance=ExtResource("1_2om34")]
+position = Vector2(0, 32)
+
+[node name="SnowWall5" parent="Walls/WallsLeft" instance=ExtResource("1_2om34")]
+position = Vector2(0, 24)
+
+[node name="SnowWall6" parent="Walls/WallsLeft" instance=ExtResource("1_2om34")]
+position = Vector2(0, 16)
+
+[node name="SnowWall7" parent="Walls/WallsLeft" instance=ExtResource("1_2om34")]
+position = Vector2(0, 8)
+
+[node name="WallsUpLeft" type="Node2D" parent="Walls"]
+y_sort_enabled = true
+
+[node name="SnowWall" parent="Walls/WallsUpLeft" instance=ExtResource("1_2om34")]
+
+[node name="WallsUp" type="Node2D" parent="Walls"]
+y_sort_enabled = true
+
+[node name="SnowWall" parent="Walls/WallsUp" instance=ExtResource("1_2om34")]
+position = Vector2(8, 0)
+
+[node name="SnowWall2" parent="Walls/WallsUp" instance=ExtResource("1_2om34")]
+position = Vector2(16, 0)
+
+[node name="SnowWall3" parent="Walls/WallsUp" instance=ExtResource("1_2om34")]
+position = Vector2(24, 0)
+
+[node name="SnowWall4" parent="Walls/WallsUp" instance=ExtResource("1_2om34")]
+position = Vector2(32, 0)
+
+[node name="SnowWall5" parent="Walls/WallsUp" instance=ExtResource("1_2om34")]
+position = Vector2(40, 0)
+
+[node name="SnowWall6" parent="Walls/WallsUp" instance=ExtResource("1_2om34")]
+position = Vector2(48, 0)
+
+[node name="SnowWall7" parent="Walls/WallsUp" instance=ExtResource("1_2om34")]
+position = Vector2(56, 0)
+
+[node name="WallUpRight" type="Node2D" parent="Walls"]
+y_sort_enabled = true
+
+[node name="SnowWall" parent="Walls/WallUpRight" instance=ExtResource("1_2om34")]
+position = Vector2(64, 0)
+
+[node name="Penguin" parent="." instance=ExtResource("2_g56y8")]
+position = Vector2(16, 16)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="StateChartDebugger" parent="CanvasLayer" instance=ExtResource("4_uy2hi")]
+offset_left = 32.0
+offset_right = 32.0
+initial_node_to_watch = NodePath("../../Penguin")

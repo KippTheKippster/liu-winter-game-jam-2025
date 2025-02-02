@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_7slpm")
-expression = "action_target == \"attack\""
+expression = "action_target == \"attack\" and allow_attack == true"
 metadata/_custom_type_script = ExtResource("1_7slpm")

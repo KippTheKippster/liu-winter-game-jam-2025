@@ -60,3 +60,4 @@ hframes = 2
 libraries = {
 &"": SubResource("AnimationLibrary_nh7sp")
 }
+autoplay = "idle"

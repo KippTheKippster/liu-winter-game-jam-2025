@@ -5,17 +5,22 @@ static var current_level_path: StringName = "res://levels/level_001.tscn"
 static var coin_count: int = 0
 
 @onready var ui_layer: CanvasLayer = $UiLayer
-@onready var level_container: Node2D = $LevelContainer
+@onready var level_container: Node2D = $Level
 @onready var pause_menu: Control = %PauseMenu
 
 static var penguins: Array[Penguin] = []
 
-func _ready() -> void:
+
+func _enter_tree() -> void:
 	penguins.clear()
+
+
+func _ready() -> void:
+	#penguins.clear()
 	
-	var level_scene := load(current_level_path) as PackedScene
-	var level := level_scene.instantiate()
-	level_container.add_child(level)
+	#var level_scene := load(current_level_path) as PackedScene
+	#var level := level_scene.instantiate()
+	#level_container.add_child(level)
 	
 	ui_layer.visible = true
 	pause_menu.visible = false

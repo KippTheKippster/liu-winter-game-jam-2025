@@ -1,11 +1,13 @@
-[gd_scene load_steps=24 format=3 uid="uid://d1ukp6d0k6q5k"]
+[gd_scene load_steps=26 format=3 uid="uid://d1ukp6d0k6q5k"]
 
 [ext_resource type="Script" uid="uid://bbsl81r0wf2fj" path="res://entities/enemies/tree mimic/tree_mimic.gd" id="1_8px78"]
 [ext_resource type="Texture2D" uid="uid://be2ttm3fnpxo6" path="res://entities/enemies/tree mimic/tree_mimic.png" id="1_46bnf"]
 [ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical/vertical.gd" id="1_u6grf"]
+[ext_resource type="Script" uid="uid://w8824multbqq" path="res://components/carriable/carriable_launcher.gd" id="2_k5mec"]
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="2_stay0"]
 [ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="2_tol2w"]
 [ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_4j5ei"]
+[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/food/food.tscn" id="3_i6slc"]
 [ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="3_lgdxk"]
 [ext_resource type="Script" uid="uid://dyi7lv20qiks3" path="res://addons/godot_state_charts/atomic_state.gd" id="4_f1x1y"]
 [ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="4_k5mec"]
@@ -17,6 +19,37 @@
 radius = 2.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0y8im"]
+
+[sub_resource type="Animation" id="Animation_stay0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageArea/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_k5mec"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vertical/TreeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
 
 [sub_resource type="Animation" id="Animation_46bnf"]
 length = 0.1
@@ -62,7 +95,7 @@ tracks/0/keys = {
 "values": [1]
 }
 
-[sub_resource type="Animation" id="Animation_kjwmf"]
+[sub_resource type="Animation" id="Animation_i6slc"]
 length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
@@ -75,22 +108,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [4]
-}
-
-[sub_resource type="Animation" id="Animation_stay0"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("DamageArea/CollisionShape2D:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"values": [2]
 }
 
 [sub_resource type="Animation" id="Animation_4j5ei"]
@@ -121,7 +139,7 @@ tracks/1/keys = {
 "values": [3]
 }
 
-[sub_resource type="Animation" id="Animation_k5mec"]
+[sub_resource type="Animation" id="Animation_kjwmf"]
 length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
@@ -134,23 +152,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [3]
-}
-
-[sub_resource type="Animation" id="Animation_i6slc"]
-length = 0.1
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Vertical/TreeSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [2]
+"values": [4]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kjwmf"]
@@ -175,11 +177,21 @@ script = ExtResource("1_8px78")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_f1x1y")
 
+[node name="CarriableLauncher" type="Node2D" parent="." node_paths=PackedStringArray("creature")]
+script = ExtResource("2_k5mec")
+creature = NodePath("../TreeArea/Creature")
+metadata/_custom_type_script = ExtResource("2_k5mec")
+
+[node name="Food" parent="CarriableLauncher" instance=ExtResource("3_i6slc")]
+
 [node name="TreeArea" type="Area2D" parent="."]
 
 [node name="Creature" type="Node2D" parent="TreeArea" node_paths=PackedStringArray("health_instance")]
 script = ExtResource("2_stay0")
 health_instance = NodePath("../HealthInstance")
+detection_range = null
+creature_layer = 1
+creature_mask = 2
 metadata/_custom_type_script = ExtResource("2_stay0")
 
 [node name="HealthInstance" type="Node2D" parent="TreeArea"]
