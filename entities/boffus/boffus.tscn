@@ -1,17 +1,28 @@
-[gd_scene load_steps=7 format=3 uid="uid://bi80q0c1kcjm"]
+[gd_scene load_steps=12 format=3 uid="uid://bi80q0c1kcjm"]
 
 [ext_resource type="Script" uid="uid://c68e0657600e1" path="res://entities/boffus/boffus.gd" id="1_fh4cr"]
 [ext_resource type="Texture2D" uid="uid://c7cgp87rg58mj" path="res://entities/boffus/seal.png" id="2_32cru"]
+[ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="3_mhjrk"]
+[ext_resource type="Texture2D" uid="uid://l8ujhgbcecqw" path="res://entities/food/assets/meat.png" id="4_nh7sp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_32cru"]
 radius = 5.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32cru"]
+size = Vector2(20, 12)
+
+[sub_resource type="Curve2D" id="Curve2D_mhjrk"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -24, 0, -5.11823, -0.0839054, 5.11823, 0.0839054, -15, -27, 0, 0, 0, 0, -3, -10)
+}
+point_count = 3
 
 [sub_resource type="Animation" id="Animation_mhjrk"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("BoffusSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -19,6 +30,94 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path2D/PathFollow2D:progress_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Path2D/PathFollow2D/FoodSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:allow_eat")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_nh7sp"]
+resource_name = "eat"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path2D/PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(0.68302, 1.46409, 1),
+"update": 0,
+"values": [0.0, 0.5, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path2D/PathFollow2D/FoodSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:allow_eat")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BoffusSprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 2]
 }
 
 [sub_resource type="Animation" id="Animation_32cru"]
@@ -29,7 +128,7 @@ step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("BoffusSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -42,6 +141,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nh7sp"]
 _data = {
 &"RESET": SubResource("Animation_mhjrk"),
+&"eat": SubResource("Animation_nh7sp"),
 &"idle": SubResource("Animation_32cru")
 }
 
@@ -51,13 +151,56 @@ script = ExtResource("1_fh4cr")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_32cru")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_32cru")
+
+[node name="Creature" type="Node2D" parent="Area2D"]
+position = Vector2(-24, 0)
+script = ExtResource("3_mhjrk")
+detection_range = 12.0
+creature_layer = 16
+creature_mask = 4
+metadata/_custom_type_script = ExtResource("3_mhjrk")
+
+[node name="BoffusSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_32cru")
 offset = Vector2(0, -4)
-hframes = 2
+hframes = 3
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_mhjrk")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-24, 0)
+rotates = false
+loop = false
+
+[node name="FoodSprite" type="Sprite2D" parent="Path2D/PathFollow2D"]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("4_nh7sp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+zoom = Vector2(4, 4)
+
+[node name="TimeLabel" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -35.0
+offset_right = 20.0
+offset_bottom = -12.0
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+deterministic = true
 libraries = {
 &"": SubResource("AnimationLibrary_nh7sp")
 }
 autoplay = "idle"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

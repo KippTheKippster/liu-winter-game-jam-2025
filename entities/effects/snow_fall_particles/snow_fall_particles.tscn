@@ -5,13 +5,18 @@
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_brdbm"]
 particle_flag_disable_z = true
 emission_shape = 3
-emission_box_extents = Vector3(180, 1, 0)
-gravity = Vector3(-1, 3, 0)
+emission_box_extents = Vector3(640, 1, 0)
+direction = Vector3(-1, 3, 0)
+spread = 0.0
+initial_velocity_min = 16.0
+initial_velocity_max = 32.0
+gravity = Vector3(0, 0, 0)
 
 [node name="SnowFallParticles" type="GPUParticles2D"]
-amount = 128
+amount = 768
 texture = ExtResource("1_brdbm")
 lifetime = 20.0
 preprocess = 20.0
-seed = 105502582
+seed = 1423818979
+visibility_rect = Rect2(-820.012, -1.96029, 1455.4, 607.659)
 process_material = SubResource("ParticleProcessMaterial_brdbm")

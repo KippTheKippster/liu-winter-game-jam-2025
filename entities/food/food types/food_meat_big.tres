@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FoodType" load_steps=3 format=3 uid="uid://csgrgd3ywh8js"]
+
+[ext_resource type="Script" uid="uid://d2bdbs6pakajn" path="res://entities/food/food_type.gd" id="1_foclh"]
+[ext_resource type="Texture2D" uid="uid://cyb72v12q2b80" path="res://entities/food/assets/meat_big.png" id="2_na8re"]
+
+[resource]
+script = ExtResource("1_foclh")
+texture = ExtResource("2_na8re")
+offset = Vector2(0, -2)
+metadata/_custom_type_script = ExtResource("1_foclh")

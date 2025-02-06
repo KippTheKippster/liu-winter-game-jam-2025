@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ExpressionGuard" load_steps=2 format=3 uid="uid://b01sudnokseb1"]
+
+[ext_resource type="Script" uid="uid://br85gcxolt6xv" path="res://addons/godot_state_charts/expression_guard.gd" id="1_7wbsx"]
+
+[resource]
+script = ExtResource("1_7wbsx")
+expression = "action_target == \"sleep\""
+metadata/_custom_type_script = ExtResource("1_7wbsx")

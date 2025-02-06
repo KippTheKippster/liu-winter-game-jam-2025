@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceh6kooyf2pfs"]
+
+[ext_resource type="PackedScene" uid="uid://cgsisbnhd4atk" path="res://entities/rooms/room_template.tscn" id="1_wjpjx"]
+[ext_resource type="PackedScene" uid="uid://byrpgpbqmjh38" path="res://entities/props/igloo/igloo.tscn" id="2_n4qxx"]
+[ext_resource type="PackedScene" uid="uid://c56uuvk1wh8tk" path="res://entities/props/tree/tree.tscn" id="3_pntb5"]
+
+[node name="RoomIgloo" instance=ExtResource("1_wjpjx")]
+
+[node name="Room" parent="." index="0" node_paths=PackedStringArray("walls")]
+walls = {
+Vector2i(-1, -1): NodePath("../Walls/WallsUpLeft"),
+Vector2i(-1, 0): NodePath("../Walls/WallsLeft"),
+Vector2i(-1, 1): NodePath("../Walls/WallsDownLeft"),
+Vector2i(0, -1): NodePath("../Walls/WallsUp"),
+Vector2i(0, 1): NodePath("../Walls/WallsDown"),
+Vector2i(1, -1): NodePath("../Walls/WallUpRight"),
+Vector2i(1, 0): NodePath("../Walls/WallsRight"),
+Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
+}
+
+[node name="Igloo" parent="." index="2" instance=ExtResource("2_n4qxx")]
+position = Vector2(32, 36)
+
+[node name="Tree" parent="." index="3" instance=ExtResource("3_pntb5")]
+position = Vector2(49, 17)
+
+[node name="Tree2" parent="." index="4" instance=ExtResource("3_pntb5")]
+position = Vector2(15, 53)
+type = 2

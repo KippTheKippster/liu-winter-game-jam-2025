@@ -1,6 +1,8 @@
 extends Node2D
 class_name Vertical
 
+signal jumped
+
 @export var gravity: float = 500.0
 @export var jump_speed: float = 120.0
 var velocity: float = 0.0
@@ -38,5 +40,10 @@ func is_on_floor() -> bool:
 	return height == 0.0
 
 
-func jump() -> void:
-	velocity = jump_speed
+func jump(speed_override: float = 0.0) -> void:
+	if speed_override:
+		velocity = speed_override
+	else:
+		velocity = jump_speed
+	
+	jumped.emit()

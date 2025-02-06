@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CreatureLog" load_steps=2 format=3 uid="uid://ij3135nwm4f0"]
+
+[ext_resource type="Script" uid="uid://wyiqxw5pfjp4" path="res://components/creature/creature_log.gd" id="1_qa7qn"]
+
+[resource]
+script = ExtResource("1_qa7qn")
+name = "Tree mimic"
+description = "This nifty creature has managed to replicate the look and fell of the native pine tree. Despite the convincing nature, the outside of the Tree mimic is entirely made out of flesh and goes great in a slow cooked stew. 
+
+This creature can remain burrowed in the ground for weeks using it's keen sense of smell to detect nearby pray. Once potential pray is in range the Tree mimic will launch out of the ground, using it massive size to crush smaller animals."
+metadata/_custom_type_script = ExtResource("1_qa7qn")

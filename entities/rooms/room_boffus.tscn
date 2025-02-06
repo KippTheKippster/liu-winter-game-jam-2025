@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dubdvbm13l8c2"]
+
+[ext_resource type="PackedScene" uid="uid://cgsisbnhd4atk" path="res://entities/rooms/room_template.tscn" id="1_kckpp"]
+[ext_resource type="PackedScene" uid="uid://bi80q0c1kcjm" path="res://entities/boffus/boffus.tscn" id="2_opk22"]
+[ext_resource type="PackedScene" uid="uid://c56uuvk1wh8tk" path="res://entities/props/tree/tree.tscn" id="3_yidaj"]
+
+[node name="RoomBoffus" instance=ExtResource("1_kckpp")]
+
+[node name="Room" parent="." index="0" node_paths=PackedStringArray("walls")]
+walls = {
+Vector2i(-1, -1): NodePath("../Walls/WallsUpLeft"),
+Vector2i(-1, 0): NodePath("../Walls/WallsLeft"),
+Vector2i(-1, 1): NodePath("../Walls/WallsDownLeft"),
+Vector2i(0, -1): NodePath("../Walls/WallsUp"),
+Vector2i(0, 1): NodePath("../Walls/WallsDown"),
+Vector2i(1, -1): NodePath("../Walls/WallUpRight"),
+Vector2i(1, 0): NodePath("../Walls/WallsRight"),
+Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
+}
+
+[node name="Boffus" parent="." index="2" instance=ExtResource("2_opk22")]
+position = Vector2(42, 26)
+
+[node name="Tree" parent="." index="3" instance=ExtResource("3_yidaj")]
+position = Vector2(16, 16)
+type = 2
+
+[node name="Tree2" parent="." index="4" instance=ExtResource("3_yidaj")]
+position = Vector2(48, 54)
+type = 1

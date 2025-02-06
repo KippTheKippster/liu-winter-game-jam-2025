@@ -14,13 +14,13 @@ func pickup() -> void:
 	old_owner_parent.remove_child(owner)
 
 
-func place(place_position: Vector2, height: float = 0.0, new_parent_override: Node = null) -> void:
-	if owner is Node2D:
-		owner.global_position = place_position
-	
+func place(place_position: Vector2, height: float = 1.0, new_parent_override: Node = null) -> void:
 	if new_parent_override:
 		new_parent_override.add_child(owner)
 	else:
 		old_owner_parent.add_child(owner)
-	print(old_owner_parent.get_path())
+	
+	if owner is Node2D:
+		owner.global_position = place_position
+	
 	placed.emit(height)

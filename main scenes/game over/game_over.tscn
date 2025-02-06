@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdg4pvjlif8sc"]
+
+[ext_resource type="Script" uid="uid://b7jkbmikuwh5q" path="res://main scenes/game over/game_over.gd" id="1_g1txs"]
+[ext_resource type="Texture2D" uid="uid://c7cgp87rg58mj" path="res://entities/boffus/seal.png" id="2_mvbtw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xf3sy"]
+atlas = ExtResource("2_mvbtw")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvx1g"]
+atlas = ExtResource("2_mvbtw")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ax6h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xf3sy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvx1g")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="GameOver" type="CanvasLayer"]
+follow_viewport_enabled = true
+script = ExtResource("1_g1txs")
+
+[node name="SealSprite" type="AnimatedSprite2D" parent="."]
+process_mode = 3
+position = Vector2(86, 45)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_6ax6h")
+animation = &"idle"
+offset = Vector2(1, -3)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 18.0
+offset_top = 97.0
+offset_right = 158.0
+offset_bottom = 116.0
+text = "OH NO BOFFUS ATE ALL YOUR PENGUINS!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(2, 2)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

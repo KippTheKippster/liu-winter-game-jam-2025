@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://o1k01u4i4toy"
+path="res://.godot/imported/penguin_egg.aseprite-4a01755c352f39f710a78850cce49e93.res"
+
+[deps]
+
+source_file="res://entities/penguin/assets/penguin_egg.aseprite"
+dest_files=["res://.godot/imported/penguin_egg.aseprite-4a01755c352f39f710a78850cce49e93.res"]
+
+[params]
+

@@ -105,3 +105,7 @@ static func call_delayed(node: Node, delay: float, method: Callable) -> void:
 			_timer.queue_free()
 			).bind(method, node, timer)
 	)
+
+
+static func seconds_to_string(seconds: float) -> String:
+	return "%02d:%02d" % [seconds, fmod(seconds, 1) * 100]

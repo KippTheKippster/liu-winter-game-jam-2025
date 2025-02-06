@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dec20wi77vw15"]
+
+[ext_resource type="PackedScene" uid="uid://cgsisbnhd4atk" path="res://entities/rooms/room_template.tscn" id="1_1y5vn"]
+[ext_resource type="PackedScene" uid="uid://d1ukp6d0k6q5k" path="res://entities/enemies/tree mimic/tree_mimic.tscn" id="2_dl7u6"]
+[ext_resource type="PackedScene" uid="uid://c56uuvk1wh8tk" path="res://entities/props/tree/tree.tscn" id="3_qwdmn"]
+
+[node name="RoomTreeMimic002" instance=ExtResource("1_1y5vn")]
+
+[node name="Room" parent="." index="0" node_paths=PackedStringArray("walls")]
+walls = {
+Vector2i(-1, -1): NodePath("../Walls/WallsUpLeft"),
+Vector2i(-1, 0): NodePath("../Walls/WallsLeft"),
+Vector2i(-1, 1): NodePath("../Walls/WallsDownLeft"),
+Vector2i(0, -1): NodePath("../Walls/WallsUp"),
+Vector2i(0, 1): NodePath("../Walls/WallsDown"),
+Vector2i(1, -1): NodePath("../Walls/WallUpRight"),
+Vector2i(1, 0): NodePath("../Walls/WallsRight"),
+Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
+}
+
+[node name="Tree" parent="." index="2" instance=ExtResource("3_qwdmn")]
+position = Vector2(50, 53)
+type = 2
+
+[node name="TreeMimic" parent="." index="3" instance=ExtResource("2_dl7u6")]
+position = Vector2(31, 9)

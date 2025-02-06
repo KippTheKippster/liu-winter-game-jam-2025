@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://d366oxls1r42e"
+path="res://.godot/imported/fishing_hole.aseprite-fcd668236078280371c2a52ca494b3ff.res"
+
+[deps]
+
+source_file="res://entities/props/fishing hole/fishing_hole.aseprite"
+dest_files=["res://.godot/imported/fishing_hole.aseprite-fcd668236078280371c2a52ca494b3ff.res"]
+
+[params]
+

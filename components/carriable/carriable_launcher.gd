@@ -1,6 +1,8 @@
 extends Node2D
 class_name CarriableLauncher
 
+@export var launch_all_at_once: bool = true
+
 @export var creature: Creature
 @export var start_height = 0.0
 
@@ -18,5 +20,13 @@ func _ready() -> void:
 
 
 func launch() -> void:
-	for carriable in carriables:
-		carriable.place(global_position, start_height, owner.get_parent())
+	if launch_all_at_once:
+		for carriable in carriables:
+			carriable.place(global_position, start_height, owner.get_parent())
+		
+		carriables.clear()
+	else:
+		if carriables.size() > 0:
+			var carriable := carriables[0]
+			carriable.place(global_position, start_height, owner.get_parent())
+			carriables.remove_at(0)

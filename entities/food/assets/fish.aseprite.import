@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dcfnjut18n56n"
+path="res://.godot/imported/fish.aseprite-9a2f200d14d6a45ec09a1a6ea4a17746.res"
+
+[deps]
+
+source_file="res://entities/food/assets/fish.aseprite"
+dest_files=["res://.godot/imported/fish.aseprite-9a2f200d14d6a45ec09a1a6ea4a17746.res"]
+
+[params]
+

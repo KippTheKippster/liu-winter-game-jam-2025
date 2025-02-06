@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ExpressionGuard" load_steps=2 format=3 uid="uid://nxw1pqrpdgk8"]
+
+[ext_resource type="Script" uid="uid://br85gcxolt6xv" path="res://addons/godot_state_charts/expression_guard.gd" id="1_metht"]
+
+[resource]
+script = ExtResource("1_metht")
+expression = "action_target == \"die\""
+metadata/_custom_type_script = ExtResource("1_metht")

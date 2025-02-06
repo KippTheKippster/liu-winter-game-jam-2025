@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c8kn5cjjldlta"
+path="res://.godot/imported/exclamation_mark.aseprite-8aaf603c584a374fb0ff6518cb5f9bc5.res"
+
+[deps]
+
+source_file="res://entities/effects/surprise/exclamation_mark.aseprite"
+dest_files=["res://.godot/imported/exclamation_mark.aseprite-8aaf603c584a374fb0ff6518cb5f9bc5.res"]
+
+[params]
+

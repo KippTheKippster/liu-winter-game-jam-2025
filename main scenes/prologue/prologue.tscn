@@ -5,11 +5,11 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lodes"]
 atlas = ExtResource("2_lodes")
-region = Rect2(0, 0, 24, 16)
+region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p6iuu"]
 atlas = ExtResource("2_lodes")
-region = Rect2(24, 0, 24, 16)
+region = Rect2(24, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4r5kt"]
 animations = [{
@@ -26,6 +26,7 @@ animations = [{
 }]
 
 [node name="Prologue" type="CanvasLayer"]
+follow_viewport_enabled = true
 script = ExtResource("1_mskhm")
 
 [node name="Seal" type="AnimatedSprite2D" parent="."]
@@ -63,5 +64,9 @@ autowrap_mode = 3
 wait_time = 0.6
 one_shot = true
 autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(2, 2)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

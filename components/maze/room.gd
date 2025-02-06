@@ -7,9 +7,6 @@ var maze_parent: Maze
 
 @export var walls: Dictionary[Vector2i, Node2D]
 
-func _ready() -> void:
-	print.call_deferred(neigbor_directions)
-
 
 func set_room_coords(coords: Vector2i) -> void:
 	var parent_2d := get_parent() as Node2D

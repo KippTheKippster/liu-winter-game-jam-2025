@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://ditrmg8oanx3t"]
+
+[ext_resource type="PackedScene" uid="uid://cgsisbnhd4atk" path="res://entities/rooms/room_template.tscn" id="1_hqdam"]
+[ext_resource type="PackedScene" uid="uid://c56uuvk1wh8tk" path="res://entities/props/tree/tree.tscn" id="2_hvkq7"]
+
+[node name="RoomCorridor003" instance=ExtResource("1_hqdam")]
+
+[node name="Room" parent="." index="0" node_paths=PackedStringArray("walls")]
+walls = {
+Vector2i(-1, -1): NodePath("../Walls/WallsUpLeft"),
+Vector2i(-1, 0): NodePath("../Walls/WallsLeft"),
+Vector2i(-1, 1): NodePath("../Walls/WallsDownLeft"),
+Vector2i(0, -1): NodePath("../Walls/WallsUp"),
+Vector2i(0, 1): NodePath("../Walls/WallsDown"),
+Vector2i(1, -1): NodePath("../Walls/WallUpRight"),
+Vector2i(1, 0): NodePath("../Walls/WallsRight"),
+Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
+}
+
+[node name="Tree" parent="." index="2" instance=ExtResource("2_hvkq7")]
+position = Vector2(53, 11)
+type = 1
+
+[node name="Tree2" parent="." index="3" instance=ExtResource("2_hvkq7")]
+position = Vector2(11, 55)

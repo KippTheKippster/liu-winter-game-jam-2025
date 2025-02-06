@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://3gmx73f0tu2k"]
+
+[ext_resource type="PackedScene" uid="uid://cgsisbnhd4atk" path="res://entities/rooms/room_template.tscn" id="1_k2wep"]
+[ext_resource type="PackedScene" uid="uid://cb418taoi0lmu" path="res://entities/props/fishing hole/fishing_hole.tscn" id="2_sf8yd"]
+
+[node name="RoomFishingHole002" instance=ExtResource("1_k2wep")]
+
+[node name="Room" parent="." index="0" node_paths=PackedStringArray("walls")]
+walls = {
+Vector2i(-1, -1): NodePath("../Walls/WallsUpLeft"),
+Vector2i(-1, 0): NodePath("../Walls/WallsLeft"),
+Vector2i(-1, 1): NodePath("../Walls/WallsDownLeft"),
+Vector2i(0, -1): NodePath("../Walls/WallsUp"),
+Vector2i(0, 1): NodePath("../Walls/WallsDown"),
+Vector2i(1, -1): NodePath("../Walls/WallUpRight"),
+Vector2i(1, 0): NodePath("../Walls/WallsRight"),
+Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
+}
+
+[node name="FishingHole" parent="." index="2" instance=ExtResource("2_sf8yd")]
+position = Vector2(43, 21)
+
+[node name="FishingHole2" parent="." index="3" instance=ExtResource("2_sf8yd")]
+position = Vector2(27, 44)

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://coibfph0hs8sq"
+path="res://.godot/imported/igloo.aseprite-dfb18a2696120e7d85574852226cc05d.res"
+
+[deps]
+
+source_file="res://entities/props/igloo/igloo.aseprite"
+dest_files=["res://.godot/imported/igloo.aseprite-dfb18a2696120e7d85574852226cc05d.res"]
+
+[params]
+

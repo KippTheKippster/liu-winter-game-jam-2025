@@ -4,6 +4,7 @@ class_name Creature
 
 signal died
 
+@export var creature_log: CreatureLog
 @export_group("Health")
 @export var free_owner_on_health_instance_died: bool = true
 @export var health_instance: HealthInstance
@@ -11,9 +12,9 @@ signal died
 @export_group("Creature Detection")
 @export var detection_range: float = 48.0
 var detection_range_squared: float
-@export_flags("Enemy", "Penguin", "Food") var creature_layer: int
-@export_flags("Enemy", "Penguin", "Food") var creature_mask: int
-
+@export_flags("Enemy", "Penguin", "Food", "Fishing Hole", "Boffus", "Igloo") var creature_layer: int
+@export_flags("Enemy", "Penguin", "Food", "Fishing Hole", "Boffus", "Igloo") var creature_mask: int
+var active: bool = true
 
 func _enter_tree() -> void:
 	detection_range_squared = detection_range * detection_range

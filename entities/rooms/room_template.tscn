@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgsisbnhd4atk"]
+[gd_scene load_steps=3 format=3 uid="uid://cgsisbnhd4atk"]
 
 [ext_resource type="PackedScene" uid="uid://wwoo0xbgbrpv" path="res://entities/props/wall/snow_wall.tscn" id="1_2om34"]
 [ext_resource type="Script" uid="uid://xbb3vbsmu1tp" path="res://components/maze/room.gd" id="1_oxlob"]
-[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin.tscn" id="2_g56y8"]
-[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="4_uy2hi"]
 
 [node name="RoomTemplate" type="Node2D"]
 y_sort_enabled = true
@@ -144,14 +142,3 @@ y_sort_enabled = true
 
 [node name="SnowWall" parent="Walls/WallUpRight" instance=ExtResource("1_2om34")]
 position = Vector2(64, 0)
-
-[node name="Penguin" parent="." instance=ExtResource("2_g56y8")]
-position = Vector2(16, 16)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="StateChartDebugger" parent="CanvasLayer" instance=ExtResource("4_uy2hi")]
-offset_left = 32.0
-offset_right = 32.0
-initial_node_to_watch = NodePath("../../Penguin")

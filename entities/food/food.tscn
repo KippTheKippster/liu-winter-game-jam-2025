@@ -20,7 +20,6 @@ shape = SubResource("CircleShape2D_mllgo")
 [node name="Creature" type="Node2D" parent="Area2D" node_paths=PackedStringArray("carriable")]
 script = ExtResource("2_mllgo")
 carriable = NodePath("../../Carriable")
-detection_range = null
 creature_layer = 4
 metadata/_custom_type_script = ExtResource("2_mllgo")
 
@@ -30,7 +29,7 @@ gravity = 120.0
 jump_speed = 60.0
 metadata/_custom_type_script = ExtResource("2_0533t")
 
-[node name="Sprite2D" type="Sprite2D" parent="Vertical"]
+[node name="FoodSprite" type="Sprite2D" parent="Vertical"]
 texture = ExtResource("1_tn4ro")
 offset = Vector2(0, -2)
 

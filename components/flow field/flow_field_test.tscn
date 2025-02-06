@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwi7uo0kjc0rk"]
+
+[ext_resource type="Script" uid="uid://dgyj7blgufy06" path="res://components/flow field/flow_field.gd" id="1_6bjlv"]
+[ext_resource type="Texture2D" uid="uid://cdp4y3p62mh0h" path="res://icon.svg" id="2_hn6a3"]
+[ext_resource type="Script" uid="uid://dci6sv2mtg2l1" path="res://components/flow field/flow_field_walker.gd" id="3_jqmqi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6bjlv"]
+font_size = 8
+
+[node name="FlowFieldTest" type="Node2D"]
+script = ExtResource("1_6bjlv")
+label_settings = SubResource("LabelSettings_6bjlv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.0625, 0.0625)
+texture = ExtResource("2_hn6a3")
+
+[node name="PathWalker" type="Sprite2D" parent="."]
+position = Vector2(99, 100)
+scale = Vector2(0.0625, 0.0625)
+texture = ExtResource("2_hn6a3")
+script = ExtResource("3_jqmqi")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(138, 68)
+
+[node name="Label" type="Label" parent="."]
+offset_right = 5.0
+offset_bottom = 12.0
+text = "1"
+label_settings = SubResource("LabelSettings_6bjlv")

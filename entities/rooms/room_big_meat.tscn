@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjlkcm3dkp1uv"]
+
+[ext_resource type="PackedScene" uid="uid://cgsisbnhd4atk" path="res://entities/rooms/room_template.tscn" id="1_1hhpx"]
+[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/food/food.tscn" id="2_101jw"]
+[ext_resource type="Resource" uid="uid://csgrgd3ywh8js" path="res://entities/food/food types/food_meat_big.tres" id="3_8ieqy"]
+
+[node name="RoomBigMeat" instance=ExtResource("1_1hhpx")]
+
+[node name="Room" parent="." index="0" node_paths=PackedStringArray("walls")]
+walls = {
+Vector2i(-1, -1): NodePath("../Walls/WallsUpLeft"),
+Vector2i(-1, 0): NodePath("../Walls/WallsLeft"),
+Vector2i(-1, 1): NodePath("../Walls/WallsDownLeft"),
+Vector2i(0, -1): NodePath("../Walls/WallsUp"),
+Vector2i(0, 1): NodePath("../Walls/WallsDown"),
+Vector2i(1, -1): NodePath("../Walls/WallUpRight"),
+Vector2i(1, 0): NodePath("../Walls/WallsRight"),
+Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
+}
+
+[node name="Food" parent="." index="2" instance=ExtResource("2_101jw")]
+position = Vector2(31, 33)
+food_type = ExtResource("3_8ieqy")

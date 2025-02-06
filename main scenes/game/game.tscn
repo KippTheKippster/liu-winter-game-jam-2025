@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://doiwfgk1hy5nb"]
+[gd_scene load_steps=15 format=3 uid="uid://doiwfgk1hy5nb"]
 
 [ext_resource type="Script" uid="uid://dya4stv6au8tw" path="res://main scenes/game/game.gd" id="1_mm5ki"]
 [ext_resource type="PackedScene" uid="uid://cyvjgw6e8qecv" path="res://ui/hud/hud.tscn" id="1_qoleo"]
@@ -6,8 +6,31 @@
 [ext_resource type="PackedScene" uid="uid://cm3rtksqgg3lu" path="res://entities/effects/snow_fall_particles/snow_fall_particles.tscn" id="2_orik2"]
 [ext_resource type="AudioStream" uid="uid://chkf6omxlyit8" path="res://audio/wind.ogg" id="5_np0q0"]
 [ext_resource type="PackedScene" uid="uid://cg32rxn6me2vm" path="res://entities/player camera/player_camera.tscn" id="5_orik2"]
+[ext_resource type="Script" uid="uid://drtrpfwntdaa2" path="res://components/flow field/flow_field_manager.gd" id="7_ctvcs"]
 [ext_resource type="Script" uid="uid://cighei1gf4iov" path="res://components/maze/maze.gd" id="7_euirq"]
-[ext_resource type="PackedScene" uid="uid://d1ukp6d0k6q5k" path="res://entities/enemies/tree mimic/tree_mimic.tscn" id="8_856xg"]
+[ext_resource type="Script" uid="uid://baptqcm2qgns6" path="res://main scenes/game/command_area.gd" id="8_856xg"]
+[ext_resource type="PackedScene" uid="uid://dgkiymlyt8q0w" path="res://entities/penguin/penguin_egg.tscn" id="9_dmrch"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dmrch"]
+noise_type = 4
+seed = 791
+frequency = 0.1014
+fractal_octaves = 10
+fractal_lacunarity = 0.0
+fractal_gain = -0.36
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ctvcs"]
+width = 12
+height = 12
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_dmrch")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_euirq"]
+radius = 16.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dmrch"]
+viewport_path = NodePath("Level/CommandArea/CircleSprite/CircleSubViewport")
 
 [node name="Game" type="Node"]
 process_mode = 3
@@ -32,29 +55,62 @@ metadata/_edit_lock_ = true
 unique_name_in_owner = true
 metadata/_edit_lock_ = true
 
-[node name="WeatherLayer" type="CanvasLayer" parent="."]
-
-[node name="SnowFallParticles" parent="WeatherLayer" instance=ExtResource("2_orik2")]
-position = Vector2(88, -8)
-
 [node name="Audio" type="Node" parent="."]
 
 [node name="WindAudio" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("5_np0q0")
 autoplay = true
 bus = &"Ambient"
+parameters/looping = true
 
 [node name="Level" type="Node2D" parent="."]
 process_mode = 1
 y_sort_enabled = true
 
 [node name="PlayerCamera" parent="Level" instance=ExtResource("5_orik2")]
-anchor_mode = 0
+position = Vector2(32, 32)
 
 [node name="Maze" type="Node2D" parent="Level"]
 y_sort_enabled = true
 script = ExtResource("7_euirq")
+layout_texture = SubResource("NoiseTexture2D_ctvcs")
 metadata/_custom_type_script = ExtResource("7_euirq")
 
-[node name="TreeMimic" parent="Level" instance=ExtResource("8_856xg")]
-position = Vector2(109, 76)
+[node name="FlowFieldManager" type="Node2D" parent="Level"]
+script = ExtResource("7_ctvcs")
+metadata/_custom_type_script = ExtResource("7_ctvcs")
+
+[node name="Sprite2D" type="Sprite2D" parent="Level"]
+texture = SubResource("NoiseTexture2D_ctvcs")
+
+[node name="CommandArea" type="Area2D" parent="Level"]
+z_index = 1
+script = ExtResource("8_856xg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/CommandArea"]
+shape = SubResource("CircleShape2D_euirq")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="CircleSprite" type="Sprite2D" parent="Level/CommandArea"]
+unique_name_in_owner = true
+texture = SubResource("ViewportTexture_dmrch")
+
+[node name="CircleSubViewport" type="SubViewport" parent="Level/CommandArea/CircleSprite"]
+unique_name_in_owner = true
+transparent_bg = true
+
+[node name="CircleDrawNode" type="Node2D" parent="Level/CommandArea/CircleSprite/CircleSubViewport"]
+unique_name_in_owner = true
+
+[node name="CircleCamera" type="Camera2D" parent="Level/CommandArea/CircleSprite/CircleSubViewport"]
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.5, 1.5)
+
+[node name="SnowFallParticles" parent="Parallax2D" instance=ExtResource("2_orik2")]
+position = Vector2(185, -208)
+seed = 227960793
+local_coords = true
+
+[node name="PenguinEgg" parent="." instance=ExtResource("9_dmrch")]
+position = Vector2(103, 135)
