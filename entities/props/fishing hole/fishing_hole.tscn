@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://cb418taoi0lmu"]
+[gd_scene load_steps=15 format=3 uid="uid://cb418taoi0lmu"]
 
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="1_6e1ve"]
 [ext_resource type="Script" uid="uid://dcn1sww4vmul3" path="res://entities/props/fishing hole/fishing_hole.gd" id="1_fhw1b"]
 [ext_resource type="Texture2D" uid="uid://baiyefuhnxt1w" path="res://entities/props/fishing hole/fishing_hole.png" id="1_iymk4"]
+[ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="2_f0v64"]
 [ext_resource type="Script" uid="uid://w8824multbqq" path="res://components/carriable/carriable_launcher.gd" id="4_iuctg"]
 [ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/food/food.tscn" id="5_phrop"]
 [ext_resource type="Resource" uid="uid://460toaio7pbp" path="res://entities/food/food types/food_fish.tres" id="6_5sior"]
@@ -46,6 +47,15 @@ script = ExtResource("1_fhw1b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("CircleShape2D_o7ldn")
+
+[node name="FlowFieldSolid" type="Node2D" parent="."]
+script = ExtResource("2_f0v64")
+metadata/_custom_type_script = ExtResource("2_f0v64")
+
+[node name="FlowFieldSolid2" type="Node2D" parent="."]
+position = Vector2(-8, 0)
+script = ExtResource("2_f0v64")
+metadata/_custom_type_script = ExtResource("2_f0v64")
 
 [node name="Area2D" type="Area2D" parent="."]
 

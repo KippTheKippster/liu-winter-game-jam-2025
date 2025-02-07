@@ -2,7 +2,6 @@ extends Area2D
 
 @export var circle_radius_large: float = 12.0
 @export var circle_radius_small: float = 4.0
-@onready var flow_field: FlowField = %FlowField
 
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 var circle_shape: CircleShape2D
@@ -51,9 +50,21 @@ func _process(delta: float) -> void:
 	
 	
 	if Input.is_action_just_released("action_1") or Input.is_action_just_released("action_2"):
-		if active:
-			apply_command()
-			queue_redraw()
+		if not Input.is_action_pressed("action_1") and not Input.is_action_pressed("action_2"):
+			if active:
+				apply_command()
+				queue_redraw()
+		else:
+			if Input.is_action_pressed("action_1"):
+				active = true
+				radius = 12.0
+				circle_shape.radius = radius - 1
+				queue_redraw()
+			elif Input.is_action_pressed("action_2"):
+				active = true
+				radius = 4.0
+				circle_shape.radius = radius - 1
+				queue_redraw()
 	
 	collision_shape_2d.disabled = !active
 	

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwf71bc7425hy"]
+
+[ext_resource type="Script" uid="uid://baptqcm2qgns6" path="res://main scenes/game/command_area.gd" id="1_7anl8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_euirq"]
+radius = 16.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dmrch"]
+viewport_path = NodePath("CircleSprite/CircleSubViewport")
+
+[node name="CommandArea" type="Area2D"]
+z_index = 1
+script = ExtResource("1_7anl8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_euirq")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="CircleSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = SubResource("ViewportTexture_dmrch")
+
+[node name="CircleSubViewport" type="SubViewport" parent="CircleSprite"]
+unique_name_in_owner = true
+transparent_bg = true
+size = Vector2i(32, 32)
+
+[node name="CircleDrawNode" type="Node2D" parent="CircleSprite/CircleSubViewport"]
+unique_name_in_owner = true
+
+[node name="CircleCamera" type="Camera2D" parent="CircleSprite/CircleSubViewport"]

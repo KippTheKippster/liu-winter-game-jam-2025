@@ -1,31 +1,64 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwi7uo0kjc0rk"]
+[gd_scene load_steps=8 format=3 uid="uid://cwi7uo0kjc0rk"]
 
-[ext_resource type="Script" uid="uid://dgyj7blgufy06" path="res://components/flow field/flow_field.gd" id="1_6bjlv"]
-[ext_resource type="Texture2D" uid="uid://cdp4y3p62mh0h" path="res://icon.svg" id="2_hn6a3"]
-[ext_resource type="Script" uid="uid://dci6sv2mtg2l1" path="res://components/flow field/flow_field_walker.gd" id="3_jqmqi"]
+[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin.tscn" id="1_2q1yj"]
+[ext_resource type="Script" uid="uid://b4vs823sxp54e" path="res://components/flow field/flow_field_test.gd" id="1_hba3q"]
+[ext_resource type="Script" uid="uid://drtrpfwntdaa2" path="res://components/flow field/flow_field_manager.gd" id="1_my22q"]
+[ext_resource type="Script" uid="uid://baptqcm2qgns6" path="res://main scenes/game/command_area.gd" id="3_3gdm3"]
+[ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="4_8p87s"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_6bjlv"]
-font_size = 8
+[sub_resource type="CircleShape2D" id="CircleShape2D_8p87s"]
+radius = 16.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hba3q"]
+viewport_path = NodePath("Level/CommandArea/CircleSprite/CircleSubViewport")
 
 [node name="FlowFieldTest" type="Node2D"]
-script = ExtResource("1_6bjlv")
-label_settings = SubResource("LabelSettings_6bjlv")
+script = ExtResource("1_hba3q")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.0625, 0.0625)
-texture = ExtResource("2_hn6a3")
+[node name="FlowFieldManager" type="Node2D" parent="."]
+script = ExtResource("1_my22q")
+metadata/_custom_type_script = ExtResource("1_my22q")
 
-[node name="PathWalker" type="Sprite2D" parent="."]
-position = Vector2(99, 100)
-scale = Vector2(0.0625, 0.0625)
-texture = ExtResource("2_hn6a3")
-script = ExtResource("3_jqmqi")
+[node name="Penguin" parent="." instance=ExtResource("1_2q1yj")]
+position = Vector2(16, 24)
+
+[node name="CommandArea" type="Area2D" parent="."]
+z_index = 1
+script = ExtResource("3_3gdm3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CommandArea"]
+shape = SubResource("CircleShape2D_8p87s")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="CircleSprite" type="Sprite2D" parent="CommandArea"]
+unique_name_in_owner = true
+texture = SubResource("ViewportTexture_hba3q")
+
+[node name="CircleSubViewport" type="SubViewport" parent="CommandArea/CircleSprite"]
+unique_name_in_owner = true
+transparent_bg = true
+size = Vector2i(32, 32)
+
+[node name="CircleDrawNode" type="Node2D" parent="CommandArea/CircleSprite/CircleSubViewport"]
+unique_name_in_owner = true
+
+[node name="CircleCamera" type="Camera2D" parent="CommandArea/CircleSprite/CircleSubViewport"]
+
+[node name="FlowFieldSolid" type="Node2D" parent="."]
+position = Vector2(16, 8)
+script = ExtResource("4_8p87s")
+metadata/_custom_type_script = ExtResource("4_8p87s")
+
+[node name="FlowFieldSolid2" type="Node2D" parent="."]
+position = Vector2(40, 8)
+script = ExtResource("4_8p87s")
+metadata/_custom_type_script = ExtResource("4_8p87s")
+
+[node name="FlowFieldSolid3" type="Node2D" parent="."]
+position = Vector2(40, 40)
+script = ExtResource("4_8p87s")
+metadata/_custom_type_script = ExtResource("4_8p87s")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(138, 68)
-
-[node name="Label" type="Label" parent="."]
-offset_right = 5.0
-offset_bottom = 12.0
-text = "1"
-label_settings = SubResource("LabelSettings_6bjlv")
+anchor_mode = 0
+zoom = Vector2(2, 2)

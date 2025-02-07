@@ -52,4 +52,3 @@ func _on_crouch_state_exited() -> void:
 	var target := creature.get_next_creature_target()
 	if creature.get_next_creature_target():
 		velocity = (target.global_position - global_position).normalized() * 20.0
-		print(velocity)

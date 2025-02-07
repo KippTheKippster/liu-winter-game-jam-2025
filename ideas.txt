@@ -3,3 +3,9 @@ Walls
 Ice paths
 Fireworks
 Snowball
+Steal monster eggs
+Health:
+	Show health bar?
+	No health bar:
+		First hit => Stun
+		Second hit => Die?

@@ -1,26 +1,40 @@
-[gd_scene load_steps=12 format=3 uid="uid://doiwfgk1hy5nb"]
+[gd_scene load_steps=15 format=3 uid="uid://doiwfgk1hy5nb"]
 
 [ext_resource type="Script" uid="uid://dya4stv6au8tw" path="res://main scenes/game/game.gd" id="1_mm5ki"]
 [ext_resource type="PackedScene" uid="uid://cyvjgw6e8qecv" path="res://ui/hud/hud.tscn" id="1_qoleo"]
 [ext_resource type="PackedScene" uid="uid://b5gpnufehivyj" path="res://ui/pause menu/pause_menu.tscn" id="2_6qgw3"]
 [ext_resource type="PackedScene" uid="uid://cm3rtksqgg3lu" path="res://entities/effects/snow_fall_particles/snow_fall_particles.tscn" id="2_orik2"]
+[ext_resource type="PackedScene" uid="uid://ccwj3msxs2fn4" path="res://entities/rooms/room_start.tscn" id="5_gscv8"]
 [ext_resource type="AudioStream" uid="uid://chkf6omxlyit8" path="res://audio/wind.ogg" id="5_np0q0"]
 [ext_resource type="PackedScene" uid="uid://dofjqsq6jc4oy" path="res://entities/effects/ecliptic canvas modulate/ecliptic_canvas_modulate.tscn" id="5_o1m1v"]
 [ext_resource type="PackedScene" uid="uid://cg32rxn6me2vm" path="res://entities/player camera/player_camera.tscn" id="5_orik2"]
 [ext_resource type="Script" uid="uid://drtrpfwntdaa2" path="res://components/flow field/flow_field_manager.gd" id="7_ctvcs"]
 [ext_resource type="Script" uid="uid://cighei1gf4iov" path="res://components/maze/maze.gd" id="7_euirq"]
+[ext_resource type="PackedScene" uid="uid://dgkiymlyt8q0w" path="res://entities/penguin/penguin_egg.tscn" id="9_dmrch"]
 [ext_resource type="PackedScene" uid="uid://bwf71bc7425hy" path="res://main scenes/game/command_area.tscn" id="10_gscv8"]
-[ext_resource type="Resource" uid="uid://b2apre2k76kjp" path="res://entities/maze properties/maze_properties_001.tres" id="11_o1m1v"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dmrch"]
+noise_type = 4
+seed = 791
+frequency = 0.1014
+fractal_octaves = 10
+fractal_lacunarity = 0.0
+fractal_gain = -0.36
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ctvcs"]
+width = 12
+height = 12
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_dmrch")
 
 [node name="Game" type="Node"]
 process_mode = 3
 script = ExtResource("1_mm5ki")
 
 [node name="UiLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Hud" parent="UiLayer" node_paths=PackedStringArray("game") instance=ExtResource("1_qoleo")]
-visible = false
 z_index = 200
 z_as_relative = false
 anchors_preset = 15
@@ -49,13 +63,12 @@ parameters/looping = true
 [node name="Effects" type="Node2D" parent="."]
 
 [node name="BackgroundColorParallax" type="Parallax2D" parent="Effects"]
-z_index = -10
+z_index = -1
 scroll_scale = Vector2(0, 0)
 
 [node name="ColorRect" type="ColorRect" parent="Effects/BackgroundColorParallax"]
 custom_minimum_size = Vector2(360, 360)
-offset_right = 360.0
-offset_bottom = 360.0
+offset_right = 90.0
 color = Color(0.133333, 0.12549, 0.203922, 1)
 metadata/_edit_use_anchors_ = true
 
@@ -63,11 +76,12 @@ metadata/_edit_use_anchors_ = true
 scroll_scale = Vector2(1.5, 1.5)
 
 [node name="SnowFallParticles" parent="Effects/SnowParallax" instance=ExtResource("2_orik2")]
-position = Vector2(152, -560)
+position = Vector2(185, -208)
 seed = 227960793
 local_coords = true
 
 [node name="EclipticCanvasModulate" parent="Effects" instance=ExtResource("5_o1m1v")]
+duration = 12.0
 
 [node name="Level" type="Node2D" parent="."]
 process_mode = 1
@@ -78,8 +92,9 @@ position = Vector2(32, 32)
 
 [node name="CommandArea" parent="Level" instance=ExtResource("10_gscv8")]
 
+[node name="RoomTemplate" parent="Level/CommandArea" instance=ExtResource("5_gscv8")]
+
 [node name="FlowFieldManager" type="Node2D" parent="Level"]
-z_index = -5
 position = Vector2(-4, -4)
 script = ExtResource("7_ctvcs")
 metadata/_custom_type_script = ExtResource("7_ctvcs")
@@ -87,5 +102,8 @@ metadata/_custom_type_script = ExtResource("7_ctvcs")
 [node name="Maze" type="Node2D" parent="Level"]
 y_sort_enabled = true
 script = ExtResource("7_euirq")
-maze_properties = ExtResource("11_o1m1v")
+layout_texture = SubResource("NoiseTexture2D_ctvcs")
 metadata/_custom_type_script = ExtResource("7_euirq")
+
+[node name="PenguinEgg" parent="." instance=ExtResource("9_dmrch")]
+position = Vector2(128, 104)

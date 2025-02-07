@@ -10,6 +10,7 @@ signal command_area_entered(command_area: Area2D)
 @onready var damage_instance: DamageInstance = $DamageInstance
 @onready var flow_field_walker: FlowFieldWalker = $FlowFieldWalker
 @onready var creature: Creature = %Creature
+@onready var health_instance: HealthInstance = %HealthInstance
 @onready var flip_group: FlipGroup = %FlipGroup
 @onready var vertical: Vertical = %Vertical
 @onready var carry_item_sprite: Sprite2D = %CarryItemSprite
@@ -105,7 +106,6 @@ func _on_task_attack_state_processing(delta: float) -> void:
 
 
 func _on_action_walk_state_physics_processing(delta: float) -> void:
-	print(flow_field_walker.get_direction())
 	velocity = walk_speed * flow_field_walker.get_direction()
 	#velocity = walk_speed * (walk_target - global_position).normalized()
 	flip_group.flip_towards(velocity)
@@ -228,12 +228,14 @@ func _on_knockback_state_entered() -> void:
 	vertical.jump()
 
 
-func _on_health_instance_died() -> void:
-	state_chart.send_event("task_die_request")
-	action_target = "die"
+#func _on_health_instance_died() -> void:
+#	state_chart.send_event("task_die_request")
+#	action_target = "die"
 
 
 func _on_action_die_state_entered() -> void:
+	health_instance.immortal = false
+	health_instance.current_health = 0.0
 	state_chart.send_event("extra_state_none_request")
 	Utils.call_delayed(self, 2.0, queue_free)
 	collision_layer = 0
@@ -328,3 +330,7 @@ func _on_task_die_state_entered() -> void:
 #func _on_vertical_jumped() -> void:
 	#punch_audio.play()
 	#jump_audio.play()
+
+
+func _on_action_stun_state_entered() -> void:
+	pass

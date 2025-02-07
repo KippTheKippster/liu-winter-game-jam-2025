@@ -13,10 +13,10 @@ initial_velocity_max = 32.0
 gravity = Vector3(0, 0, 0)
 
 [node name="SnowFallParticles" type="GPUParticles2D"]
-amount = 768
+amount = 1200
 texture = ExtResource("1_brdbm")
-lifetime = 20.0
-preprocess = 20.0
-seed = 1423818979
-visibility_rect = Rect2(-820.012, -1.96029, 1455.4, 607.659)
+lifetime = 50.0
+preprocess = 30.0
+seed = 753660566
+visibility_rect = Rect2(-1200, -32, 2000, 1500)
 process_material = SubResource("ParticleProcessMaterial_brdbm")

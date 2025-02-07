@@ -13,6 +13,7 @@ static var coin_count: int = 0
 
 static var flow_field: FlowField
 
+
 func _ready() -> void:
 	#var level_scene := load(current_level_path) as PackedScene
 	#var level := level_scene.instantiate()
@@ -20,7 +21,6 @@ func _ready() -> void:
 	
 	ui_layer.visible = true
 	pause_menu.visible = false
-	flow_field = %FlowField
 
 
 func _process(delta: float) -> void:

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MazeProperties" load_steps=2 format=3 uid="uid://cnim1glcs4as1"]
+
+[ext_resource type="Script" uid="uid://b62auoj638fvg" path="res://components/maze/maza_properties.gd" id="1_l6f1c"]
+
+[resource]
+script = ExtResource("1_l6f1c")
+path_amount = 8
+path_turn_amount = 4
+path_min_length = 1
+path_max_length = 2
+metadata/_custom_type_script = ExtResource("1_l6f1c")

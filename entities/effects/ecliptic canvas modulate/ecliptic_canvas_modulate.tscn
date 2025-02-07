@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dofjqsq6jc4oy"]
+
+[ext_resource type="Script" uid="uid://cut3epyn4bthq" path="res://entities/effects/ecliptic canvas modulate/ecliptic_canvas_modulate.gd" id="1_mxlxj"]
+
+[sub_resource type="Gradient" id="Gradient_pt6j4"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.333333, 0.471861, 0.584416, 0.748918, 0.87013, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 0.839216, 0.811765, 1, 1, 0.839216, 0.811765, 1, 0.823529, 0.501961, 0.878431, 1, 0.82324, 0.5016, 0.88, 1, 0.4464, 0.46464, 0.72, 1)
+
+[node name="EclipticCanvasModulate" type="CanvasModulate"]
+script = ExtResource("1_mxlxj")
+duration = 120.0
+color_range = SubResource("Gradient_pt6j4")

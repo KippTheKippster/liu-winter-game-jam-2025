@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bi80q0c1kcjm"]
+[gd_scene load_steps=13 format=3 uid="uid://bi80q0c1kcjm"]
 
 [ext_resource type="Script" uid="uid://c68e0657600e1" path="res://entities/boffus/boffus.gd" id="1_fh4cr"]
+[ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="2_7eai3"]
 [ext_resource type="Texture2D" uid="uid://c7cgp87rg58mj" path="res://entities/boffus/seal.png" id="2_32cru"]
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="3_mhjrk"]
 [ext_resource type="Texture2D" uid="uid://l8ujhgbcecqw" path="res://entities/food/assets/meat.png" id="4_nh7sp"]
@@ -150,6 +151,10 @@ script = ExtResource("1_fh4cr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_32cru")
+
+[node name="FlowFieldSolid" type="Node2D" parent="."]
+script = ExtResource("2_7eai3")
+metadata/_custom_type_script = ExtResource("2_7eai3")
 
 [node name="Area2D" type="Area2D" parent="."]
 

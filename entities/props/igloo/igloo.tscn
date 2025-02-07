@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://byrpgpbqmjh38"]
+[gd_scene load_steps=13 format=3 uid="uid://byrpgpbqmjh38"]
 
 [ext_resource type="Texture2D" uid="uid://b5dqh86dx232u" path="res://entities/props/igloo/igloo.png" id="1_v83l2"]
 [ext_resource type="Script" uid="uid://d0bvyj83wj2cj" path="res://entities/props/igloo/igloo.gd" id="1_y4o24"]
 [ext_resource type="Texture2D" uid="uid://b66xiyyeuy5u8" path="res://components/vertical/assets/shadow.png" id="2_fs5pr"]
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="2_h736q"]
 [ext_resource type="Texture2D" uid="uid://l8ujhgbcecqw" path="res://entities/food/assets/meat.png" id="4_jf8h7"]
+[ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="6_bb8px"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4o24"]
 radius = 3.0
@@ -107,6 +108,35 @@ region_rect = Rect2(2, 1, 1, 1)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_v83l2")
 offset = Vector2(-1, -4)
+
+[node name="FlowFieldSolid" type="Node2D" parent="."]
+script = ExtResource("6_bb8px")
+metadata/_custom_type_script = ExtResource("6_bb8px")
+
+[node name="FlowFieldSolid2" type="Node2D" parent="."]
+position = Vector2(-8, 0)
+script = ExtResource("6_bb8px")
+metadata/_custom_type_script = ExtResource("6_bb8px")
+
+[node name="FlowFieldSolid3" type="Node2D" parent="."]
+position = Vector2(8, 0)
+script = ExtResource("6_bb8px")
+metadata/_custom_type_script = ExtResource("6_bb8px")
+
+[node name="FlowFieldSolid4" type="Node2D" parent="."]
+position = Vector2(8, -8)
+script = ExtResource("6_bb8px")
+metadata/_custom_type_script = ExtResource("6_bb8px")
+
+[node name="FlowFieldSolid5" type="Node2D" parent="."]
+position = Vector2(0, -8)
+script = ExtResource("6_bb8px")
+metadata/_custom_type_script = ExtResource("6_bb8px")
+
+[node name="FlowFieldSolid6" type="Node2D" parent="."]
+position = Vector2(-8, -8)
+script = ExtResource("6_bb8px")
+metadata/_custom_type_script = ExtResource("6_bb8px")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

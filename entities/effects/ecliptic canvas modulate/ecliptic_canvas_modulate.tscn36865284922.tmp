@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dofjqsq6jc4oy"]
+
+[ext_resource type="Script" uid="uid://cut3epyn4bthq" path="res://entities/effects/ecliptic canvas modulate/ecliptic_canvas_modulate.gd" id="1_mxlxj"]
+
+[sub_resource type="Gradient" id="Gradient_pt6j4"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[node name="EclipticCanvasModulate" type="CanvasModulate"]
+script = ExtResource("1_mxlxj")
+color_range = SubResource("Gradient_pt6j4")

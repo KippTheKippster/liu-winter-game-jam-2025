@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://d4ac7bikwtscv"]
+[gd_scene load_steps=77 format=3 uid="uid://d4ac7bikwtscv"]
 
 [ext_resource type="Script" uid="uid://d2fxbd6ulm03" path="res://entities/penguin/penguin.gd" id="1_a0yya"]
 [ext_resource type="Texture2D" uid="uid://i4w0p1oyi77" path="res://entities/penguin/assets/penguin.png" id="1_r5j68"]
@@ -23,6 +23,8 @@
 [ext_resource type="Resource" uid="uid://n6m6gq3lg0p6" path="res://entities/penguin/expression guards/on_floor.tres" id="16_fec4a"]
 [ext_resource type="Script" uid="uid://c3lw5rmdqjrw5" path="res://addons/godot_state_charts/animation_tree_state.gd" id="16_qqawb"]
 [ext_resource type="Resource" uid="uid://bmmkxkgwgj8pn" path="res://entities/penguin/expression guards/action_target_fish.tres" id="18_akbrx"]
+[ext_resource type="Script" uid="uid://dnqyokl3kx7tu" path="res://addons/godot_state_charts/state_is_active_guard.gd" id="18_bdfa7"]
+[ext_resource type="Script" uid="uid://wqk5vc05av5e" path="res://addons/godot_state_charts/not_guard.gd" id="19_ouyml"]
 [ext_resource type="Resource" uid="uid://b01sudnokseb1" path="res://entities/penguin/expression guards/action_target_sleep.tres" id="20_u5wb6"]
 [ext_resource type="Resource" uid="uid://nxw1pqrpdgk8" path="res://entities/penguin/expression guards/action_target_die.tres" id="21_u5wb6"]
 
@@ -238,6 +240,22 @@ tracks/1/keys = {
 "values": [5, 3]
 }
 
+[sub_resource type="Animation" id="Animation_2j07w"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [11, 12]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uw7px"]
 _data = {
 &"RESET": SubResource("Animation_qqawb"),
@@ -246,6 +264,7 @@ _data = {
 &"idle": SubResource("Animation_r5j68"),
 &"idle_carry": SubResource("Animation_vskbl"),
 &"sleep": SubResource("Animation_woodo"),
+&"stun": SubResource("Animation_2j07w"),
 &"walk": SubResource("Animation_a0yya"),
 &"walk_carry": SubResource("Animation_0dlp7")
 }
@@ -281,6 +300,9 @@ node_connections = [&"carry_blend", 0, &"idle_animation", &"carry_blend", 1, &"i
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_woodo"]
 animation = &"sleep"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2j07w"]
+animation = &"stun"
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_jaji5"]
 
@@ -332,6 +354,14 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_elkqi"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ploiq"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5wlyb"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4nswe"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wpg4b"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_vskbl"]
 states/die/node = SubResource("AnimationNodeAnimation_qqawb")
 states/die/position = Vector2(537, 193)
@@ -341,9 +371,27 @@ states/idle_blend_tree/node = SubResource("AnimationNodeBlendTree_uw7px")
 states/idle_blend_tree/position = Vector2(350, 100)
 states/sleep/node = SubResource("AnimationNodeAnimation_woodo")
 states/sleep/position = Vector2(350, 193)
+states/stun/node = SubResource("AnimationNodeAnimation_2j07w")
+states/stun/position = Vector2(537, 9)
 states/walk_blend_tree/node = SubResource("AnimationNodeBlendTree_ci46k")
 states/walk_blend_tree/position = Vector2(537, 100)
-transitions = ["idle_blend_tree", "walk_blend_tree", SubResource("AnimationNodeStateMachineTransition_ci46k"), "walk_blend_tree", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_28o2q"), "Start", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_no72d"), "idle_blend_tree", "sleep", SubResource("AnimationNodeStateMachineTransition_u5wb6"), "idle_blend_tree", "fish", SubResource("AnimationNodeStateMachineTransition_8tthm"), "walk_blend_tree", "fish", SubResource("AnimationNodeStateMachineTransition_2j07w"), "fish", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_gbc55"), "fish", "walk_blend_tree", SubResource("AnimationNodeStateMachineTransition_bdfa7"), "idle_blend_tree", "die", SubResource("AnimationNodeStateMachineTransition_ouyml"), "walk_blend_tree", "die", SubResource("AnimationNodeStateMachineTransition_fmwf0"), "sleep", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_elkqi")]
+transitions = ["idle_blend_tree", "walk_blend_tree", SubResource("AnimationNodeStateMachineTransition_ci46k"), "walk_blend_tree", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_28o2q"), "Start", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_no72d"), "idle_blend_tree", "sleep", SubResource("AnimationNodeStateMachineTransition_u5wb6"), "idle_blend_tree", "fish", SubResource("AnimationNodeStateMachineTransition_8tthm"), "walk_blend_tree", "fish", SubResource("AnimationNodeStateMachineTransition_2j07w"), "fish", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_gbc55"), "fish", "walk_blend_tree", SubResource("AnimationNodeStateMachineTransition_bdfa7"), "idle_blend_tree", "die", SubResource("AnimationNodeStateMachineTransition_ouyml"), "walk_blend_tree", "die", SubResource("AnimationNodeStateMachineTransition_fmwf0"), "sleep", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_elkqi"), "idle_blend_tree", "stun", SubResource("AnimationNodeStateMachineTransition_ploiq"), "stun", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_5wlyb"), "walk_blend_tree", "stun", SubResource("AnimationNodeStateMachineTransition_4nswe"), "stun", "walk_blend_tree", SubResource("AnimationNodeStateMachineTransition_wpg4b")]
+graph_offset = Vector2(-49, -145)
+
+[sub_resource type="Resource" id="Resource_ploiq"]
+script = ExtResource("18_bdfa7")
+state = NodePath("../Stun")
+metadata/_custom_type_script = ExtResource("18_bdfa7")
+
+[sub_resource type="Resource" id="Resource_fmwf0"]
+script = ExtResource("18_bdfa7")
+state = NodePath("../Stun")
+metadata/_custom_type_script = ExtResource("18_bdfa7")
+
+[sub_resource type="Resource" id="Resource_elkqi"]
+script = ExtResource("19_ouyml")
+guard = SubResource("Resource_fmwf0")
+metadata/_custom_type_script = ExtResource("19_ouyml")
 
 [node name="Penguin" type="CharacterBody2D" groups=["penguin"]]
 motion_mode = 1
@@ -377,8 +425,9 @@ creature_mask = 13
 metadata/_custom_type_script = ExtResource("2_0dlp7")
 
 [node name="HealthInstance" type="Node2D" parent="Area2D"]
+unique_name_in_owner = true
 script = ExtResource("3_ourdf")
-base_health = 5.0
+immortal = true
 damage_mask = 3
 metadata/_custom_type_script = ExtResource("3_ourdf")
 
@@ -398,7 +447,7 @@ texture_filter = 1
 texture = ExtResource("1_r5j68")
 offset = Vector2(-0.5, -2.5)
 hframes = 4
-vframes = 3
+vframes = 4
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
 "pending_changes": {}
@@ -415,7 +464,7 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "res://entities/penguin/assets/penguin.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "94435153b06e0bf83c785a4b1e3d0667"
+metadata/_aseprite_wizard_source_file_hash_ = "537c543192fd2674b57821bbc7a2b398"
 
 [node name="CarryItemSprite" type="Sprite2D" parent="Vertical/FlipGroup"]
 unique_name_in_owner = true
@@ -585,10 +634,18 @@ script = ExtResource("5_vskbl")
 script = ExtResource("4_uw7px")
 initial_state = NodePath("Idle")
 
-[node name="DamageRecieved" type="Node" parent="StateChart/Root/Action"]
+[node name="DamageRecievedStun" type="Node" parent="StateChart/Root/Action"]
+script = ExtResource("7_ci46k")
+to = NodePath("../Die")
+event = &"damage_recieved"
+guard = SubResource("Resource_ploiq")
+delay_in_seconds = "0.0"
+
+[node name="DamageRecievedNormal" type="Node" parent="StateChart/Root/Action"]
 script = ExtResource("7_ci46k")
 to = NodePath("../Knockback")
 event = &"damage_recieved"
+guard = SubResource("Resource_elkqi")
 delay_in_seconds = "0.0"
 
 [node name="Idle" type="Node" parent="StateChart/Root/Action"]
@@ -698,7 +755,7 @@ metadata/_custom_type_script = ExtResource("5_vskbl")
 
 [node name="OnFloor" type="Node" parent="StateChart/Root/Action/Knockback"]
 script = ExtResource("7_ci46k")
-to = NodePath("../../Idle")
+to = NodePath("../../Stun")
 guard = ExtResource("16_fec4a")
 delay_in_seconds = "0.0"
 
@@ -744,6 +801,16 @@ delay_in_seconds = "0.0"
 script = ExtResource("16_qqawb")
 animation_tree = NodePath("../../../../AnimationTree")
 state_name = &"die"
+
+[node name="Stun" type="Node" parent="StateChart/Root/Action"]
+script = ExtResource("16_qqawb")
+animation_tree = NodePath("../../../../AnimationTree")
+state_name = &"stun"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Action/Stun"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Idle")
+delay_in_seconds = "4.0"
 
 [node name="ExtraState" type="Node" parent="StateChart/Root"]
 script = ExtResource("4_uw7px")
@@ -794,5 +861,6 @@ delay_in_seconds = "0.0"
 [connection signal="state_exited" from="StateChart/Root/Action/Knockback" to="." method="_on_knockback_state_exited"]
 [connection signal="state_exited" from="StateChart/Root/Action/Sleep" to="." method="_on_action_sleep_state_exited"]
 [connection signal="state_entered" from="StateChart/Root/Action/Die" to="." method="_on_action_die_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Action/Stun" to="." method="_on_action_stun_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/ExtraState/Carry" to="." method="_on_extra_state_carry_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/ExtraState/Carry" to="." method="_on_extra_state_carry_state_exited"]
