@@ -1,10 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://bi80q0c1kcjm"]
+[gd_scene load_steps=23 format=3 uid="uid://bi80q0c1kcjm"]
 
 [ext_resource type="Script" uid="uid://c68e0657600e1" path="res://entities/boffus/boffus.gd" id="1_fh4cr"]
 [ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="2_7eai3"]
 [ext_resource type="Texture2D" uid="uid://c7cgp87rg58mj" path="res://entities/boffus/seal.png" id="2_32cru"]
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="3_mhjrk"]
-[ext_resource type="Texture2D" uid="uid://l8ujhgbcecqw" path="res://entities/food/assets/meat.png" id="4_nh7sp"]
+[ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="5_hexm2"]
+[ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="5_maxop"]
+[ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="6_g15qm"]
+[ext_resource type="Texture2D" uid="uid://barysjgilhliw" path="res://entities/carry objects/assets/food_penguin.png" id="7_hexm2"]
+[ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="7_mdpm0"]
+[ext_resource type="AudioStream" uid="uid://r7i1erkso4pl" path="res://audio/boffus_eat.wav" id="8_maxop"]
+[ext_resource type="Script" uid="uid://dtvh4vikgt2v" path="res://addons/godot_state_charts/animation_player_state.gd" id="8_mdpm0"]
+[ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="9_5w4lw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_32cru"]
 radius = 5.0
@@ -14,55 +21,49 @@ size = Vector2(20, 12)
 
 [sub_resource type="Curve2D" id="Curve2D_mhjrk"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -24, 0, -5.11823, -0.0839054, 5.11823, 0.0839054, -15, -27, 0, 0, 0, 0, -3, -10)
+"points": PackedVector2Array(0, 0, 0, 0, 24, 0, 5.118, -0.084, -5.118, 0.084, 15, -27, 0, 0, 0, 0, 3, -10)
 }
 point_count = 3
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xxmb8"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("8_maxop")
 
 [sub_resource type="Animation" id="Animation_mhjrk"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BoffusSprite:frame")
+tracks/0/path = NodePath("FlipGroup/Path2D/PathFollow2D:progress_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"update": 0,
+"values": [0.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Path2D/PathFollow2D:progress_ratio")
+tracks/1/path = NodePath("FlipGroup/Path2D/PathFollow2D/FoodSprite:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [false]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Path2D/PathFollow2D/FoodSprite:visible")
+tracks/2/path = NodePath(".:allow_eat")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:allow_eat")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -75,7 +76,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Path2D/PathFollow2D:progress_ratio")
+tracks/0/path = NodePath("FlipGroup/Path2D/PathFollow2D:progress_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -87,7 +88,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Path2D/PathFollow2D/FoodSprite:visible")
+tracks/1/path = NodePath("FlipGroup/Path2D/PathFollow2D/FoodSprite:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -108,53 +109,125 @@ tracks/2/keys = {
 "update": 1,
 "values": [false, true]
 }
-tracks/3/type = "value"
+tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("BoffusSprite:frame")
+tracks/3/path = NodePath("StateChart")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"eat_conclude"],
+"method": &"send_event"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FlipGroup/BoffusSprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 2]
+"values": [2]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AudioStreamPlayer2D")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_32cru"]
 resource_name = "idle"
-length = 0.8
+length = 0.6
 loop_mode = 1
 step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BoffusSprite:frame")
+tracks/0/path = NodePath("FlipGroup/BoffusSprite:frame")
 tracks/0/interp = 1
-tracks/0/loop_wrap = true
+tracks/0/loop_wrap = false
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_7eai3"]
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/BoffusSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_5w4lw"]
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/BoffusSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nh7sp"]
 _data = {
 &"RESET": SubResource("Animation_mhjrk"),
 &"eat": SubResource("Animation_nh7sp"),
-&"idle": SubResource("Animation_32cru")
+&"idle": SubResource("Animation_32cru"),
+&"sleep": SubResource("Animation_7eai3"),
+&"waking": SubResource("Animation_5w4lw")
 }
 
-[node name="Boffus" type="StaticBody2D"]
+[node name="Boffus" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_fh4cr")
+time_left = 120.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_32cru")
 
 [node name="FlowFieldSolid" type="Node2D" parent="."]
 script = ExtResource("2_7eai3")
-metadata/_custom_type_script = ExtResource("2_7eai3")
+metadata/_custom_type_script = "uid://cospm7wq6xrv6"
+
+[node name="PenguinCreature" type="Node2D" parent="." node_paths=PackedStringArray("health_instance")]
+unique_name_in_owner = true
+script = ExtResource("3_mhjrk")
+health_instance = NodePath("../Area2D/HealthInstance")
+detection_range = 24.0
+creature_mask = 6
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -162,31 +235,76 @@ metadata/_custom_type_script = ExtResource("2_7eai3")
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_32cru")
 
-[node name="Creature" type="Node2D" parent="Area2D"]
-position = Vector2(-24, 0)
+[node name="BoffusCreature" type="Node2D" parent="Area2D" node_paths=PackedStringArray("health_instance")]
+unique_name_in_owner = true
 script = ExtResource("3_mhjrk")
-detection_range = 12.0
+health_instance = NodePath("../HealthInstance")
+detection_range = 256.0
 creature_layer = 16
-creature_mask = 4
-metadata/_custom_type_script = ExtResource("3_mhjrk")
+creature_mask = 6
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
-[node name="BoffusSprite" type="Sprite2D" parent="."]
+[node name="HealthInstance" type="Node2D" parent="Area2D"]
+script = ExtResource("5_hexm2")
+base_health = 120.0
+damage_mask = 0
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
+
+[node name="FlipGroup" type="Node2D" parent="."]
+script = ExtResource("5_maxop")
+metadata/_custom_type_script = "uid://bhjyv2astlcwo"
+
+[node name="BoffusSprite" type="Sprite2D" parent="FlipGroup"]
+texture_filter = 1
 texture = ExtResource("2_32cru")
 offset = Vector2(0, -4)
 hframes = 3
+vframes = 2
+frame = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": true,
+"layer_section": false,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": true,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/boffus/seal.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "efcf795996653a4e7dd75ca291f354a5"
 
-[node name="Path2D" type="Path2D" parent="."]
+[node name="FoodCreature" type="Node2D" parent="FlipGroup"]
+unique_name_in_owner = true
+position = Vector2(24, 0)
+script = ExtResource("3_mhjrk")
+detection_range = 12.0
+creature_mask = 4
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="Path2D" type="Path2D" parent="FlipGroup"]
 curve = SubResource("Curve2D_mhjrk")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(-24, 0)
+[node name="PathFollow2D" type="PathFollow2D" parent="FlipGroup/Path2D"]
+position = Vector2(3, -10)
+progress = 50.4475
 rotates = false
 loop = false
 
-[node name="FoodSprite" type="Sprite2D" parent="Path2D/PathFollow2D"]
+[node name="FoodSprite" type="Sprite2D" parent="FlipGroup/Path2D/PathFollow2D"]
 unique_name_in_owner = true
 visible = false
-texture = ExtResource("4_nh7sp")
+texture = ExtResource("7_hexm2")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_xxmb8")
+bus = &"Effects"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
@@ -208,4 +326,88 @@ libraries = {
 }
 autoplay = "idle"
 
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("6_g15qm")
+metadata/_custom_type_script = "uid://cwgjtd2qwnb20"
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("7_mdpm0")
+initial_state = NodePath("Sleep")
+
+[node name="Sleep" type="Node" parent="StateChart/Root"]
+script = ExtResource("8_mdpm0")
+animation_player = NodePath("../../../AnimationPlayer")
+
+[node name="WakingRequest" type="Node" parent="StateChart/Root/Sleep"]
+script = ExtResource("9_5w4lw")
+to = NodePath("../../Waking")
+event = &"waking_request"
+delay_in_seconds = "0.0"
+
+[node name="Waking" type="Node" parent="StateChart/Root"]
+script = ExtResource("8_mdpm0")
+animation_player = NodePath("../../../AnimationPlayer")
+
+[node name="EatRequest" type="Node" parent="StateChart/Root/Waking"]
+script = ExtResource("9_5w4lw")
+to = NodePath("../../Eat")
+event = &"eat_request"
+delay_in_seconds = "0.0"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Waking"]
+script = ExtResource("9_5w4lw")
+to = NodePath("../../Chase")
+delay_in_seconds = "1.0"
+
+[node name="Eat" type="Node" parent="StateChart/Root"]
+script = ExtResource("8_mdpm0")
+animation_player = NodePath("../../../AnimationPlayer")
+
+[node name="EatConclude" type="Node" parent="StateChart/Root/Eat"]
+script = ExtResource("9_5w4lw")
+to = NodePath("../../Sleep")
+event = &"eat_conclude"
+delay_in_seconds = "0.0"
+
+[node name="Chase" type="Node" parent="StateChart/Root"]
+script = ExtResource("7_mdpm0")
+initial_state = NodePath("Charge")
+
+[node name="Charge" type="Node" parent="StateChart/Root/Chase"]
+script = ExtResource("8_mdpm0")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"idle"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Chase/Charge"]
+script = ExtResource("9_5w4lw")
+to = NodePath("../../Shoot")
+delay_in_seconds = "0.4"
+
+[node name="Shoot" type="Node" parent="StateChart/Root/Chase"]
+script = ExtResource("8_mdpm0")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"idle"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Chase/Shoot"]
+script = ExtResource("9_5w4lw")
+to = NodePath("../../Charge")
+delay_in_seconds = "1.0"
+
+[node name="EatRequest" type="Node" parent="StateChart/Root/Chase"]
+script = ExtResource("9_5w4lw")
+to = NodePath("../../Eat")
+event = &"eat_request"
+delay_in_seconds = "0.0"
+
+[connection signal="state_processing" from="StateChart/Root/Sleep" to="." method="_on_sleep_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Waking" to="." method="_on_waking_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Waking" to="." method="_on_waking_state_exited"]
+[connection signal="state_processing" from="StateChart/Root/Waking" to="." method="_on_waking_state_processing"]
+[connection signal="state_exited" from="StateChart/Root/Eat" to="." method="_on_eat_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Chase" to="." method="_on_chase_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Chase" to="." method="_on_chase_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Chase" to="." method="_on_chase_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Chase/Charge" to="." method="_on_charge_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Chase/Charge" to="." method="_on_charge_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Chase/Shoot" to="." method="_on_shoot_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Chase/Shoot" to="." method="_on_shoot_state_physics_processing"]

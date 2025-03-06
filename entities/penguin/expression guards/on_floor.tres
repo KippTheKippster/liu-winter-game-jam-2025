@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_ysg6d")
-expression = "on_floor and vertical_velocity <= 0"
+expression = "on_floor"
 metadata/_custom_type_script = ExtResource("1_ysg6d")

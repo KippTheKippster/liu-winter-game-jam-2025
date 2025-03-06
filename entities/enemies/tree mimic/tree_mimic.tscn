@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bbsl81r0wf2fj" path="res://entities/enemies/tree mimic/tree_mimic.gd" id="1_8px78"]
 [ext_resource type="Texture2D" uid="uid://be2ttm3fnpxo6" path="res://entities/enemies/tree mimic/tree_mimic.png" id="1_46bnf"]
-[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical/vertical.gd" id="1_u6grf"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="1_u6grf"]
 [ext_resource type="Script" uid="uid://w8824multbqq" path="res://components/carriable/carriable_launcher.gd" id="2_k5mec"]
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="2_stay0"]
 [ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="2_tol2w"]
 [ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_4j5ei"]
-[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/food/food.tscn" id="3_i6slc"]
+[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/carry objects/carry_object.tscn" id="3_i6slc"]
 [ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="3_lgdxk"]
 [ext_resource type="Script" uid="uid://dyi7lv20qiks3" path="res://addons/godot_state_charts/atomic_state.gd" id="4_f1x1y"]
 [ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="4_k5mec"]
@@ -38,7 +38,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Vertical/TreeSprite:frame")
+tracks/1/path = NodePath("VerticalGroup/TreeSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -54,7 +54,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Vertical/TreeSprite:frame")
+tracks/0/path = NodePath("VerticalGroup/TreeSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
@@ -82,7 +82,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Vertical/TreeSprite:frame")
+tracks/1/path = NodePath("VerticalGroup/TreeSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/keys = {
@@ -98,7 +98,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Vertical/TreeSprite:frame")
+tracks/0/path = NodePath("VerticalGroup/TreeSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
@@ -114,7 +114,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Vertical/TreeSprite:frame")
+tracks/0/path = NodePath("VerticalGroup/TreeSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
@@ -142,7 +142,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Vertical/TreeSprite:frame")
+tracks/1/path = NodePath("VerticalGroup/TreeSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/keys = {
@@ -158,7 +158,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Vertical/TreeSprite:frame")
+tracks/0/path = NodePath("VerticalGroup/TreeSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
@@ -185,6 +185,8 @@ expression = "on_floor and vertical_velocity < 0"
 metadata/_custom_type_script = ExtResource("12_4j5ei")
 
 [node name="TreeMimic" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 7
 motion_mode = 1
 platform_on_leave = 2
 script = ExtResource("1_8px78")
@@ -195,7 +197,7 @@ shape = SubResource("CircleShape2D_f1x1y")
 [node name="CarriableLauncher" type="Node2D" parent="." node_paths=PackedStringArray("creature")]
 script = ExtResource("2_k5mec")
 creature = NodePath("../TreeArea/Creature")
-metadata/_custom_type_script = ExtResource("2_k5mec")
+metadata/_custom_type_script = "uid://w8824multbqq"
 
 [node name="Food" parent="CarriableLauncher" instance=ExtResource("3_i6slc")]
 
@@ -208,13 +210,13 @@ health_instance = NodePath("../HealthInstance")
 detection_range = 40.0
 creature_layer = 1
 creature_mask = 2
-metadata/_custom_type_script = ExtResource("2_stay0")
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
 [node name="HealthInstance" type="Node2D" parent="TreeArea"]
 script = ExtResource("3_4j5ei")
 base_health = 30.0
 damage_mask = 5
-metadata/_custom_type_script = ExtResource("3_4j5ei")
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TreeArea"]
 shape = SubResource("CircleShape2D_f1x1y")
@@ -224,20 +226,20 @@ shape = SubResource("CircleShape2D_f1x1y")
 [node name="DamageInstance" type="Node2D" parent="DamageArea"]
 script = ExtResource("4_k5mec")
 damage_layer = 2
-metadata/_custom_type_script = ExtResource("4_k5mec")
+metadata/_custom_type_script = "uid://dd5wfdkuccdar"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
 shape = SubResource("CircleShape2D_0y8im")
 disabled = true
 debug_color = Color(0.998504, 0, 0.151912, 0.121569)
 
-[node name="Vertical" type="Node2D" parent="."]
+[node name="VerticalGroup" type="Node2D" parent="."]
 script = ExtResource("1_u6grf")
 gravity = 100.0
 jump_speed = 60.0
-metadata/_custom_type_script = ExtResource("1_u6grf")
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
 
-[node name="TreeSprite" type="Sprite2D" parent="Vertical"]
+[node name="TreeSprite" type="Sprite2D" parent="VerticalGroup"]
 unique_name_in_owner = true
 texture_filter = 1
 texture = ExtResource("1_46bnf")
@@ -273,7 +275,7 @@ script = ExtResource("2_tol2w")
 initial_expression_properties = {
 &"on_floor": true
 }
-metadata/_custom_type_script = ExtResource("2_tol2w")
+metadata/_custom_type_script = "uid://cwgjtd2qwnb20"
 
 [node name="Root" type="Node" parent="StateChart"]
 script = ExtResource("3_lgdxk")
@@ -347,7 +349,7 @@ animation_name = &"idle"
 script = ExtResource("5_f1x1y")
 to = NodePath("../../Leap")
 delay_in_seconds = "2.0"
-metadata/_custom_type_script = ExtResource("5_f1x1y")
+metadata/_custom_type_script = "uid://dexbj1hgvxsoe"
 
 [connection signal="state_exited" from="StateChart/Root/Hide" to="." method="_on_hide_state_exited"]
 [connection signal="state_processing" from="StateChart/Root/Hide/Burrow" to="." method="_on_burrow_state_processing"]

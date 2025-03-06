@@ -123,6 +123,7 @@ centered = false
 metadata/_edit_lock_ = true
 
 [node name="PenguinSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(23, 57)
 sprite_frames = SubResource("SpriteFrames_wdjbk")
 autoplay = "default"

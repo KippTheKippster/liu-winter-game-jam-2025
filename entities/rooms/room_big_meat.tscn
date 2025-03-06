@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bjlkcm3dkp1uv"]
 
 [ext_resource type="PackedScene" uid="uid://cgsisbnhd4atk" path="res://entities/rooms/room_template.tscn" id="1_1hhpx"]
-[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/food/food.tscn" id="2_101jw"]
-[ext_resource type="Resource" uid="uid://csgrgd3ywh8js" path="res://entities/food/food types/food_meat_big.tres" id="3_8ieqy"]
+[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/carry objects/carry_object.tscn" id="2_101jw"]
+[ext_resource type="Resource" uid="uid://csgrgd3ywh8js" path="res://entities/carry objects/carry object types/food_meat_big.tres" id="3_8ieqy"]
 
 [node name="RoomBigMeat" instance=ExtResource("1_1hhpx")]
 
@@ -19,5 +19,5 @@ Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
 }
 
 [node name="Food" parent="." index="2" instance=ExtResource("2_101jw")]
-position = Vector2(31, 33)
+position = Vector2(32, 32)
 food_type = ExtResource("3_8ieqy")

@@ -19,11 +19,11 @@ Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
 }
 
 [node name="Igloo" parent="." index="2" instance=ExtResource("2_n4qxx")]
-position = Vector2(32, 36)
+position = Vector2(32, 40)
 
 [node name="Tree" parent="." index="3" instance=ExtResource("3_pntb5")]
-position = Vector2(49, 17)
+position = Vector2(48, 16)
 
 [node name="Tree2" parent="." index="4" instance=ExtResource("3_pntb5")]
-position = Vector2(15, 53)
+position = Vector2(16, 56)
 type = 2

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bbynanimrvpbq"
+path="res://.godot/imported/starry_sky_01.aseprite-577599f748061e102e4808fec18efbaf.res"
+
+[deps]
+
+source_file="res://entities/skies/starry_sky_01.aseprite"
+dest_files=["res://.godot/imported/starry_sky_01.aseprite-577599f748061e102e4808fec18efbaf.res"]
+
+[params]
+

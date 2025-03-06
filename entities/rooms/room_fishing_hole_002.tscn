@@ -18,7 +18,7 @@ Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
 }
 
 [node name="FishingHole" parent="." index="2" instance=ExtResource("2_sf8yd")]
-position = Vector2(43, 21)
+position = Vector2(48, 16)
 
 [node name="FishingHole2" parent="." index="3" instance=ExtResource("2_sf8yd")]
-position = Vector2(27, 44)
+position = Vector2(24, 48)

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoomSceneGroup" load_steps=5 format=3 uid="uid://1nnsrh62r0j2"]
+
+[ext_resource type="Script" uid="uid://cy5qt87mnccof" path="res://components/maze/room_scene_group.gd" id="1_bro6p"]
+[ext_resource type="PackedScene" uid="uid://cjmdlpq15rimu" path="res://entities/rooms/room_corridor_001.tscn" id="2_o33vl"]
+[ext_resource type="PackedScene" uid="uid://yl3cxsqivpwf" path="res://entities/rooms/room_corridor_002.tscn" id="3_rnrrt"]
+[ext_resource type="PackedScene" uid="uid://ditrmg8oanx3t" path="res://entities/rooms/room_corridor_003.tscn" id="4_co00c"]
+
+[resource]
+script = ExtResource("1_bro6p")
+room_scenes = Array[PackedScene]([ExtResource("2_o33vl"), ExtResource("3_rnrrt"), ExtResource("4_co00c")])
+metadata/_custom_type_script = "uid://cy5qt87mnccof"

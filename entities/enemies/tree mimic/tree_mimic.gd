@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var creature: Creature = $TreeArea/Creature
-@onready var vertical: Vertical = $Vertical
+@onready var vertical_group: VerticalGroup = $VerticalGroup
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var state_chart: StateChart = $StateChart
 
@@ -9,7 +9,8 @@ extends CharacterBody2D
 
 var time_elapsed: float = 0.0
 
-#func _ready() -> void:
+func _ready() -> void:
+	creature.active = false
 	#state_chart.send_event.call_deferred("unburrow_request")
 	#creature.get_next_creature_target()
 
@@ -20,18 +21,19 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	time_elapsed += delta
-	state_chart.set_expression_property("on_floor", vertical.is_on_floor())
-	state_chart.set_expression_property("vertical_velocity", vertical.velocity)
+	state_chart.set_expression_property("on_floor", vertical_group.is_on_floor())
+	state_chart.set_expression_property("vertical_velocity", vertical_group.velocity)
 
 
 func _on_hide_state_exited() -> void:
 	animation_player.play("idle")
+	creature.active = true
 	creature.detection_range_squared = 96.0 * 96.0
 	tree_sprite.offset.x = 0
 
 
 func _on_jump_state_entered() -> void:
-	vertical.jump()
+	vertical_group.jump()
 
 
 func _on_jump_state_exited() -> void:

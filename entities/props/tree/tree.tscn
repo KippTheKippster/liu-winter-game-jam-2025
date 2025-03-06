@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d3f8yln0fw21d" path="res://entities/props/tree/tree.gd" id="1_5w366"]
 [ext_resource type="Texture2D" uid="uid://cvfoodcsh2elr" path="res://entities/props/tree/tree.png" id="1_unrws"]
 [ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_misyt"]
-[ext_resource type="Texture2D" uid="uid://b66xiyyeuy5u8" path="res://components/vertical/assets/shadow.png" id="5_snpvw"]
+[ext_resource type="Texture2D" uid="uid://b66xiyyeuy5u8" path="res://components/vertical group/assets/shadow.png" id="5_snpvw"]
 [ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="5_x1juo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_unrws"]
@@ -24,7 +24,7 @@ shape = SubResource("CircleShape2D_unrws")
 script = ExtResource("3_misyt")
 base_health = 30.0
 damage_mask = 0
-metadata/_custom_type_script = ExtResource("3_misyt")
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
 
 [node name="ShadowSprite" type="Sprite2D" parent="."]
 z_index = -1
@@ -37,4 +37,4 @@ hframes = 3
 
 [node name="FlowFieldSolid" type="Node2D" parent="."]
 script = ExtResource("5_x1juo")
-metadata/_custom_type_script = ExtResource("5_x1juo")
+metadata/_custom_type_script = "uid://cospm7wq6xrv6"

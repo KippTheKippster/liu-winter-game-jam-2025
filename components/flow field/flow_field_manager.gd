@@ -41,13 +41,15 @@ func add_user_to_flow_field(target_coords: Vector2i) -> FlowField:
 		return flow_field_list[target_coords]
 	
 	var flow_field := FlowField.new()
-	add_child(flow_field)
+	add_child(flow_field, true)
 	
+	flow_field.name = "FlowField" + str(target_coords)
 	flow_field.cell_size = cell_size
-	flow_field.cells = cells
+	flow_field.cells = cells.duplicate()
 	flow_field.solid_cells = solid_cells
 	flow_field.set_target_coords(target_coords)
 	flow_field_list[target_coords] = flow_field
+	
 	return flow_field
 
 
@@ -66,7 +68,7 @@ func point_to_coords(point: Vector2) -> Vector2i:
 
 
 func coords_to_point(coords: Vector2i) -> Vector2i:
-	return Vector2(coords * cell_size) + position
+	return Vector2(coords * cell_size) + position + Vector2(0.5, 0.5) * cell_size
 
 
 func add_solid(coords: Vector2i) -> void:
@@ -75,7 +77,10 @@ func add_solid(coords: Vector2i) -> void:
 	#print(solid_cells[coords])
 
 
-func remove_solid(coords: Vector2i) -> void:
+func remove_solid(coords: Vector2i, flood_cell: bool = false) -> void:
 	solid_cells[coords] -= 1
 	if solid_cells.get(coords) == 0:
 		solid_cells.erase(coords)
+	
+	if flood_cell and not cells.has(coords):
+		flood_cell(coords)

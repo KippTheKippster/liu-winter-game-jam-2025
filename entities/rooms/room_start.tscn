@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccwj3msxs2fn4"]
+[gd_scene load_steps=7 format=3 uid="uid://ccwj3msxs2fn4"]
 
 [ext_resource type="PackedScene" uid="uid://cgsisbnhd4atk" path="res://entities/rooms/room_template.tscn" id="1_giv76"]
 [ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin.tscn" id="2_5owj2"]
 [ext_resource type="PackedScene" uid="uid://c56uuvk1wh8tk" path="res://entities/props/tree/tree.tscn" id="3_vr1go"]
+[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/carry objects/carry_object.tscn" id="4_coiiy"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="5_3j5a7"]
+[ext_resource type="PackedScene" uid="uid://c6re2egyy0hux" path="res://entities/enemies/snowball/snowball.tscn" id="6_eohqp"]
 
-[node name="RoomTemplate" instance=ExtResource("1_giv76")]
+[node name="RoomStart" instance=ExtResource("1_giv76")]
 
 [node name="Room" parent="." index="0" node_paths=PackedStringArray("walls")]
 walls = {
@@ -19,14 +22,43 @@ Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
 }
 
 [node name="Penguin" parent="." index="2" instance=ExtResource("2_5owj2")]
-position = Vector2(26, 32)
+position = Vector2(48, 16)
 
-[node name="Penguin2" parent="." index="3" instance=ExtResource("2_5owj2")]
-position = Vector2(40, 32)
+[node name="Penguin3" parent="." index="3" instance=ExtResource("2_5owj2")]
+position = Vector2(56, 16)
 
-[node name="Tree" parent="." index="4" instance=ExtResource("3_vr1go")]
-position = Vector2(13, 52)
+[node name="Penguin4" parent="." index="4" instance=ExtResource("2_5owj2")]
+position = Vector2(16, 40)
 
-[node name="Tree2" parent="." index="5" instance=ExtResource("3_vr1go")]
-position = Vector2(53, 53)
+[node name="Penguin5" parent="." index="5" instance=ExtResource("2_5owj2")]
+position = Vector2(24, 32)
+
+[node name="Penguin6" parent="." index="6" instance=ExtResource("2_5owj2")]
+position = Vector2(32, 16)
+
+[node name="Penguin7" parent="." index="7" instance=ExtResource("2_5owj2")]
+position = Vector2(40, 16)
+
+[node name="Penguin2" parent="." index="8" instance=ExtResource("2_5owj2")]
+position = Vector2(16, 32)
+
+[node name="Tree" parent="." index="9" instance=ExtResource("3_vr1go")]
+position = Vector2(8, 56)
+
+[node name="Tree2" parent="." index="10" instance=ExtResource("3_vr1go")]
+position = Vector2(56, 56)
 type = 2
+
+[node name="Food" parent="." index="11" instance=ExtResource("4_coiiy")]
+position = Vector2(32.0854, 42.5965)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="12"]
+
+[node name="StateChartDebugger" parent="CanvasLayer" index="0" instance=ExtResource("5_3j5a7")]
+z_index = 6
+offset_left = 416.0
+offset_bottom = -72.0
+initial_node_to_watch = NodePath("../../Penguin2")
+
+[node name="Snowball" parent="." index="13" instance=ExtResource("6_eohqp")]
+position = Vector2(24, 16)

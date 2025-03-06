@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ddhkmdldu0o6w"
+path="res://.godot/imported/meat.aseprite-75c8859bd1774c8839829db54aaf03ce.res"
+
+[deps]
+
+source_file="res://entities/carry objects/assets/meat.aseprite"
+dest_files=["res://.godot/imported/meat.aseprite-75c8859bd1774c8839829db54aaf03ce.res"]
+
+[params]
+

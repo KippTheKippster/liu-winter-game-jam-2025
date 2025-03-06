@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cdqvlqkaghmst"
+path="res://.godot/imported/goat.aseprite-389649ea65ccab13041257c1b16b35ec.res"
+
+[deps]
+
+source_file="res://entities/enemies/goat/goat.aseprite"
+dest_files=["res://.godot/imported/goat.aseprite-389649ea65ccab13041257c1b16b35ec.res"]
+
+[params]
+

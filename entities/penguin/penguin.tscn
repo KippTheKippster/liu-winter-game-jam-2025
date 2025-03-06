@@ -1,10 +1,10 @@
-[gd_scene load_steps=77 format=3 uid="uid://d4ac7bikwtscv"]
+[gd_scene load_steps=68 format=3 uid="uid://d4ac7bikwtscv"]
 
 [ext_resource type="Script" uid="uid://d2fxbd6ulm03" path="res://entities/penguin/penguin.gd" id="1_a0yya"]
 [ext_resource type="Texture2D" uid="uid://i4w0p1oyi77" path="res://entities/penguin/assets/penguin.png" id="1_r5j68"]
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="2_0dlp7"]
 [ext_resource type="Script" uid="uid://dci6sv2mtg2l1" path="res://components/flow field/flow_field_walker.gd" id="3_2j07w"]
-[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical/vertical.gd" id="3_no72d"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="3_no72d"]
 [ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_ourdf"]
 [ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="3_xlgo3"]
 [ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="4_lsgwc"]
@@ -14,10 +14,15 @@
 [ext_resource type="Script" uid="uid://dyi7lv20qiks3" path="res://addons/godot_state_charts/atomic_state.gd" id="5_vskbl"]
 [ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="7_ci46k"]
 [ext_resource type="AudioStream" uid="uid://choo7tvf3myk6" path="res://audio/punch.wav" id="8_2htdi"]
+[ext_resource type="Texture2D" uid="uid://pr0gktql4v5g" path="res://entities/penguin/pool_ring.png" id="9_5wlyb"]
 [ext_resource type="AudioStream" uid="uid://d1pbkbwnw8vtf" path="res://audio/footstep.wav" id="9_a5a8a"]
 [ext_resource type="AudioStream" uid="uid://cirnpw06lu0hx" path="res://audio/damaged.wav" id="9_l4dxa"]
+[ext_resource type="PackedScene" uid="uid://bc3mimnplcu7g" path="res://entities/effects/fire particles/fire_particles.tscn" id="9_ploiq"]
 [ext_resource type="AudioStream" uid="uid://c8h5wevow5ask" path="res://audio/jump.wav" id="10_8tthm"]
 [ext_resource type="Resource" uid="uid://gs4g17pohifk" path="res://entities/penguin/expression guards/action_target_attack.tres" id="13_8ksvf"]
+[ext_resource type="AudioStream" uid="uid://cjmsjcp8wuc8p" path="res://audio/penguin_die.wav" id="13_elkqi"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://b0nfx46nxw3r5" path="res://entities/penguin/animation nodes/penguin_root_state_machine.tres" id="13_ouyml"]
+[ext_resource type="AudioStream" uid="uid://cxxqxw1fl0cbm" path="res://audio/penguin_scared_randomizer.tres" id="13_ploiq"]
 [ext_resource type="Resource" uid="uid://bcbctg5xgyu8n" path="res://entities/penguin/expression guards/action_target_walk.tres" id="14_fec4a"]
 [ext_resource type="Resource" uid="uid://8lenkphdvuqd" path="res://entities/penguin/expression guards/action_target_idle.tres" id="15_8ksvf"]
 [ext_resource type="Resource" uid="uid://n6m6gq3lg0p6" path="res://entities/penguin/expression guards/on_floor.tres" id="16_fec4a"]
@@ -27,9 +32,12 @@
 [ext_resource type="Script" uid="uid://wqk5vc05av5e" path="res://addons/godot_state_charts/not_guard.gd" id="19_ouyml"]
 [ext_resource type="Resource" uid="uid://b01sudnokseb1" path="res://entities/penguin/expression guards/action_target_sleep.tres" id="20_u5wb6"]
 [ext_resource type="Resource" uid="uid://nxw1pqrpdgk8" path="res://entities/penguin/expression guards/action_target_die.tres" id="21_u5wb6"]
+[ext_resource type="Resource" uid="uid://4qriyiurr6fb" path="res://entities/penguin/expression guards/cannot_carry.tres" id="33_4nswe"]
+[ext_resource type="Script" uid="uid://bxm3vahefclw2" path="res://addons/godot_state_charts/guard.gd" id="33_wpg4b"]
+[ext_resource type="Script" uid="uid://dpo6cocjbfo03" path="res://addons/godot_state_charts/all_of_guard.gd" id="34_eyo0w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vskbl"]
-radius = 3.0
+radius = 1.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_woodo"]
 radius = 2.0
@@ -52,36 +60,14 @@ random_volume_offset_db = 2.0
 streams_count = 1
 stream_0/stream = ExtResource("10_8tthm")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ploiq"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("13_elkqi")
+
 [sub_resource type="Animation" id="Animation_qqawb"]
 length = 0.2
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("%CarryItemSprite:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -8)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = false
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_u5wb6"]
-length = 0.7
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -93,7 +79,72 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EquipmentSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%CarryItemSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, -8)]
+}
+
+[sub_resource type="Animation" id="Animation_u5wb6"]
+length = 0.7
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%VerticalGroup/../Audio/DieAudio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
 "values": [10]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../EquipmentSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
 }
 
 [sub_resource type="Animation" id="Animation_l4dxa"]
@@ -111,6 +162,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [6, 7]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EquipmentSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 3]
+}
 
 [sub_resource type="Animation" id="Animation_r5j68"]
 length = 0.4
@@ -122,6 +185,18 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EquipmentSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
@@ -143,6 +218,46 @@ tracks/0/keys = {
 "update": 1,
 "values": [3, 4]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EquipmentSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_elkqi"]
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EquipmentSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
 
 [sub_resource type="Animation" id="Animation_woodo"]
 length = 1.4
@@ -150,26 +265,106 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%CarryItemSprite:position")
+tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
-tracks/0/loop_wrap = true
+tracks/0/loop_wrap = false
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2, 0)]
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 9]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
+tracks/1/path = NodePath("../EquipmentSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.7),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [8, 9]
+"values": [3, 3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%CarryItemSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(2, 4)]
+}
+
+[sub_resource type="Animation" id="Animation_2j07w"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [11, 12]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EquipmentSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%CarryItemSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(2, 4)]
+}
+
+[sub_resource type="Animation" id="Animation_ouyml"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [13, 14]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EquipmentSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l4dxa"]
@@ -184,7 +379,7 @@ loop_mode = 1
 tracks/0/type = "audio"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%Vertical/../Audio/FootstepAudio")
+tracks/0/path = NodePath("%VerticalGroup/../Audio/FootstepAudio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -203,6 +398,18 @@ tracks/1/path = NodePath(".:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../EquipmentSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
@@ -239,8 +446,48 @@ tracks/1/keys = {
 "update": 1,
 "values": [5, 3]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../EquipmentSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 0]
+}
 
-[sub_resource type="Animation" id="Animation_2j07w"]
+[sub_resource type="Animation" id="Animation_fmwf0"]
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [17, 18]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EquipmentSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_eyo0w"]
 length = 0.6
 loop_mode = 1
 tracks/0/type = "value"
@@ -253,7 +500,31 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [11, 12]
+"values": [15, 16]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EquipmentSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%CarryItemSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, -7)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uw7px"]
@@ -263,120 +534,55 @@ _data = {
 &"fish": SubResource("Animation_l4dxa"),
 &"idle": SubResource("Animation_r5j68"),
 &"idle_carry": SubResource("Animation_vskbl"),
+&"jump": SubResource("Animation_elkqi"),
 &"sleep": SubResource("Animation_woodo"),
 &"stun": SubResource("Animation_2j07w"),
+&"swim": SubResource("Animation_ouyml"),
+&"swim_carry": SubResource("Animation_eyo0w"),
 &"walk": SubResource("Animation_a0yya"),
-&"walk_carry": SubResource("Animation_0dlp7")
+&"walk_carry": SubResource("Animation_0dlp7"),
+&"walk_flee": SubResource("Animation_fmwf0")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qqawb"]
-animation = &"die"
+[sub_resource type="Resource" id="Resource_xxwb7"]
+script = ExtResource("18_bdfa7")
+state = NodePath("../../../../Effect/Swim")
+metadata/_custom_type_script = "uid://dnqyokl3kx7tu"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l4dxa"]
-animation = &"fish"
+[sub_resource type="Resource" id="Resource_mcxdf"]
+script = ExtResource("18_bdfa7")
+state = NodePath("../../../../Equipment/PoolRing")
+metadata/_custom_type_script = "uid://dnqyokl3kx7tu"
 
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_c5178"]
+[sub_resource type="Resource" id="Resource_ht8ns"]
+script = ExtResource("19_ouyml")
+guard = SubResource("Resource_mcxdf")
+metadata/_custom_type_script = "uid://wqk5vc05av5e"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a0yya"]
-animation = &"idle"
+[sub_resource type="Resource" id="Resource_kqpf5"]
+script = ExtResource("34_eyo0w")
+guards = Array[ExtResource("33_wpg4b")]([SubResource("Resource_xxwb7"), SubResource("Resource_ht8ns")])
+metadata/_custom_type_script = "uid://dpo6cocjbfo03"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ruenj"]
-animation = &"idle_carry"
+[sub_resource type="Resource" id="Resource_wpg4b"]
+script = ExtResource("18_bdfa7")
+state = NodePath("../../../../Effect/Burn")
+metadata/_custom_type_script = "uid://dnqyokl3kx7tu"
 
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_xlgo3"]
+[sub_resource type="Resource" id="Resource_eyo0w"]
+script = ExtResource("19_ouyml")
+guard = SubResource("Resource_wpg4b")
+metadata/_custom_type_script = "uid://wqk5vc05av5e"
 
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_uw7px"]
-graph_offset = Vector2(-156.628, 94.3283)
-nodes/carry_blend/node = SubResource("AnimationNodeBlend2_c5178")
-nodes/carry_blend/position = Vector2(40, 140)
-nodes/idle_animation/node = SubResource("AnimationNodeAnimation_a0yya")
-nodes/idle_animation/position = Vector2(-240, 140)
-nodes/idle_carry_animation/node = SubResource("AnimationNodeAnimation_ruenj")
-nodes/idle_carry_animation/position = Vector2(-240, 320)
-nodes/output/position = Vector2(400, 140)
-nodes/time_scale/node = SubResource("AnimationNodeTimeScale_xlgo3")
-nodes/time_scale/position = Vector2(220, 140)
-node_connections = [&"carry_blend", 0, &"idle_animation", &"carry_blend", 1, &"idle_carry_animation", &"output", 0, &"time_scale", &"time_scale", 0, &"carry_blend"]
+[sub_resource type="Resource" id="Resource_5wlyb"]
+script = ExtResource("18_bdfa7")
+state = NodePath("../Flee")
+metadata/_custom_type_script = ExtResource("18_bdfa7")
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_woodo"]
-animation = &"sleep"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2j07w"]
-animation = &"stun"
-
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_jaji5"]
-
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_0dlp7"]
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vskbl"]
-animation = &"walk"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8ksvf"]
-animation = &"walk_carry"
-
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ci46k"]
-graph_offset = Vector2(-319.727, 17.9091)
-nodes/carry_blend/node = SubResource("AnimationNodeBlend2_jaji5")
-nodes/carry_blend/position = Vector2(40, 140)
-nodes/output/position = Vector2(360, 140)
-nodes/time_scale/node = SubResource("AnimationNodeTimeScale_0dlp7")
-nodes/time_scale/position = Vector2(200, 140)
-nodes/walk_animation/node = SubResource("AnimationNodeAnimation_vskbl")
-nodes/walk_animation/position = Vector2(-200, 140)
-nodes/walk_carry_animation/node = SubResource("AnimationNodeAnimation_8ksvf")
-nodes/walk_carry_animation/position = Vector2(-200, 320)
-node_connections = [&"carry_blend", 0, &"walk_animation", &"carry_blend", 1, &"walk_carry_animation", &"output", 0, &"time_scale", &"time_scale", 0, &"carry_blend"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ci46k"]
-advance_mode = 2
-advance_expression = "not velocity.is_zero_approx()"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_28o2q"]
-advance_mode = 2
-advance_expression = "velocity.is_zero_approx()"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_no72d"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u5wb6"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8tthm"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2j07w"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gbc55"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bdfa7"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ouyml"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fmwf0"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_elkqi"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ploiq"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5wlyb"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4nswe"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wpg4b"]
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_vskbl"]
-states/die/node = SubResource("AnimationNodeAnimation_qqawb")
-states/die/position = Vector2(537, 193)
-states/fish/node = SubResource("AnimationNodeAnimation_l4dxa")
-states/fish/position = Vector2(350, 9)
-states/idle_blend_tree/node = SubResource("AnimationNodeBlendTree_uw7px")
-states/idle_blend_tree/position = Vector2(350, 100)
-states/sleep/node = SubResource("AnimationNodeAnimation_woodo")
-states/sleep/position = Vector2(350, 193)
-states/stun/node = SubResource("AnimationNodeAnimation_2j07w")
-states/stun/position = Vector2(537, 9)
-states/walk_blend_tree/node = SubResource("AnimationNodeBlendTree_ci46k")
-states/walk_blend_tree/position = Vector2(537, 100)
-transitions = ["idle_blend_tree", "walk_blend_tree", SubResource("AnimationNodeStateMachineTransition_ci46k"), "walk_blend_tree", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_28o2q"), "Start", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_no72d"), "idle_blend_tree", "sleep", SubResource("AnimationNodeStateMachineTransition_u5wb6"), "idle_blend_tree", "fish", SubResource("AnimationNodeStateMachineTransition_8tthm"), "walk_blend_tree", "fish", SubResource("AnimationNodeStateMachineTransition_2j07w"), "fish", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_gbc55"), "fish", "walk_blend_tree", SubResource("AnimationNodeStateMachineTransition_bdfa7"), "idle_blend_tree", "die", SubResource("AnimationNodeStateMachineTransition_ouyml"), "walk_blend_tree", "die", SubResource("AnimationNodeStateMachineTransition_fmwf0"), "sleep", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_elkqi"), "idle_blend_tree", "stun", SubResource("AnimationNodeStateMachineTransition_ploiq"), "stun", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_5wlyb"), "walk_blend_tree", "stun", SubResource("AnimationNodeStateMachineTransition_4nswe"), "stun", "walk_blend_tree", SubResource("AnimationNodeStateMachineTransition_wpg4b")]
-graph_offset = Vector2(-49, -145)
+[sub_resource type="Resource" id="Resource_4nswe"]
+script = ExtResource("19_ouyml")
+guard = SubResource("Resource_5wlyb")
+metadata/_custom_type_script = ExtResource("19_ouyml")
 
 [sub_resource type="Resource" id="Resource_ploiq"]
 script = ExtResource("18_bdfa7")
@@ -394,6 +600,8 @@ guard = SubResource("Resource_fmwf0")
 metadata/_custom_type_script = ExtResource("19_ouyml")
 
 [node name="Penguin" type="CharacterBody2D" groups=["penguin"]]
+collision_layer = 2
+collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_a0yya")
 
@@ -402,11 +610,16 @@ shape = SubResource("CircleShape2D_vskbl")
 
 [node name="DamageInstance" type="Node2D" parent="."]
 script = ExtResource("4_lsgwc")
-metadata/_custom_type_script = ExtResource("4_lsgwc")
+metadata/_custom_type_script = "uid://dd5wfdkuccdar"
 
 [node name="FlowFieldWalker" type="Node2D" parent="."]
 script = ExtResource("3_2j07w")
-metadata/_custom_type_script = ExtResource("3_2j07w")
+metadata/_custom_type_script = "uid://dci6sv2mtg2l1"
+
+[node name="BoffusCreatureDetector" type="Node2D" parent="."]
+script = ExtResource("2_0dlp7")
+creature_mask = 16
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -422,40 +635,42 @@ health_instance = NodePath("../HealthInstance")
 detection_range = 32.0
 creature_layer = 2
 creature_mask = 13
-metadata/_custom_type_script = ExtResource("2_0dlp7")
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
 [node name="HealthInstance" type="Node2D" parent="Area2D"]
 unique_name_in_owner = true
 script = ExtResource("3_ourdf")
 immortal = true
 damage_mask = 3
-metadata/_custom_type_script = ExtResource("3_ourdf")
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
 
-[node name="Vertical" type="Node2D" parent="."]
+[node name="VerticalGroup" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_no72d")
 gravity = 490.0
-metadata/_custom_type_script = ExtResource("3_no72d")
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
 
-[node name="FlipGroup" type="Node2D" parent="Vertical"]
+[node name="FlipGroup" type="Node2D" parent="VerticalGroup"]
 unique_name_in_owner = true
 script = ExtResource("5_ruenj")
-metadata/_custom_type_script = ExtResource("5_ruenj")
+metadata/_custom_type_script = "uid://bhjyv2astlcwo"
 
-[node name="PenguinSprite" type="Sprite2D" parent="Vertical/FlipGroup"]
+[node name="PenguinSprite" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
 texture_filter = 1
 texture = ExtResource("1_r5j68")
 offset = Vector2(-0.5, -2.5)
-hframes = 4
+hframes = 5
 vframes = 4
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
-"pending_changes": {}
+"pending_changes": {},
+"slice_section": false
 }
 metadata/_aseprite_wizard_config_ = {
 "i_mode": -1,
 "keep_anim_length": false,
-"layers": [],
+"layers": ["penguin"],
 "o_ex_p": "",
 "o_folder": "res://entities/penguin/assets",
 "o_name": "",
@@ -464,11 +679,42 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "res://entities/penguin/assets/penguin.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "537c543192fd2674b57821bbc7a2b398"
+metadata/_aseprite_wizard_source_file_hash_ = "942c2eb1c1360c07630eb860664f5466"
 
-[node name="CarryItemSprite" type="Sprite2D" parent="Vertical/FlipGroup"]
+[node name="EquipmentSprite" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
+unique_name_in_owner = true
+texture_filter = 1
+texture = ExtResource("9_5wlyb")
+offset = Vector2(-0.5, -2.5)
+hframes = 4
+vframes = 3
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": ["pool_ring"],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/penguin/assets/penguin.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "942c2eb1c1360c07630eb860664f5466"
+
+[node name="CarryItemSprite" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
 unique_name_in_owner = true
 position = Vector2(0, -8)
+
+[node name="Effects" type="Node2D" parent="."]
+
+[node name="FireParticles" parent="Effects" instance=ExtResource("9_ploiq")]
+unique_name_in_owner = true
+emitting = false
 
 [node name="Audio" type="Node2D" parent="."]
 
@@ -491,23 +737,38 @@ unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_2j07w")
 bus = &"Effects"
 
+[node name="ScaredAudio" type="AudioStreamPlayer2D" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("13_ploiq")
+pitch_scale = 1.2
+bus = &"Effects"
+
+[node name="DieAudio" type="AudioStreamPlayer2D" parent="Audio"]
+stream = SubResource("AudioStreamRandomizer_ploiq")
+bus = &"Effects"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 active = false
 deterministic = true
-root_node = NodePath("../Vertical/FlipGroup/PenguinSprite")
+root_node = NodePath("../VerticalGroup/FlipGroup/PenguinSprite")
 libraries = {
 &"": SubResource("AnimationLibrary_uw7px")
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_node = NodePath("%FlipGroup/PenguinSprite")
-tree_root = SubResource("AnimationNodeStateMachine_vskbl")
+tree_root = ExtResource("13_ouyml")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
-parameters/idle_blend_tree/carry_blend/blend_amount = 0.0
-parameters/idle_blend_tree/time_scale/scale = 1.0
-parameters/walk_blend_tree/carry_blend/blend_amount = 0.0
-parameters/walk_blend_tree/time_scale/scale = 0.7
+parameters/idle_blend_space/blend_position = Vector2(0, 0)
+parameters/idle_blend_tree/flee_blend/blend_amount = 0.0
+parameters/idle_blend_tree/idle_carry_blend/blend_amount = 0.0
+parameters/idle_blend_tree/idle_walk_blend/blend_amount = 0.0
+parameters/idle_blend_tree/jump_blend/blend_amount = 0.0
+parameters/idle_blend_tree/swim_blend/blend_amount = 0.0
+parameters/idle_blend_tree/swim_carry_blend/blend_amount = 0.0
+parameters/idle_blend_tree/time_scale/scale = false
+parameters/idle_blend_tree/walk_carry_blend/blend_amount = false
 
 [node name="AttackCooldownTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -521,7 +782,7 @@ initial_expression_properties = {
 &"on_floor": true,
 &"vertical_velocity": 0.0
 }
-metadata/_custom_type_script = ExtResource("3_xlgo3")
+metadata/_custom_type_script = "uid://cwgjtd2qwnb20"
 
 [node name="Root" type="Node" parent="StateChart"]
 script = ExtResource("5_28o2q")
@@ -566,6 +827,12 @@ script = ExtResource("5_vskbl")
 [node name="Carry" type="Node" parent="StateChart/Root/Task/Reactive"]
 script = ExtResource("5_vskbl")
 
+[node name="CannotCarry" type="Node" parent="StateChart/Root/Task/Reactive/Carry"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Idle/Stand")
+guard = SubResource("Resource_kqpf5")
+delay_in_seconds = "0.0"
+
 [node name="Fish" type="Node" parent="StateChart/Root/Task/Reactive"]
 script = ExtResource("5_vskbl")
 
@@ -574,6 +841,16 @@ script = ExtResource("5_vskbl")
 
 [node name="Igloo" type="Node" parent="StateChart/Root/Task/Reactive"]
 script = ExtResource("5_vskbl")
+
+[node name="Flee" type="Node" parent="StateChart/Root/Task/Reactive"]
+script = ExtResource("5_vskbl")
+
+[node name="TaskFleeConclude" type="Node" parent="StateChart/Root/Task/Reactive/Flee"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Idle/Stand")
+event = &"task_flee_conclude"
+guard = SubResource("Resource_eyo0w")
+delay_in_seconds = "3.0"
 
 [node name="TaskAttackRequest" type="Node" parent="StateChart/Root/Task/Reactive"]
 script = ExtResource("7_ci46k")
@@ -617,6 +894,13 @@ to = NodePath("../Igloo")
 event = &"task_igloo_request"
 delay_in_seconds = "0.0"
 
+[node name="TaskFleeRequest" type="Node" parent="StateChart/Root/Task/Reactive"]
+script = ExtResource("7_ci46k")
+to = NodePath("../Flee")
+event = &"task_flee_request"
+guard = SubResource("Resource_4nswe")
+delay_in_seconds = "0.0"
+
 [node name="TaskDieRequest" type="Node" parent="StateChart/Root/Task/Reactive"]
 script = ExtResource("7_ci46k")
 to = NodePath("../../Inactive/Die")
@@ -649,20 +933,35 @@ guard = SubResource("Resource_elkqi")
 delay_in_seconds = "0.0"
 
 [node name="Idle" type="Node" parent="StateChart/Root/Action"]
+script = ExtResource("4_uw7px")
+initial_state = NodePath("Stand")
+
+[node name="Stand" type="Node" parent="StateChart/Root/Action/Idle"]
 script = ExtResource("16_qqawb")
-animation_tree = NodePath("../../../../AnimationTree")
+animation_tree = NodePath("../../../../../AnimationTree")
 state_name = &"idle_blend_tree"
+
+[node name="ActionTargetWalk" type="Node" parent="StateChart/Root/Action/Idle/Stand"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Walk")
+guard = ExtResource("14_fec4a")
+delay_in_seconds = "0.0"
+
+[node name="Walk" type="Node" parent="StateChart/Root/Action/Idle"]
+script = ExtResource("16_qqawb")
+animation_tree = NodePath("../../../../../AnimationTree")
+state_name = &"idle_blend_tree"
+
+[node name="ActionTargetStand" type="Node" parent="StateChart/Root/Action/Idle/Walk"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Stand")
+guard = ExtResource("15_8ksvf")
+delay_in_seconds = "0.0"
 
 [node name="ActionTargetAttack" type="Node" parent="StateChart/Root/Action/Idle"]
 script = ExtResource("7_ci46k")
 to = NodePath("../../Attack")
 guard = ExtResource("13_8ksvf")
-delay_in_seconds = "0.0"
-
-[node name="ActionTargetWalk" type="Node" parent="StateChart/Root/Action/Idle"]
-script = ExtResource("7_ci46k")
-to = NodePath("../../Walk")
-guard = ExtResource("14_fec4a")
 delay_in_seconds = "0.0"
 
 [node name="ActionTargetFish" type="Node" parent="StateChart/Root/Action/Idle"]
@@ -678,33 +977,6 @@ guard = ExtResource("20_u5wb6")
 delay_in_seconds = "0.0"
 
 [node name="ActionTargetDie" type="Node" parent="StateChart/Root/Action/Idle"]
-script = ExtResource("7_ci46k")
-to = NodePath("../../Die")
-guard = ExtResource("21_u5wb6")
-delay_in_seconds = "0.0"
-
-[node name="Walk" type="Node" parent="StateChart/Root/Action"]
-script = ExtResource("5_vskbl")
-
-[node name="ActionTargetAttack" type="Node" parent="StateChart/Root/Action/Walk"]
-script = ExtResource("7_ci46k")
-to = NodePath("../../Attack")
-guard = ExtResource("13_8ksvf")
-delay_in_seconds = "0.0"
-
-[node name="ActionTargetIdle" type="Node" parent="StateChart/Root/Action/Walk"]
-script = ExtResource("7_ci46k")
-to = NodePath("../../Idle")
-guard = ExtResource("15_8ksvf")
-delay_in_seconds = "0.0"
-
-[node name="ActionTargetFish" type="Node" parent="StateChart/Root/Action/Walk"]
-script = ExtResource("7_ci46k")
-to = NodePath("../../Fish")
-guard = ExtResource("18_akbrx")
-delay_in_seconds = "0.0"
-
-[node name="ActionTargetDie" type="Node" parent="StateChart/Root/Action/Walk"]
 script = ExtResource("7_ci46k")
 to = NodePath("../../Die")
 guard = ExtResource("21_u5wb6")
@@ -733,7 +1005,7 @@ state_name = &"fish"
 
 [node name="ActionTargetWalk" type="Node" parent="StateChart/Root/Action/Fish"]
 script = ExtResource("7_ci46k")
-to = NodePath("../../Walk")
+to = NodePath("../../Idle/Walk")
 guard = ExtResource("14_fec4a")
 delay_in_seconds = "0.0"
 
@@ -745,13 +1017,13 @@ delay_in_seconds = "0.0"
 
 [node name="ActionTargetIdle" type="Node" parent="StateChart/Root/Action/Fish"]
 script = ExtResource("7_ci46k")
-to = NodePath("../../Idle")
+to = NodePath("../../Idle/Stand")
 guard = ExtResource("15_8ksvf")
 delay_in_seconds = "0.0"
 
 [node name="Knockback" type="Node" parent="StateChart/Root/Action"]
 script = ExtResource("5_vskbl")
-metadata/_custom_type_script = ExtResource("5_vskbl")
+metadata/_custom_type_script = "uid://dyi7lv20qiks3"
 
 [node name="OnFloor" type="Node" parent="StateChart/Root/Action/Knockback"]
 script = ExtResource("7_ci46k")
@@ -764,7 +1036,7 @@ script = ExtResource("5_vskbl")
 
 [node name="Wait" type="Node" parent="StateChart/Root/Action/Cooldown"]
 script = ExtResource("7_ci46k")
-to = NodePath("../../Idle")
+to = NodePath("../../Idle/Stand")
 delay_in_seconds = "0.5"
 
 [node name="Sleep" type="Node" parent="StateChart/Root/Action"]
@@ -775,7 +1047,7 @@ state_name = &"sleep"
 
 [node name="ActionTargetIdle" type="Node" parent="StateChart/Root/Action/Sleep"]
 script = ExtResource("7_ci46k")
-to = NodePath("../../Idle")
+to = NodePath("../../Idle/Stand")
 guard = ExtResource("15_8ksvf")
 delay_in_seconds = "0.0"
 
@@ -787,7 +1059,7 @@ delay_in_seconds = "0.0"
 
 [node name="ActionTargetWalk" type="Node" parent="StateChart/Root/Action/Sleep"]
 script = ExtResource("7_ci46k")
-to = NodePath("../../Walk")
+to = NodePath("../../../Task/Reactive/Idle/Stand")
 guard = ExtResource("14_fec4a")
 delay_in_seconds = "0.0"
 
@@ -809,36 +1081,103 @@ state_name = &"stun"
 
 [node name="Wait" type="Node" parent="StateChart/Root/Action/Stun"]
 script = ExtResource("7_ci46k")
-to = NodePath("../../Idle")
+to = NodePath("../../Idle/Stand")
 delay_in_seconds = "4.0"
 
-[node name="ExtraState" type="Node" parent="StateChart/Root"]
+[node name="Equipment" type="Node" parent="StateChart/Root"]
 script = ExtResource("4_uw7px")
-initial_state = NodePath("None")
+initial_state = NodePath("Free")
 
-[node name="None" type="Node" parent="StateChart/Root/ExtraState"]
+[node name="Free" type="Node" parent="StateChart/Root/Equipment"]
 script = ExtResource("5_vskbl")
 
-[node name="ExtraStateCarryRequest" type="Node" parent="StateChart/Root/ExtraState/None"]
+[node name="EquipPoolRing" type="Node" parent="StateChart/Root/Equipment/Free"]
 script = ExtResource("7_ci46k")
-to = NodePath("../../Carry")
-event = &"extra_state_carry_request"
+to = NodePath("../../PoolRing")
+event = &"equip_pool_ring"
 delay_in_seconds = "0.0"
 
-[node name="Carry" type="Node" parent="StateChart/Root/ExtraState"]
+[node name="PoolRing" type="Node" parent="StateChart/Root/Equipment"]
 script = ExtResource("5_vskbl")
 
-[node name="ExtraStateNoneRequest" type="Node" parent="StateChart/Root/ExtraState/Carry"]
+[node name="Effect" type="Node" parent="StateChart/Root"]
+script = ExtResource("4_uw7px")
+initial_state = NodePath("Clear")
+
+[node name="Clear" type="Node" parent="StateChart/Root/Effect"]
+script = ExtResource("5_vskbl")
+
+[node name="EffectBurnRequest" type="Node" parent="StateChart/Root/Effect/Clear"]
 script = ExtResource("7_ci46k")
-to = NodePath("../../None")
-event = &"extra_state_none_request"
+to = NodePath("../../Burn")
+event = &"effect_burn_request"
+delay_in_seconds = "0.0"
+
+[node name="EffectSwimRequest" type="Node" parent="StateChart/Root/Effect/Clear"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Swim")
+event = &"effect_swim_request"
+delay_in_seconds = "0.0"
+
+[node name="Burn" type="Node" parent="StateChart/Root/Effect"]
+script = ExtResource("5_vskbl")
+
+[node name="Wait" type="Node" parent="StateChart/Root/Effect/Burn"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../../Task/Inactive/Die")
+delay_in_seconds = "6.5"
+
+[node name="EffectSwimRequest" type="Node" parent="StateChart/Root/Effect/Burn"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Swim")
+event = &"effect_swim_request"
+delay_in_seconds = "0.0"
+
+[node name="Swim" type="Node" parent="StateChart/Root/Effect"]
+script = ExtResource("5_vskbl")
+
+[node name="EffectSwimConclude" type="Node" parent="StateChart/Root/Effect/Swim"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Clear")
+event = &"effect_swim_conclude"
+delay_in_seconds = "0.0"
+
+[node name="Carry" type="Node" parent="StateChart/Root"]
+script = ExtResource("4_uw7px")
+initial_state = NodePath("Inactive")
+
+[node name="Inactive" type="Node" parent="StateChart/Root/Carry"]
+script = ExtResource("5_vskbl")
+
+[node name="CarryActiveRequest" type="Node" parent="StateChart/Root/Carry/Inactive"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Active")
+event = &"carry_active_request"
+delay_in_seconds = "0.0"
+
+[node name="Active" type="Node" parent="StateChart/Root/Carry"]
+script = ExtResource("5_vskbl")
+
+[node name="CarryInactiveRequest" type="Node" parent="StateChart/Root/Carry/Active"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Inactive")
+event = &"carry_inactive_request"
+delay_in_seconds = "0.0"
+
+[node name="EffectSwimActive" type="Node" parent="StateChart/Root/Carry/Active"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Inactive")
+guard = ExtResource("33_4nswe")
 delay_in_seconds = "0.0"
 
 [connection signal="command_area_entered" from="." to="." method="_on_command_area_entered"]
+[connection signal="effect_applied" from="Area2D/Creature" to="." method="_on_creature_effect_applied"]
+[connection signal="effect_removed" from="Area2D/Creature" to="." method="_on_creature_effect_removed"]
 [connection signal="damage_received" from="Area2D/HealthInstance" to="." method="_on_health_instance_damage_received"]
 [connection signal="died" from="Area2D/HealthInstance" to="." method="_on_health_instance_died"]
-[connection signal="jumped" from="Vertical" to="." method="_on_vertical_jumped"]
+[connection signal="jumped" from="VerticalGroup" to="." method="_on_vertical_jumped"]
 [connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_attack_cooldown_timer_timeout"]
+[connection signal="state_processing" from="StateChart/Root/Task/Reactive" to="." method="_on_reactive_task_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Task/Reactive/Idle" to="." method="_on_task_idle_state_entered"]
 [connection signal="state_processing" from="StateChart/Root/Task/Reactive/Idle" to="." method="_on_task_idle_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Task/Reactive/Idle/Stand" to="." method="_on_task_idle_stand_state_entered"]
@@ -851,9 +1190,13 @@ delay_in_seconds = "0.0"
 [connection signal="state_physics_processing" from="StateChart/Root/Task/Reactive/Fish" to="." method="_on_task_fish_state_physics_processing"]
 [connection signal="state_physics_processing" from="StateChart/Root/Task/Reactive/Feed" to="." method="_on_feed_state_physics_processing"]
 [connection signal="state_physics_processing" from="StateChart/Root/Task/Reactive/Igloo" to="." method="_on_task_igloo_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Task/Reactive/Flee" to="." method="_on_task_flee_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Task/Reactive/Flee" to="." method="_on_task_flee_state_exited"]
+[connection signal="state_processing" from="StateChart/Root/Task/Reactive/Flee" to="." method="_on_task_flee_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Task/Inactive/Die" to="." method="_on_task_die_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/Action/Idle" to="." method="_on_action_idle_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/Root/Action/Walk" to="." method="_on_action_walk_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Action/Idle/Stand" to="." method="_on_action_idle_stand_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Action/Idle/Walk" to="." method="_on_action_idle_walk_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Action/Idle/Walk" to="." method="_on_action_idle_walk_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Action/Attack" to="." method="_on_action_attack_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Action/Fish" to="." method="_on_action_fish_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Action/Fish" to="." method="_on_action_fish_state_exited"]
@@ -862,5 +1205,14 @@ delay_in_seconds = "0.0"
 [connection signal="state_exited" from="StateChart/Root/Action/Sleep" to="." method="_on_action_sleep_state_exited"]
 [connection signal="state_entered" from="StateChart/Root/Action/Die" to="." method="_on_action_die_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Action/Stun" to="." method="_on_action_stun_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/ExtraState/Carry" to="." method="_on_extra_state_carry_state_entered"]
-[connection signal="state_exited" from="StateChart/Root/ExtraState/Carry" to="." method="_on_extra_state_carry_state_exited"]
+[connection signal="state_exited" from="StateChart/Root/Action/Stun" to="." method="_on_action_stun_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Equipment/Free" to="." method="_on_equipment_free_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Equipment/Free" to="." method="_on_equipment_free_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Equipment/PoolRing" to="." method="_on_equipment_pool_ring_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Effect/Burn" to="." method="_on_effect_burn_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Effect/Burn" to="." method="_on_effect_burn_state_exited"]
+[connection signal="state_processing" from="StateChart/Root/Effect/Burn" to="." method="_on_effect_burn_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Effect/Swim" to="." method="_on_effect_swim_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Effect/Swim" to="." method="_on_effect_swim_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Carry/Inactive" to="." method="_on_carry_inactive_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Carry/Active" to="." method="_on_carry_active_state_entered"]

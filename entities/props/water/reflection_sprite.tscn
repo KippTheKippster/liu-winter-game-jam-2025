@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsmaf3gg75xht"]
+
+[ext_resource type="Material" uid="uid://1a64naukwk7i" path="res://entities/props/water/reflection_material.tres" id="1_vo3x4"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_a6d2j"]
+
+[node name="ReflectionSprite" type="Sprite2D"]
+material = ExtResource("1_vo3x4")
+texture = SubResource("CanvasTexture_a6d2j")

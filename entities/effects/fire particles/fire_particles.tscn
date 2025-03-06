@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://bc3mimnplcu7g"]
+
+[ext_resource type="Texture2D" uid="uid://dxipd5mvj1ta" path="res://entities/effects/pixel_particle.png" id="1_g0cwf"]
+
+[sub_resource type="Gradient" id="Gradient_vshji"]
+offsets = PackedFloat32Array(0.0268657, 0.161194, 0.441791, 0.626866, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 0, 1, 1, 0.616667, 0, 1, 1, 0.372549, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_k4ib7"]
+gradient = SubResource("Gradient_vshji")
+
+[sub_resource type="Curve" id="Curve_emjgc"]
+_limits = [-1.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 5.38587, 0, 0, Vector2(1, 2.01728), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7r8ox"]
+curve = SubResource("Curve_emjgc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5wlyb"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 22.0
+gravity = Vector3(0, -60, 0)
+radial_accel_min = -42.05
+radial_accel_max = -8.09
+radial_accel_curve = SubResource("CurveTexture_7r8ox")
+damping_min = 20.552
+damping_max = 42.017
+color_ramp = SubResource("GradientTexture1D_k4ib7")
+
+[node name="FireParticles" type="GPUParticles2D"]
+amount = 32
+texture = ExtResource("1_g0cwf")
+lifetime = 1.2
+randomness = 0.37
+process_material = SubResource("ParticleProcessMaterial_5wlyb")

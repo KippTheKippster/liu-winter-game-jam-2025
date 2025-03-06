@@ -1,23 +1,28 @@
-[gd_scene load_steps=12 format=3 uid="uid://doiwfgk1hy5nb"]
+[gd_scene load_steps=16 format=3 uid="uid://doiwfgk1hy5nb"]
 
 [ext_resource type="Script" uid="uid://dya4stv6au8tw" path="res://main scenes/game/game.gd" id="1_mm5ki"]
 [ext_resource type="PackedScene" uid="uid://cyvjgw6e8qecv" path="res://ui/hud/hud.tscn" id="1_qoleo"]
 [ext_resource type="PackedScene" uid="uid://b5gpnufehivyj" path="res://ui/pause menu/pause_menu.tscn" id="2_6qgw3"]
-[ext_resource type="PackedScene" uid="uid://cm3rtksqgg3lu" path="res://entities/effects/snow_fall_particles/snow_fall_particles.tscn" id="2_orik2"]
+[ext_resource type="PackedScene" uid="uid://cm3rtksqgg3lu" path="res://entities/effects/snow fall particles/snow_fall_particles.tscn" id="2_orik2"]
+[ext_resource type="PackedScene" uid="uid://bxk6t6qv284os" path="res://ui/raft depart menu/raft_depart_menu.tscn" id="4_d0g2b"]
 [ext_resource type="AudioStream" uid="uid://chkf6omxlyit8" path="res://audio/wind.ogg" id="5_np0q0"]
 [ext_resource type="PackedScene" uid="uid://dofjqsq6jc4oy" path="res://entities/effects/ecliptic canvas modulate/ecliptic_canvas_modulate.tscn" id="5_o1m1v"]
 [ext_resource type="PackedScene" uid="uid://cg32rxn6me2vm" path="res://entities/player camera/player_camera.tscn" id="5_orik2"]
 [ext_resource type="Script" uid="uid://drtrpfwntdaa2" path="res://components/flow field/flow_field_manager.gd" id="7_ctvcs"]
 [ext_resource type="Script" uid="uid://cighei1gf4iov" path="res://components/maze/maze.gd" id="7_euirq"]
+[ext_resource type="Texture2D" uid="uid://c5jbn83vaify1" path="res://entities/skies/starry_sky_01.png" id="7_o1m1v"]
 [ext_resource type="PackedScene" uid="uid://bwf71bc7425hy" path="res://main scenes/game/command_area.tscn" id="10_gscv8"]
-[ext_resource type="Resource" uid="uid://b2apre2k76kjp" path="res://entities/maze properties/maze_properties_001.tres" id="11_o1m1v"]
+[ext_resource type="Resource" uid="uid://b551a0plq5npl" path="res://entities/maze properties/maze_properties_breakable_wall_test.tres" id="13_d0g2b"]
+[ext_resource type="PackedScene" uid="uid://cpsyqlxd4bsnt" path="res://levels/level_test.tscn" id="14_yjtjj"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_saw4t"]
 
 [node name="Game" type="Node"]
 process_mode = 3
 script = ExtResource("1_mm5ki")
+metadata/_edit_horizontal_guides_ = [-7.0, -26.0]
 
 [node name="UiLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Hud" parent="UiLayer" node_paths=PackedStringArray("game") instance=ExtResource("1_qoleo")]
 visible = false
@@ -38,6 +43,10 @@ unique_name_in_owner = true
 visible = false
 metadata/_edit_lock_ = true
 
+[node name="RaftDepartMenu" parent="UiLayer" instance=ExtResource("4_d0g2b")]
+unique_name_in_owner = true
+visible = false
+
 [node name="Audio" type="Node" parent="."]
 
 [node name="WindAudio" type="AudioStreamPlayer" parent="Audio"]
@@ -46,28 +55,76 @@ autoplay = true
 bus = &"Ambient"
 parameters/looping = true
 
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(116, 81)
+
 [node name="Effects" type="Node2D" parent="."]
 
-[node name="BackgroundColorParallax" type="Parallax2D" parent="Effects"]
+[node name="StaticParallax" type="Parallax2D" parent="Effects"]
 z_index = -10
 scroll_scale = Vector2(0, 0)
 
-[node name="ColorRect" type="ColorRect" parent="Effects/BackgroundColorParallax"]
-custom_minimum_size = Vector2(360, 360)
-offset_right = 360.0
-offset_bottom = 360.0
-color = Color(0.133333, 0.12549, 0.203922, 1)
+[node name="BackgroundSprite" type="Sprite2D" parent="Effects/StaticParallax"]
+visible = false
+modulate = Color(0.65098, 0.839216, 0.945098, 1)
+scale = Vector2(640, 360)
+texture = SubResource("CanvasTexture_saw4t")
+centered = false
 metadata/_edit_use_anchors_ = true
 
+[node name="BackgroundSprite2" type="Sprite2D" parent="Effects/StaticParallax"]
+visible = false
+modulate = Color(0.611765, 0.823529, 0.941176, 1)
+scale = Vector2(640, 360)
+texture = SubResource("CanvasTexture_saw4t")
+centered = false
+metadata/_edit_use_anchors_ = true
+
+[node name="BackgroundSprite3" type="Sprite2D" parent="Effects/StaticParallax"]
+visible = false
+modulate = Color(0.611765, 0.780392, 0.941176, 1)
+scale = Vector2(640, 360)
+texture = SubResource("CanvasTexture_saw4t")
+centered = false
+metadata/_edit_use_anchors_ = true
+
+[node name="BackgroundSprite4" type="Sprite2D" parent="Effects/StaticParallax"]
+visible = false
+modulate = Color(0.564706, 0.756863, 0.929412, 1)
+scale = Vector2(640, 360)
+texture = SubResource("CanvasTexture_saw4t")
+centered = false
+metadata/_edit_use_anchors_ = true
+
+[node name="BackgroundSprite5" type="Sprite2D" parent="Effects/StaticParallax"]
+visible = false
+modulate = Color(0.370777, 0.628923, 0.858714, 1)
+scale = Vector2(640, 360)
+texture = SubResource("CanvasTexture_saw4t")
+centered = false
+metadata/_edit_use_anchors_ = true
+
+[node name="StarrySky01" type="Sprite2D" parent="Effects/StaticParallax"]
+visible = false
+texture = ExtResource("7_o1m1v")
+centered = false
+
 [node name="SnowParallax" type="Parallax2D" parent="Effects"]
+z_index = 2
 scroll_scale = Vector2(1.5, 1.5)
 
 [node name="SnowFallParticles" parent="Effects/SnowParallax" instance=ExtResource("2_orik2")]
 position = Vector2(152, -560)
-seed = 227960793
 local_coords = true
 
 [node name="EclipticCanvasModulate" parent="Effects" instance=ExtResource("5_o1m1v")]
+duration = 240.0
+
+[node name="FlowFieldManager" type="Node2D" parent="."]
+z_index = -5
+script = ExtResource("7_ctvcs")
+metadata/_custom_type_script = "uid://drtrpfwntdaa2"
 
 [node name="Level" type="Node2D" parent="."]
 process_mode = 1
@@ -78,14 +135,13 @@ position = Vector2(32, 32)
 
 [node name="CommandArea" parent="Level" instance=ExtResource("10_gscv8")]
 
-[node name="FlowFieldManager" type="Node2D" parent="Level"]
-z_index = -5
-position = Vector2(-4, -4)
-script = ExtResource("7_ctvcs")
-metadata/_custom_type_script = ExtResource("7_ctvcs")
-
 [node name="Maze" type="Node2D" parent="Level"]
 y_sort_enabled = true
 script = ExtResource("7_euirq")
-maze_properties = ExtResource("11_o1m1v")
-metadata/_custom_type_script = ExtResource("7_euirq")
+generate_on_ready = false
+maze_properties = ExtResource("13_d0g2b")
+metadata/_custom_type_script = "uid://cighei1gf4iov"
+
+[node name="LevelTest" parent="Level" instance=ExtResource("14_yjtjj")]
+
+[connection signal="depart_accepted" from="UiLayer/RaftDepartMenu" to="." method="_on_raft_depart_menu_depart_accepted"]

@@ -1,0 +1,212 @@
+[gd_scene load_steps=18 format=3 uid="uid://kmfgh7wh8vui"]
+
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="1_acu58"]
+[ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="1_dlyk1"]
+[ext_resource type="Texture2D" uid="uid://mi0cls0ji8iv" path="res://entities/enemies/goat/goat.png" id="1_jnau8"]
+[ext_resource type="Script" uid="uid://bi4rnxlt7xpfa" path="res://entities/enemies/goat/goat.gd" id="1_puqcu"]
+[ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="2_b5tiu"]
+[ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="2_m2uf3"]
+[ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="4_m2uf3"]
+[ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="5_wkkvt"]
+[ext_resource type="Script" uid="uid://dtvh4vikgt2v" path="res://addons/godot_state_charts/animation_player_state.gd" id="6_4dkfh"]
+[ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="7_4t7mx"]
+[ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="10_yfd5y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_acu58"]
+radius = 4.12311
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yfd5y"]
+size = Vector2(6, 5)
+
+[sub_resource type="Animation" id="Animation_yfd5y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/DamageArea/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_dlyk1"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/VerticalGroup/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlipGroup/DamageArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_4dkfh"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/VerticalGroup/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlipGroup/DamageArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_acu58"]
+_data = {
+&"RESET": SubResource("Animation_yfd5y"),
+&"charge": SubResource("Animation_dlyk1"),
+&"idle": SubResource("Animation_4dkfh")
+}
+
+[node name="Goat" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_puqcu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_acu58")
+
+[node name="GoatArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoatArea"]
+shape = SubResource("CircleShape2D_acu58")
+
+[node name="Creature" type="Node2D" parent="GoatArea" node_paths=PackedStringArray("health_instance")]
+unique_name_in_owner = true
+script = ExtResource("1_dlyk1")
+health_instance = NodePath("../HealthInstance")
+creature_layer = 1
+creature_mask = 2
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="HealthInstance" type="Node2D" parent="GoatArea"]
+script = ExtResource("2_b5tiu")
+base_health = 10.0
+damage_mask = 4
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
+
+[node name="FlipGroup" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_m2uf3")
+metadata/_custom_type_script = "uid://bhjyv2astlcwo"
+
+[node name="VerticalGroup" type="Node2D" parent="FlipGroup"]
+script = ExtResource("1_acu58")
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
+
+[node name="Sprite2D" type="Sprite2D" parent="FlipGroup/VerticalGroup"]
+texture_filter = 1
+texture = ExtResource("1_jnau8")
+offset = Vector2(0, -4)
+hframes = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/enemies/goat/goat.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "fecc78d7ddd33d25aaffaf7d83f5666a"
+
+[node name="DamageArea" type="Area2D" parent="FlipGroup"]
+
+[node name="DamageInstance" type="Node2D" parent="FlipGroup/DamageArea"]
+script = ExtResource("7_4t7mx")
+damage_layer = 2
+metadata/_custom_type_script = "uid://dd5wfdkuccdar"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlipGroup/DamageArea"]
+position = Vector2(8, -1.5)
+shape = SubResource("RectangleShape2D_yfd5y")
+disabled = true
+debug_color = Color(0.99, 0, 0.231, 0.12549)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_acu58")
+}
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("4_m2uf3")
+metadata/_custom_type_script = "uid://cwgjtd2qwnb20"
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("5_wkkvt")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_4dkfh")
+animation_player = NodePath("../../../AnimationPlayer")
+
+[node name="ChargeRequest" type="Node" parent="StateChart/Root/Idle"]
+script = ExtResource("10_yfd5y")
+to = NodePath("../../Charge")
+event = &"charge_request"
+delay_in_seconds = "2.0"
+
+[node name="Charge" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_4dkfh")
+animation_player = NodePath("../../../AnimationPlayer")
+
+[node name="ChargeCancel" type="Node" parent="StateChart/Root/Charge"]
+script = ExtResource("10_yfd5y")
+to = NodePath("../../Idle")
+event = &"charge_cancel"
+delay_in_seconds = "0.0"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Charge"]
+script = ExtResource("10_yfd5y")
+to = NodePath("../../Idle")
+delay_in_seconds = "1.0"
+
+[connection signal="state_processing" from="StateChart/Root/Idle" to="." method="_on_idle_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Charge" to="." method="_on_charge_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Charge" to="." method="_on_charge_state_exited"]

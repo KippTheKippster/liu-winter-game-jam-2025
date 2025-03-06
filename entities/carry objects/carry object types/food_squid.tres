@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CarryObjectType" load_steps=3 format=3 uid="uid://d3kycjs4w1sjr"]
+
+[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="1_pgmhi"]
+[ext_resource type="Texture2D" uid="uid://bk8qlibv8fa1o" path="res://entities/carry objects/assets/squid.png" id="2_oayeb"]
+
+[resource]
+script = ExtResource("1_pgmhi")
+eatable = true
+texture = ExtResource("2_oayeb")
+offset = Vector2(0, -3.5)
+metadata/_custom_type_script = "uid://d2bdbs6pakajn"

@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://dwxtrccdrpoyl"]
+
+[ext_resource type="Script" uid="uid://h18rt7fqatef" path="res://entities/carry objects/carry_object.gd" id="1_qsx2l"]
+[ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="2_hgf20"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="3_uhyox"]
+[ext_resource type="Texture2D" uid="uid://l8ujhgbcecqw" path="res://entities/carry objects/assets/meat.png" id="4_fm0f1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mllgo"]
+radius = 4.12311
+
+[node name="CarryObject" type="Node2D"]
+script = ExtResource("1_qsx2l")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_mllgo")
+
+[node name="Creature" type="Node2D" parent="Area2D" node_paths=PackedStringArray("carriable")]
+script = ExtResource("2_hgf20")
+carriable = NodePath("../..")
+creature_layer = 4
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="VerticalGroup" type="Node2D" parent="."]
+script = ExtResource("3_uhyox")
+gravity = 120.0
+jump_speed = 60.0
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
+
+[node name="ObjectSprite" type="Sprite2D" parent="VerticalGroup"]
+unique_name_in_owner = true
+texture = ExtResource("4_fm0f1")
+offset = Vector2(0, -2)
+
+[connection signal="carry_object_type_changed" from="." to="." method="_on_carry_object_type_changed"]
+[connection signal="placed" from="." to="." method="_on_placed"]

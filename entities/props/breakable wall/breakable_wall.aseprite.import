@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b43dbwv7dqcni"
+path="res://.godot/imported/breakable_wall.aseprite-68e94281169a95765c5d96ca6d792917.res"
+
+[deps]
+
+source_file="res://entities/props/breakable wall/breakable_wall.aseprite"
+dest_files=["res://.godot/imported/breakable_wall.aseprite-68e94281169a95765c5d96ca6d792917.res"]
+
+[params]
+

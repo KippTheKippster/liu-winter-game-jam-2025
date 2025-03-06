@@ -110,6 +110,7 @@ func release_command() -> void:
 
 
 func apply_command() -> void:
+	print("Applying to: ", penguin_list.size())
 	if target_list.is_empty():
 		for penguin in penguin_list:
 			if is_instance_valid(penguin):

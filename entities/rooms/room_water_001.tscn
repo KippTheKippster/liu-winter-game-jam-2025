@@ -1,0 +1,165 @@
+[gd_scene load_steps=3 format=3 uid="uid://cic3o1hce0rvo"]
+
+[ext_resource type="PackedScene" uid="uid://cgsisbnhd4atk" path="res://entities/rooms/room_template.tscn" id="1_c5kw8"]
+[ext_resource type="PackedScene" uid="uid://cobh34bindth6" path="res://entities/props/water/water.tscn" id="2_5eq0s"]
+
+[node name="RoomWater001" instance=ExtResource("1_c5kw8")]
+
+[node name="Room" parent="." index="0" node_paths=PackedStringArray("walls")]
+walls = {
+Vector2i(-1, -1): NodePath("../Walls/WallsUpLeft"),
+Vector2i(-1, 0): NodePath("../Walls/WallsLeft"),
+Vector2i(-1, 1): NodePath("../Walls/WallsDownLeft"),
+Vector2i(0, -1): NodePath("../Walls/WallsUp"),
+Vector2i(0, 1): NodePath("../Walls/WallsDown"),
+Vector2i(1, -1): NodePath("../Walls/WallUpRight"),
+Vector2i(1, 0): NodePath("../Walls/WallsRight"),
+Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
+}
+
+[node name="Water" parent="." index="2" instance=ExtResource("2_5eq0s")]
+position = Vector2(8, 8)
+
+[node name="Water2" parent="." index="3" instance=ExtResource("2_5eq0s")]
+position = Vector2(8, 16)
+
+[node name="Water3" parent="." index="4" instance=ExtResource("2_5eq0s")]
+position = Vector2(8, 24)
+
+[node name="Water4" parent="." index="5" instance=ExtResource("2_5eq0s")]
+position = Vector2(8, 32)
+
+[node name="Water5" parent="." index="6" instance=ExtResource("2_5eq0s")]
+position = Vector2(8, 40)
+
+[node name="Water6" parent="." index="7" instance=ExtResource("2_5eq0s")]
+position = Vector2(8, 48)
+
+[node name="Water7" parent="." index="8" instance=ExtResource("2_5eq0s")]
+position = Vector2(8, 56)
+
+[node name="Water8" parent="." index="9" instance=ExtResource("2_5eq0s")]
+position = Vector2(16, 8)
+
+[node name="Water9" parent="." index="10" instance=ExtResource("2_5eq0s")]
+position = Vector2(16, 16)
+
+[node name="Water10" parent="." index="11" instance=ExtResource("2_5eq0s")]
+position = Vector2(16, 24)
+
+[node name="Water11" parent="." index="12" instance=ExtResource("2_5eq0s")]
+position = Vector2(16, 32)
+
+[node name="Water12" parent="." index="13" instance=ExtResource("2_5eq0s")]
+position = Vector2(16, 40)
+
+[node name="Water13" parent="." index="14" instance=ExtResource("2_5eq0s")]
+position = Vector2(16, 48)
+
+[node name="Water14" parent="." index="15" instance=ExtResource("2_5eq0s")]
+position = Vector2(16, 56)
+
+[node name="Water15" parent="." index="16" instance=ExtResource("2_5eq0s")]
+position = Vector2(24, 8)
+
+[node name="Water16" parent="." index="17" instance=ExtResource("2_5eq0s")]
+position = Vector2(24, 16)
+
+[node name="Water17" parent="." index="18" instance=ExtResource("2_5eq0s")]
+position = Vector2(24, 24)
+
+[node name="Water18" parent="." index="19" instance=ExtResource("2_5eq0s")]
+position = Vector2(24, 32)
+
+[node name="Water19" parent="." index="20" instance=ExtResource("2_5eq0s")]
+position = Vector2(24, 40)
+
+[node name="Water20" parent="." index="21" instance=ExtResource("2_5eq0s")]
+position = Vector2(24, 48)
+
+[node name="Water21" parent="." index="22" instance=ExtResource("2_5eq0s")]
+position = Vector2(24, 56)
+
+[node name="Water22" parent="." index="23" instance=ExtResource("2_5eq0s")]
+position = Vector2(32, 8)
+
+[node name="Water23" parent="." index="24" instance=ExtResource("2_5eq0s")]
+position = Vector2(32, 16)
+
+[node name="Water24" parent="." index="25" instance=ExtResource("2_5eq0s")]
+position = Vector2(32, 24)
+
+[node name="Water25" parent="." index="26" instance=ExtResource("2_5eq0s")]
+position = Vector2(32, 32)
+
+[node name="Water26" parent="." index="27" instance=ExtResource("2_5eq0s")]
+position = Vector2(32, 40)
+
+[node name="Water27" parent="." index="28" instance=ExtResource("2_5eq0s")]
+position = Vector2(32, 48)
+
+[node name="Water28" parent="." index="29" instance=ExtResource("2_5eq0s")]
+position = Vector2(32, 56)
+
+[node name="Water29" parent="." index="30" instance=ExtResource("2_5eq0s")]
+position = Vector2(40, 8)
+
+[node name="Water30" parent="." index="31" instance=ExtResource("2_5eq0s")]
+position = Vector2(40, 16)
+
+[node name="Water31" parent="." index="32" instance=ExtResource("2_5eq0s")]
+position = Vector2(40, 24)
+
+[node name="Water32" parent="." index="33" instance=ExtResource("2_5eq0s")]
+position = Vector2(40, 32)
+
+[node name="Water33" parent="." index="34" instance=ExtResource("2_5eq0s")]
+position = Vector2(40, 40)
+
+[node name="Water34" parent="." index="35" instance=ExtResource("2_5eq0s")]
+position = Vector2(40, 48)
+
+[node name="Water35" parent="." index="36" instance=ExtResource("2_5eq0s")]
+position = Vector2(40, 56)
+
+[node name="Water36" parent="." index="37" instance=ExtResource("2_5eq0s")]
+position = Vector2(48, 8)
+
+[node name="Water37" parent="." index="38" instance=ExtResource("2_5eq0s")]
+position = Vector2(48, 16)
+
+[node name="Water38" parent="." index="39" instance=ExtResource("2_5eq0s")]
+position = Vector2(48, 24)
+
+[node name="Water39" parent="." index="40" instance=ExtResource("2_5eq0s")]
+position = Vector2(48, 32)
+
+[node name="Water40" parent="." index="41" instance=ExtResource("2_5eq0s")]
+position = Vector2(48, 40)
+
+[node name="Water41" parent="." index="42" instance=ExtResource("2_5eq0s")]
+position = Vector2(48, 48)
+
+[node name="Water42" parent="." index="43" instance=ExtResource("2_5eq0s")]
+position = Vector2(48, 56)
+
+[node name="Water43" parent="." index="44" instance=ExtResource("2_5eq0s")]
+position = Vector2(56, 8)
+
+[node name="Water44" parent="." index="45" instance=ExtResource("2_5eq0s")]
+position = Vector2(56, 16)
+
+[node name="Water45" parent="." index="46" instance=ExtResource("2_5eq0s")]
+position = Vector2(56, 24)
+
+[node name="Water46" parent="." index="47" instance=ExtResource("2_5eq0s")]
+position = Vector2(56, 32)
+
+[node name="Water47" parent="." index="48" instance=ExtResource("2_5eq0s")]
+position = Vector2(56, 40)
+
+[node name="Water48" parent="." index="49" instance=ExtResource("2_5eq0s")]
+position = Vector2(56, 48)
+
+[node name="Water49" parent="." index="50" instance=ExtResource("2_5eq0s")]
+position = Vector2(56, 56)

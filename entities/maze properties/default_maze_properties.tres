@@ -1,11 +1,24 @@
-[gd_resource type="Resource" script_class="MazeProperties" load_steps=2 format=3 uid="uid://cnim1glcs4as1"]
+[gd_resource type="Resource" script_class="MazeProperties" load_steps=8 format=3 uid="uid://cnim1glcs4as1"]
 
+[ext_resource type="Script" uid="uid://cy5qt87mnccof" path="res://components/maze/room_scene_group.gd" id="1_di4uq"]
 [ext_resource type="Script" uid="uid://b62auoj638fvg" path="res://components/maze/maza_properties.gd" id="1_l6f1c"]
+[ext_resource type="Resource" uid="uid://bxidnkgeae6xv" path="res://entities/rooms/room scene groups/room_scene_group_boffus.tres" id="3_niyvi"]
+[ext_resource type="Resource" uid="uid://1nnsrh62r0j2" path="res://entities/rooms/room scene groups/room_scene_group_corridor.tres" id="4_jf1ic"]
+[ext_resource type="Resource" uid="uid://bp1q6nk0g465p" path="res://entities/rooms/room scene groups/room_scene_group_igloo.tres" id="5_ou46f"]
+[ext_resource type="Resource" uid="uid://ermhvuiwa2ff" path="res://entities/rooms/room scene groups/room_scene_group_raft.tres" id="6_d3go4"]
+[ext_resource type="Resource" uid="uid://bid11301stval" path="res://entities/rooms/room scene groups/room_scene_group_start_point.tres" id="7_0l826"]
 
 [resource]
 script = ExtResource("1_l6f1c")
-path_amount = 8
-path_turn_amount = 4
-path_min_length = 1
-path_max_length = 2
+seed = 0
+distinct_room_scene_groups = Dictionary[ExtResource("1_di4uq"), int]({})
+room_scene_group_corridor = ExtResource("4_jf1ic")
+room_scene_group_start_point = ExtResource("7_0l826")
+room_scene_group_boffus = ExtResource("3_niyvi")
+room_scene_group_igloo = ExtResource("5_ou46f")
+room_scene_group_raft = ExtResource("6_d3go4")
+path_amount = null
+path_turn_amount = null
+path_min_length = null
+path_max_length = null
 metadata/_custom_type_script = ExtResource("1_l6f1c")

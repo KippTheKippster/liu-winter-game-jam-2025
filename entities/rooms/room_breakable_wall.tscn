@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxy11345dmkqg"]
+
+[ext_resource type="PackedScene" uid="uid://cgsisbnhd4atk" path="res://entities/rooms/room_template.tscn" id="1_h51v0"]
+[ext_resource type="PackedScene" uid="uid://hya1a4703i6q" path="res://entities/props/breakable_wall.tscn" id="2_nigy7"]
+[ext_resource type="Script" uid="uid://b7i6w22e187cp" path="res://entities/rooms/room_breakable_wall.gd" id="2_t4iu3"]
+[ext_resource type="PackedScene" uid="uid://wwoo0xbgbrpv" path="res://entities/props/wall/snow_wall.tscn" id="3_fe0ps"]
+
+[node name="RoomBreakableWall" instance=ExtResource("1_h51v0")]
+script = ExtResource("2_t4iu3")
+
+[node name="Room" parent="." index="0" node_paths=PackedStringArray("walls")]
+walls = {
+Vector2i(-1, -1): NodePath("../Walls/WallsUpLeft"),
+Vector2i(-1, 0): NodePath("../Walls/WallsLeft"),
+Vector2i(-1, 1): NodePath("../Walls/WallsDownLeft"),
+Vector2i(0, -1): NodePath("../Walls/WallsUp"),
+Vector2i(0, 1): NodePath("../Walls/WallsDown"),
+Vector2i(1, -1): NodePath("../Walls/WallUpRight"),
+Vector2i(1, 0): NodePath("../Walls/WallsRight"),
+Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
+}
+
+[node name="VerticalGroup" type="Node2D" parent="." index="2"]
+y_sort_enabled = true
+
+[node name="BreakableWall" parent="VerticalGroup" index="0" instance=ExtResource("2_nigy7")]
+position = Vector2(32, 32)
+orientation = 1
+
+[node name="SnowWall" parent="VerticalGroup" index="1" instance=ExtResource("3_fe0ps")]
+position = Vector2(32, 8)
+
+[node name="SnowWall2" parent="VerticalGroup" index="2" instance=ExtResource("3_fe0ps")]
+position = Vector2(32, 16)
+
+[node name="SnowWall3" parent="VerticalGroup" index="3" instance=ExtResource("3_fe0ps")]
+position = Vector2(32, 48)
+
+[node name="SnowWall4" parent="VerticalGroup" index="4" instance=ExtResource("3_fe0ps")]
+position = Vector2(32, 56)
+
+[node name="HorizontalGroup" type="Node2D" parent="." index="3"]
+y_sort_enabled = true
+
+[node name="BreakableWall" parent="HorizontalGroup" index="0" instance=ExtResource("2_nigy7")]
+position = Vector2(32, 32)
+
+[node name="SnowWall" parent="HorizontalGroup" index="1" instance=ExtResource("3_fe0ps")]
+position = Vector2(8, 32)
+
+[node name="SnowWall2" parent="HorizontalGroup" index="2" instance=ExtResource("3_fe0ps")]
+position = Vector2(16, 32)
+
+[node name="SnowWall3" parent="HorizontalGroup" index="3" instance=ExtResource("3_fe0ps")]
+position = Vector2(48, 32)
+
+[node name="SnowWall4" parent="HorizontalGroup" index="4" instance=ExtResource("3_fe0ps")]
+position = Vector2(56, 32)
+
+[connection signal="layout_updated" from="Room" to="." method="_on_room_layout_updated"]

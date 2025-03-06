@@ -1,0 +1,14 @@
+[gd_resource type="AnimationNodeBlendTree" load_steps=3 format=3 uid="uid://bc14sj0s2ecf5"]
+
+[ext_resource type="AnimationNodeStateMachine" uid="uid://b0nfx46nxw3r5" path="res://entities/penguin/animation nodes/penguin_root_state_machine.tres" id="1_k5eme"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_db7a7"]
+
+[resource]
+graph_offset = Vector2(-363.778, -19.8089)
+nodes/output/position = Vector2(280, 140)
+nodes/root_state_machine/node = ExtResource("1_k5eme")
+nodes/root_state_machine/position = Vector2(-240, 140)
+nodes/time_scale/node = SubResource("AnimationNodeTimeScale_db7a7")
+nodes/time_scale/position = Vector2(60, 140)
+node_connections = [&"output", 0, &"time_scale", &"time_scale", 0, &"root_state_machine"]

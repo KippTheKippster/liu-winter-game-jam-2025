@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CarryObjectType" load_steps=3 format=3 uid="uid://u0nsf50run60"]
+
+[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="1_08mp4"]
+[ext_resource type="Texture2D" uid="uid://c0vec73rrutou" path="res://entities/carry objects/assets/shrimp.png" id="2_wlhsi"]
+
+[resource]
+script = ExtResource("1_08mp4")
+eatable = true
+texture = ExtResource("2_wlhsi")
+offset = Vector2(-0.5, -6.5)
+metadata/_custom_type_script = "uid://d2bdbs6pakajn"

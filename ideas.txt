@@ -1,11 +1,21 @@
 Penguins spawn as eggs
-Walls
+Breakable Walls
 Ice paths
 Fireworks
 Snowball
 Steal monster eggs
+Walking Igloo
+Water where penguins can't carry items
 Health:
 	Show health bar?
 	No health bar:
 		First hit => Stun
 		Second hit => Die?
+Caves
+Bottomless pits with enemies that excel at knockback
+Enemy holding balloons
+TNT
+Kraken
+Fire
+Mecha penguin
+Kraken bossfight

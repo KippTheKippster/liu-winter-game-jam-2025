@@ -1,27 +1,11 @@
 extends Node2D
 class_name FlowFieldWalker
 
+@export var reverse_path: bool
 @export var max_path_follow_length: int = 10
 
 var flow_field_manager: FlowFieldManager
 var flow_field: FlowField
-"""
-var target_point: Vector2:
-	get:
-		return flow_field_manager.coords_to_point(target_coords)
-	set(value):
-		target_coords = flow_field_manager.point_to_coords(value)
-
-var target_coords: Vector2i:
-	set(value):
-		var old_value := target_coords
-		target_coords = value
-		if old_value != target_coords:
-			if flow_field:
-				flow_field_manager.remove_user_from_flow_field(old_value)
-			
-			flow_field = flow_field_manager.add_user_to_flow_field(target_coords)
-"""
 var target_coords: Vector2i:
 	get:
 		return flow_field_manager.point_to_coords(target_point)
@@ -37,25 +21,35 @@ var target_point: Vector2:
 		if old_coords != new_coords:
 			if flow_field:
 				flow_field_manager.remove_user_from_flow_field(old_coords)
+				flow_field = null
 			
 			flow_field = flow_field_manager.add_user_to_flow_field(new_coords)
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
 	flow_field_manager = Utils.find_child_of_class(get_tree().root, "FlowFieldManager")
 
 
+func _exit_tree() -> void:
+	if flow_field:
+		flow_field_manager.remove_user_from_flow_field(target_coords)
+		flow_field = null
+
+
 func get_direction() -> Vector2:
-	var cell_size := flow_field.cell_size
-	#var cell := (global_position / cell_size - Vector2(0.5, 0.5)).round()
-	var cell := flow_field_manager.point_to_coords(global_position)
-	var cell_path = get_cell_path(cell)
+	var coords := flow_field_manager.point_to_coords(global_position)
+	var cell_path := get_cell_path(coords)
 	var direction := Vector2.ZERO
-	for i in cell_path.size():
-		direction += Vector2(cell_path[i]).normalized()
+	var direction_sign := 1 
+	if reverse_path:
+		cell_path.reverse()
+		direction_sign = -1
 	
-	if direction == Vector2.ZERO or flow_field.get_cell_value(cell) < max_path_follow_length:
-		direction += (target_point - global_position).normalized()
+	for i in cell_path.size():
+		direction += Vector2(cell_path[i]).normalized() * direction_sign
+	
+	if direction == Vector2.ZERO or flow_field.get_cell_value(coords) < max_path_follow_length:
+		direction += (target_point - global_position).normalized() * direction_sign
 	
 	return direction.normalized()
 

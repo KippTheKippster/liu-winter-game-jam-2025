@@ -1,6 +1,8 @@
 extends Node2D
 class_name FlowFieldSolid
 
+@export var flood_cell_on_tree_exit: bool = false
+
 var flow_field_manager: FlowFieldManager
 var solid_coords: Vector2i
 
@@ -14,4 +16,4 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
-	flow_field_manager.remove_solid(solid_coords)
+	flow_field_manager.remove_solid(solid_coords, flood_cell_on_tree_exit)

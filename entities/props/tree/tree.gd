@@ -3,6 +3,7 @@ extends StaticBody2D
 
 @onready var tree_sprite: Sprite2D = $TreeSprite
 
+@export var randomize_on_ready: bool = true
 @export_enum("No Snow", "Light Snow", "Full Snow") var type: int:
 	set(value):
 		type = value
@@ -13,6 +14,9 @@ extends StaticBody2D
 	type = randi_range(0, 2)
 
 func _ready() -> void:
+	if not Engine.is_editor_hint():
+		randomize_type_callable.call()
+	
 	update_sprite()
 
 

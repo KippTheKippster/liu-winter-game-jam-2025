@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CarryObjectType" load_steps=3 format=3 uid="uid://cvel35rx5kt4s"]
+
+[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="1_yi58w"]
+[ext_resource type="Texture2D" uid="uid://barysjgilhliw" path="res://entities/carry objects/assets/food_penguin.png" id="2_38j04"]
+
+[resource]
+script = ExtResource("1_yi58w")
+eatable = true
+texture = ExtResource("2_38j04")
+offset = Vector2(0, 0)
+metadata/_custom_type_script = "uid://d2bdbs6pakajn"

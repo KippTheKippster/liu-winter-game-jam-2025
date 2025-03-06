@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RoomSceneGroup" load_steps=3 format=3 uid="uid://bid11301stval"]
+
+[ext_resource type="Script" uid="uid://cy5qt87mnccof" path="res://components/maze/room_scene_group.gd" id="1_3md1y"]
+[ext_resource type="PackedScene" uid="uid://ccwj3msxs2fn4" path="res://entities/rooms/room_start.tscn" id="2_6cljd"]
+
+[resource]
+script = ExtResource("1_3md1y")
+room_scenes = Array[PackedScene]([ExtResource("2_6cljd")])
+metadata/_custom_type_script = "uid://cy5qt87mnccof"

@@ -18,8 +18,7 @@ Vector2i(1, 1): NodePath("../Walls/WallsDownRight")
 }
 
 [node name="Tree" parent="." index="2" instance=ExtResource("2_hvkq7")]
-position = Vector2(53, 11)
-type = 1
+position = Vector2(56, 8)
 
 [node name="Tree2" parent="." index="3" instance=ExtResource("2_hvkq7")]
-position = Vector2(11, 55)
+position = Vector2(8, 56)

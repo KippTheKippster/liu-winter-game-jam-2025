@@ -1,12 +1,33 @@
-[gd_resource type="Resource" script_class="MazeProperties" load_steps=2 format=3 uid="uid://b2apre2k76kjp"]
+[gd_resource type="Resource" script_class="MazeProperties" load_steps=12 format=3 uid="uid://b2apre2k76kjp"]
 
 [ext_resource type="Script" uid="uid://b62auoj638fvg" path="res://components/maze/maza_properties.gd" id="1_d3sw4"]
+[ext_resource type="Script" uid="uid://cy5qt87mnccof" path="res://components/maze/room_scene_group.gd" id="1_qr4wk"]
+[ext_resource type="Resource" uid="uid://cdrhd3m2a1sd5" path="res://entities/rooms/room scene groups/room_scene_group_enemy.tres" id="2_1bdmh"]
+[ext_resource type="Resource" uid="uid://bxidnkgeae6xv" path="res://entities/rooms/room scene groups/room_scene_group_boffus.tres" id="2_pc7vg"]
+[ext_resource type="Resource" uid="uid://dr2o5rcgqe8ys" path="res://entities/rooms/room scene groups/room_scene_group_fishing_hole.tres" id="3_1ygy4"]
+[ext_resource type="Resource" uid="uid://1nnsrh62r0j2" path="res://entities/rooms/room scene groups/room_scene_group_corridor.tres" id="3_qr4wk"]
+[ext_resource type="Resource" uid="uid://ij0olkgjhqhh" path="res://entities/rooms/room scene groups/room_scene_group_water.tres" id="4_1ygy4"]
+[ext_resource type="Resource" uid="uid://bp1q6nk0g465p" path="res://entities/rooms/room scene groups/room_scene_group_igloo.tres" id="4_mrjoe"]
+[ext_resource type="Resource" uid="uid://bph53gag7de2o" path="res://entities/rooms/room scene groups/room_scene_group_breakable_wall.tres" id="5_0cfri"]
+[ext_resource type="Resource" uid="uid://bid11301stval" path="res://entities/rooms/room scene groups/room_scene_group_start_point.tres" id="5_1bdmh"]
+[ext_resource type="Resource" uid="uid://ermhvuiwa2ff" path="res://entities/rooms/room scene groups/room_scene_group_raft.tres" id="9_hxoaq"]
 
 [resource]
 script = ExtResource("1_d3sw4")
-path_amount = 5
+seed = 0
+distinct_room_scene_groups = Dictionary[ExtResource("1_qr4wk"), int]({
+ExtResource("2_1bdmh"): 1,
+ExtResource("3_1ygy4"): 2,
+ExtResource("4_1ygy4"): 2,
+ExtResource("5_0cfri"): 1
+})
+room_scene_group_corridor = ExtResource("3_qr4wk")
+room_scene_group_start_point = ExtResource("5_1bdmh")
+room_scene_group_boffus = ExtResource("2_pc7vg")
+room_scene_group_igloo = ExtResource("4_mrjoe")
+room_scene_group_raft = ExtResource("9_hxoaq")
+path_amount = 7
 path_turn_amount = 2
 path_min_length = 1
 path_max_length = 2
-seed = -1
 metadata/_custom_type_script = ExtResource("1_d3sw4")

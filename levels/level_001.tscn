@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin.tscn" id="3_y34ju"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="4_y34ju"]
 [ext_resource type="PackedScene" uid="uid://wwoo0xbgbrpv" path="res://entities/props/wall/snow_wall.tscn" id="5_po88e"]
-[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/food/food.tscn" id="6_44t5x"]
+[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/carry objects/carry_object.tscn" id="6_44t5x"]
 [ext_resource type="PackedScene" uid="uid://bi80q0c1kcjm" path="res://entities/boffus/boffus.tscn" id="7_wtxts"]
 [ext_resource type="PackedScene" uid="uid://d1ukp6d0k6q5k" path="res://entities/enemies/tree mimic/tree_mimic.tscn" id="8_jrmpr"]
 

@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://cxfmeykoc0drc" path="res://levels/level.gd" id="1_gup2b"]
 
 [node name="LevelTemplate" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_gup2b")

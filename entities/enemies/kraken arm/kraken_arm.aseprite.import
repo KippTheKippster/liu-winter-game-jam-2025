@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bbc0v8v0rx24n"
+path="res://.godot/imported/kraken_arm.aseprite-4ede78a253b6eb957a0d38d545f553fa.res"
+
+[deps]
+
+source_file="res://entities/enemies/kraken arm/kraken_arm.aseprite"
+dest_files=["res://.godot/imported/kraken_arm.aseprite-4ede78a253b6eb957a0d38d545f553fa.res"]
+
+[params]
+

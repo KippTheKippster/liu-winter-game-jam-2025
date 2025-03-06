@@ -3,6 +3,7 @@ class_name FishingHole
 
 @onready var catch_timer: Timer = $CatchTimer
 @onready var carriable_launcher: CarriableLauncher = $CarriableLauncher
+@onready var splash_audio: AudioStreamPlayer2D = $SplashAudio
 
 var caught_count: int = 0
 
@@ -19,6 +20,7 @@ func _on_catch_timer_timeout() -> void:
 	caught_count += 1
 	reset_timer()
 	carriable_launcher.launch()
+	splash_audio.play()
 
 
 func reset_timer() -> void:

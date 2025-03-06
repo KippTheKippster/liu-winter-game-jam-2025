@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bfbemjji1kdcl"
+path="res://.godot/imported/steam_boat.aseprite-c619c0e063aca0e307984452997cfd90.res"
+
+[deps]
+
+source_file="res://entities/props/raft/steam_boat.aseprite"
+dest_files=["res://.godot/imported/steam_boat.aseprite-c619c0e063aca0e307984452997cfd90.res"]
+
+[params]
+

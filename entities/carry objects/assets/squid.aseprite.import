@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://i3rp14t3pae2"
+path="res://.godot/imported/squid.aseprite-42c49131d1eae83558366857efa80562.res"
+
+[deps]
+
+source_file="res://entities/carry objects/assets/squid.aseprite"
+dest_files=["res://.godot/imported/squid.aseprite-42c49131d1eae83558366857efa80562.res"]
+
+[params]
+

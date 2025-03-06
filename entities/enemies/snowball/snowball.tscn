@@ -1,0 +1,90 @@
+[gd_scene load_steps=9 format=3 uid="uid://c6re2egyy0hux"]
+
+[ext_resource type="Script" uid="uid://dixcin2862cqp" path="res://entities/enemies/snowball/snowball.gd" id="1_jqiyb"]
+[ext_resource type="Texture2D" uid="uid://b5ypsiei25uf6" path="res://entities/enemies/snowball/snowball.png" id="1_t1m4k"]
+[ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="3_2tb54"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="3_6lvto"]
+[ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="3_axbdc"]
+[ext_resource type="AudioStream" uid="uid://cxxqxw1fl0cbm" path="res://audio/penguin_scared_randomizer.tres" id="3_k03ai"]
+[ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="3_yk20s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6lvto"]
+radius = 2.0
+
+[node name="Snowball" type="Node2D" node_paths=PackedStringArray("sprites")]
+script = ExtResource("1_jqiyb")
+sprites = [NodePath("VerticalGroup/FlipGroup/SnowballSprite"), NodePath("VerticalGroup/FlipGroup/PenguinSprite1"), NodePath("VerticalGroup/FlipGroup/PenguinSprite2"), NodePath("VerticalGroup/FlipGroup/PenguinSprite3"), NodePath("VerticalGroup/FlipGroup/PenguinSprite4")]
+
+[node name="Creature" type="Node2D" parent="."]
+script = ExtResource("3_axbdc")
+detection_range = 6.0
+creature_mask = 2
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="DamageInstance" type="Node2D" parent="."]
+script = ExtResource("3_yk20s")
+base_damage = 0.0
+metadata/_custom_type_script = "uid://dd5wfdkuccdar"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_6lvto")
+
+[node name="VerticalGroup" type="Node2D" parent="."]
+script = ExtResource("3_6lvto")
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
+
+[node name="FlipGroup" type="Node2D" parent="VerticalGroup"]
+script = ExtResource("3_2tb54")
+metadata/_custom_type_script = "uid://bhjyv2astlcwo"
+
+[node name="SnowballSprite" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
+texture = ExtResource("1_t1m4k")
+offset = Vector2(0, -10)
+hframes = 4
+vframes = 15
+
+[node name="PenguinSprite1" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
+visible = false
+texture = ExtResource("1_t1m4k")
+offset = Vector2(0, -10)
+hframes = 4
+vframes = 15
+
+[node name="PenguinSprite2" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
+visible = false
+texture = ExtResource("1_t1m4k")
+offset = Vector2(0, -10)
+hframes = 4
+vframes = 15
+
+[node name="PenguinSprite3" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
+visible = false
+texture = ExtResource("1_t1m4k")
+offset = Vector2(0, -10)
+hframes = 4
+vframes = 15
+
+[node name="PenguinSprite4" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
+visible = false
+texture = ExtResource("1_t1m4k")
+offset = Vector2(0, -10)
+hframes = 4
+vframes = 15
+
+[node name="ScaredAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_k03ai")
+pitch_scale = 1.2
+
+[node name="FrameTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="GrowTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="FrameTimer" to="." method="_on_frame_timer_timeout"]
+[connection signal="timeout" from="GrowTimer" to="." method="_on_grow_timer_timeout"]

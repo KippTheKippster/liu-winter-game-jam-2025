@@ -26,6 +26,7 @@ func _process(delta: float) -> void:
 			zoom /= 2.0
 			
 		#global_position = get_global_mouse_position() / 4.0
-
-
+	
 	zoom = zoom.clamp(Vector2(1.0, 1.0), Vector2(4.0, 4.0))
+	
+	RenderingServer.global_shader_parameter_set("camera_zoom", zoom)

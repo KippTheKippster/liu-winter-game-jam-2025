@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://cdegfkl3e6eei"]
+
+[ext_resource type="Shader" uid="uid://bq67t8tv58j0f" path="res://entities/props/water/water_material.gdshader" id="1_cie0b"]
+[ext_resource type="Texture2D" uid="uid://c5jbn83vaify1" path="res://entities/skies/starry_sky_01.png" id="2_cie0b"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cie0b"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cie0b"]
+width = 360
+height = 360
+seamless = true
+seamless_blend_skirt = 0.319
+noise = SubResource("FastNoiseLite_cie0b")
+
+[resource]
+shader = ExtResource("1_cie0b")
+shader_parameter/sky_sampler = ExtResource("2_cie0b")
+shader_parameter/sky_texture_size = Vector2(360, 360)
+shader_parameter/noise_sampler_1 = SubResource("NoiseTexture2D_cie0b")

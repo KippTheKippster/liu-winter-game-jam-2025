@@ -20,4 +20,4 @@ hframes = 3
 
 [node name="FlowFieldSolid" type="Node2D" parent="."]
 script = ExtResource("3_22io7")
-metadata/_custom_type_script = ExtResource("3_22io7")
+metadata/_custom_type_script = "uid://cospm7wq6xrv6"

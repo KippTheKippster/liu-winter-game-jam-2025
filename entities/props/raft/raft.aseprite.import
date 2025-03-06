@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dwyivkn88xjki"
+path="res://.godot/imported/raft.aseprite-a0ec83007ebe4fd984a32b42070cdb2f.res"
+
+[deps]
+
+source_file="res://entities/props/raft/raft.aseprite"
+dest_files=["res://.godot/imported/raft.aseprite-a0ec83007ebe4fd984a32b42070cdb2f.res"]
+
+[params]
+

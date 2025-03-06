@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CarryObjectType" load_steps=3 format=3 uid="uid://csgrgd3ywh8js"]
+
+[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="1_usrnp"]
+[ext_resource type="Texture2D" uid="uid://cyb72v12q2b80" path="res://entities/carry objects/assets/meat_big.png" id="2_2bfou"]
+
+[resource]
+script = ExtResource("1_usrnp")
+eatable = true
+texture = ExtResource("2_2bfou")
+offset = Vector2(0, -2)
+metadata/_custom_type_script = "uid://d2bdbs6pakajn"

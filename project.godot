@@ -18,6 +18,7 @@ config/icon="uid://yhjpfck7w0md"
 [autoload]
 
 GlobalUi="*res://globals/global_ui/global_ui.tscn"
+SignalBus="*res://globals/signal_bus/signal_bus.tscn"
 
 [debug]
 
@@ -25,7 +26,7 @@ gdscript/warnings/unused_parameter=0
 
 [display]
 
-window/size/viewport_width=360
+window/size/viewport_width=640
 window/size/viewport_height=360
 window/stretch/mode="viewport"
 
@@ -117,8 +118,31 @@ camera_speed_boost={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+speed_increase={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":45,"key_label":0,"unicode":43,"location":0,"echo":false,"script":null)
+]
+}
+speed_decrease={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":47,"key_label":0,"unicode":45,"location":0,"echo":false,"script":null)
+]
+}
+
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Penguin"
+2d_physics/layer_3="Enemy"
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0.133333, 0.12549, 0.203922, 1)
+
+[shader_globals]
+
+camera_zoom={
+"type": "vec2",
+"value": Vector2(1, 1)
+}

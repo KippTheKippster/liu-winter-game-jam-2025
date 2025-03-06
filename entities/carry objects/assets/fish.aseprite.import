@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dcfnjut18n56n"
+path="res://.godot/imported/fish.aseprite-4a36f9df4d021f5dc95a0a6f6251e959.res"
+
+[deps]
+
+source_file="res://entities/carry objects/assets/fish.aseprite"
+dest_files=["res://.godot/imported/fish.aseprite-4a36f9df4d021f5dc95a0a6f6251e959.res"]
+
+[params]
+

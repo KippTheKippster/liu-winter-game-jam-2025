@@ -1,0 +1,213 @@
+[gd_scene load_steps=17 format=3 uid="uid://d0wuv85suid2h"]
+
+[ext_resource type="Script" uid="uid://qnax8cx8t7yq" path="res://entities/enemies/kraken arm/kraken_arm.gd" id="1_5bjx3"]
+[ext_resource type="Texture2D" uid="uid://ctpmdukshlkcy" path="res://entities/enemies/kraken arm/kraken_arm.png" id="1_avhhy"]
+[ext_resource type="Texture2D" uid="uid://c07k2vprvj0fh" path="res://entities/enemies/kraken arm/kraken_arm_mask.png" id="1_wbg6q"]
+[ext_resource type="Texture2D" uid="uid://buskn2cbjw1ji" path="res://entities/enemies/kraken arm/kraken_arm_waterline.png" id="3_nlp5v"]
+[ext_resource type="AudioStream" uid="uid://cxxqxw1fl0cbm" path="res://audio/penguin_scared_randomizer.tres" id="4_k0nmw"]
+[ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="5_022xg"]
+[ext_resource type="AudioStream" uid="uid://dhld5jkoee3qx" path="res://audio/water_splash.wav" id="7_qw8pf"]
+
+[sub_resource type="Animation" id="Animation_nlp5v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MaskSprite/KrakenArmSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MaskSprite/KrakenArmWaterlineSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MaskSprite/KrakenArmSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_k0nmw"]
+resource_name = "dive"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MaskSprite/KrakenArmSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(3.03143, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 26)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MaskSprite/KrakenArmWaterlineSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_avhhy"]
+resource_name = "grab"
+length = 2.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MaskSprite/KrakenArmSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(4.59479, 1),
+"update": 0,
+"values": [Vector2(0, 26), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MaskSprite/KrakenArmWaterlineSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("MaskSprite/KrakenArmSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.433333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.433333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"grab_penguin"
+}]
+}
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SplashAudio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("7_qw8pf")
+}],
+"times": PackedFloat32Array(0.35)
+}
+tracks/4/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wbg6q"]
+_data = {
+&"RESET": SubResource("Animation_nlp5v"),
+&"dive": SubResource("Animation_k0nmw"),
+&"grab": SubResource("Animation_avhhy")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5bjx3"]
+animation = &"dive"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qw8pf"]
+animation = &"grab"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0wkco"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7cj2x"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_mqmd0"]
+states/End/position = Vector2(616, 100)
+states/dive/node = SubResource("AnimationNodeAnimation_5bjx3")
+states/dive/position = Vector2(488, 100)
+states/grab/node = SubResource("AnimationNodeAnimation_qw8pf")
+states/grab/position = Vector2(348, 100)
+transitions = ["Start", "grab", SubResource("AnimationNodeStateMachineTransition_0wkco"), "grab", "dive", SubResource("AnimationNodeStateMachineTransition_7cj2x")]
+
+[node name="KrakenArm" type="Node2D"]
+script = ExtResource("1_5bjx3")
+
+[node name="Creature" type="Node2D" parent="."]
+script = ExtResource("5_022xg")
+detection_range = 8.0
+creature_mask = 2
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="MaskSprite" type="Sprite2D" parent="."]
+clip_children = 1
+texture = ExtResource("1_wbg6q")
+offset = Vector2(0, -14)
+
+[node name="KrakenArmWaterlineSprite" type="Sprite2D" parent="MaskSprite"]
+visible = false
+position = Vector2(1, 0)
+texture = ExtResource("3_nlp5v")
+offset = Vector2(1, 0)
+
+[node name="KrakenArmSprite" type="Sprite2D" parent="MaskSprite"]
+unique_name_in_owner = true
+texture = ExtResource("1_avhhy")
+offset = Vector2(0, -10)
+hframes = 2
+
+[node name="PenguinScaredAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_k0nmw")
+pitch_scale = 1.2
+
+[node name="SplashAudio" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+deterministic = false
+libraries = {
+&"": SubResource("AnimationLibrary_wbg6q")
+}
+tree_root = SubResource("AnimationNodeStateMachine_mqmd0")

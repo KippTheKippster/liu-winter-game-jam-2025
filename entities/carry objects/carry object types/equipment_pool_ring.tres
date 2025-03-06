@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CarryObjectType" load_steps=3 format=3 uid="uid://3756488067p0"]
+
+[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="1_w8v8u"]
+[ext_resource type="Texture2D" uid="uid://cakoo2h6ch6y" path="res://entities/carry objects/assets/pool_ring.png" id="2_vupem"]
+
+[resource]
+script = ExtResource("1_w8v8u")
+carry_object_type_instance_path = ""
+eatable = false
+penguin_interest = true
+texture = ExtResource("2_vupem")
+offset = Vector2(0, 0)
+metadata/_custom_type_script = "uid://b4d3ek51qeeju"

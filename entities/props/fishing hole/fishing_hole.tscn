@@ -1,14 +1,15 @@
-[gd_scene load_steps=15 format=3 uid="uid://cb418taoi0lmu"]
+[gd_scene load_steps=17 format=3 uid="uid://cb418taoi0lmu"]
 
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="1_6e1ve"]
 [ext_resource type="Script" uid="uid://dcn1sww4vmul3" path="res://entities/props/fishing hole/fishing_hole.gd" id="1_fhw1b"]
 [ext_resource type="Texture2D" uid="uid://baiyefuhnxt1w" path="res://entities/props/fishing hole/fishing_hole.png" id="1_iymk4"]
 [ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="2_f0v64"]
 [ext_resource type="Script" uid="uid://w8824multbqq" path="res://components/carriable/carriable_launcher.gd" id="4_iuctg"]
-[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/food/food.tscn" id="5_phrop"]
-[ext_resource type="Resource" uid="uid://460toaio7pbp" path="res://entities/food/food types/food_fish.tres" id="6_5sior"]
-[ext_resource type="Resource" uid="uid://d3kycjs4w1sjr" path="res://entities/food/food types/food_squid.tres" id="8_f0v64"]
-[ext_resource type="Resource" uid="uid://u0nsf50run60" path="res://entities/food/food types/food_shrimp.tres" id="8_xg2a0"]
+[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/carry objects/carry_object.tscn" id="5_phrop"]
+[ext_resource type="Resource" uid="uid://460toaio7pbp" path="res://entities/carry objects/carry object types/food_fish.tres" id="6_5sior"]
+[ext_resource type="AudioStream" uid="uid://dhld5jkoee3qx" path="res://audio/water_splash.wav" id="7_jvnwy"]
+[ext_resource type="Resource" uid="uid://d3kycjs4w1sjr" path="res://entities/carry objects/carry object types/food_squid.tres" id="8_f0v64"]
+[ext_resource type="Resource" uid="uid://u0nsf50run60" path="res://entities/carry objects/carry object types/food_shrimp.tres" id="8_xg2a0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o7ldn"]
 radius = 3.0
@@ -39,6 +40,12 @@ animations = [{
 "speed": 1.0
 }]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xg2a0"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("7_jvnwy")
+
 [node name="FishingHole" type="Node2D"]
 z_index = -1
 script = ExtResource("1_fhw1b")
@@ -50,12 +57,12 @@ shape = SubResource("CircleShape2D_o7ldn")
 
 [node name="FlowFieldSolid" type="Node2D" parent="."]
 script = ExtResource("2_f0v64")
-metadata/_custom_type_script = ExtResource("2_f0v64")
+metadata/_custom_type_script = "uid://cospm7wq6xrv6"
 
 [node name="FlowFieldSolid2" type="Node2D" parent="."]
 position = Vector2(-8, 0)
 script = ExtResource("2_f0v64")
-metadata/_custom_type_script = ExtResource("2_f0v64")
+metadata/_custom_type_script = "uid://cospm7wq6xrv6"
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -68,7 +75,7 @@ shape = SubResource("CapsuleShape2D_6e1ve")
 position = Vector2(-7.5, 1.5)
 script = ExtResource("1_6e1ve")
 creature_layer = 8
-metadata/_custom_type_script = ExtResource("1_6e1ve")
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
 [node name="HoleSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_iuctg")
@@ -76,20 +83,25 @@ autoplay = "default"
 frame_progress = 0.527054
 
 [node name="CarriableLauncher" type="Node2D" parent="."]
+visible = false
 position = Vector2(0, -6.5)
 script = ExtResource("4_iuctg")
 launch_all_at_once = false
 start_height = 1.0
-metadata/_custom_type_script = ExtResource("4_iuctg")
+metadata/_custom_type_script = "uid://w8824multbqq"
 
 [node name="Food" parent="CarriableLauncher" instance=ExtResource("5_phrop")]
-food_type = ExtResource("6_5sior")
+carry_object_type = ExtResource("6_5sior")
 
 [node name="Food2" parent="CarriableLauncher" instance=ExtResource("5_phrop")]
-food_type = ExtResource("8_xg2a0")
+carry_object_type = ExtResource("8_xg2a0")
 
 [node name="Food3" parent="CarriableLauncher" instance=ExtResource("5_phrop")]
-food_type = ExtResource("8_f0v64")
+carry_object_type = ExtResource("8_f0v64")
+
+[node name="SplashAudio" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_xg2a0")
+bus = &"Effects"
 
 [node name="CatchTimer" type="Timer" parent="."]
 wait_time = 4.0

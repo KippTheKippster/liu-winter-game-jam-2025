@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AllOfGuard" load_steps=6 format=3 uid="uid://4qriyiurr6fb"]
+
+[ext_resource type="Script" uid="uid://bxm3vahefclw2" path="res://addons/godot_state_charts/guard.gd" id="1_3l0sj"]
+[ext_resource type="Script" uid="uid://dnqyokl3kx7tu" path="res://addons/godot_state_charts/state_is_active_guard.gd" id="2_hao2f"]
+[ext_resource type="Resource" uid="uid://hn0a2tcmje23" path="res://entities/penguin/expression guards/pool_ring_not_equipped.tres" id="3_3y8tx"]
+[ext_resource type="Script" uid="uid://dpo6cocjbfo03" path="res://addons/godot_state_charts/all_of_guard.gd" id="4_tqtmo"]
+
+[sub_resource type="Resource" id="Resource_xxwb7"]
+script = ExtResource("2_hao2f")
+state = NodePath("../../../Effect/Swim")
+metadata/_custom_type_script = "uid://dnqyokl3kx7tu"
+
+[resource]
+script = ExtResource("4_tqtmo")
+guards = Array[ExtResource("1_3l0sj")]([SubResource("Resource_xxwb7"), ExtResource("3_3y8tx")])
+metadata/_custom_type_script = "uid://dpo6cocjbfo03"
