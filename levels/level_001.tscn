@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c4vwlvp4nkygl" path="res://levels/level_template.tscn" id="1_xh6sb"]
 [ext_resource type="PackedScene" uid="uid://c56uuvk1wh8tk" path="res://entities/props/tree/tree.tscn" id="3_io8uw"]
-[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin.tscn" id="3_y34ju"]
+[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin_old.tscn" id="3_y34ju"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="4_y34ju"]
 [ext_resource type="PackedScene" uid="uid://wwoo0xbgbrpv" path="res://entities/props/wall/snow_wall.tscn" id="5_po88e"]
 [ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/carry objects/carry_object.tscn" id="6_44t5x"]

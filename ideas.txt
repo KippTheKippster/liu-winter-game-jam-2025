@@ -19,3 +19,4 @@ Kraken
 Fire
 Mecha penguin
 Kraken bossfight
+Floof (with blur tool and indexed colors)

@@ -6,6 +6,9 @@ enum Size {
 	LARGE
 }
 
+const SnowExplosion = preload("res://entities/effects/snow explosion/snow_explosion.gd")
+const SNOW_EXPLOSION_SCENE = preload("res://entities/effects/snow explosion/snow_explosion.tscn")
+
 @onready var creature: Creature = $Creature
 @onready var scared_audio: AudioStreamPlayer2D = $ScaredAudio
 @onready var grow_timer: Timer = $GrowTimer
@@ -16,11 +19,12 @@ enum Size {
 
 @export var sprites: Array[Sprite2D]
 
-var caught_penguins: Array[Penguin]:
+var caught_penguins: Array[Penguin2]:
 	set(value):
 		caught_penguins = value
 		for i in sprites.size():
 			sprites[i].visible = i <= caught_penguins.size()
+			print(i, ": ", sprites[i].visible)
 
 
 var penguin_limit: int = 1
@@ -47,8 +51,8 @@ var snowball_size: Size = 0:
 
 func _ready() -> void:
 	#penguins_sprite.frame = 0
-	#snowball_size = Size.MEDIUM
-	snowball_size = Size.LARGE
+	snowball_size = Size.SMALL
+	#snowball_size = Size.LARGE
 	caught_penguins = caught_penguins
 
 
@@ -59,7 +63,7 @@ func _process(delta: float) -> void:
 		return
 	
 	var next_creature := creature.get_next_creature_target()
-	if not next_creature or not next_creature.owner or not next_creature.owner is Penguin:
+	if not next_creature or not next_creature.owner or not next_creature.owner is Penguin2:
 		return
 	
 	var penguin := next_creature.owner
@@ -81,6 +85,11 @@ func destroy() -> void:
 		penguin.position = position + direction
 		penguin.health_instance.damage(damage_instance, direction) # DANGER if direction is the same twice then the penguins will be stuck in eachother
 		#penguin.vertical_group.jump()
+	
+	var snow_explosion := SNOW_EXPLOSION_SCENE.instantiate() as SnowExplosion
+	snow_explosion.start_size = max(snowball_size, Size.MEDIUM)
+	add_sibling(snow_explosion)
+	snow_explosion.position = position
 	
 	queue_free()
 

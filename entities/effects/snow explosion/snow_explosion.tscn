@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://flwgcy34fwt3"]
+
+[ext_resource type="Script" uid="uid://ihmabh3wweot" path="res://entities/effects/snow explosion/snow_explosion.gd" id="1_myo3k"]
+[ext_resource type="PackedScene" uid="uid://dy1ro51wo76ye" path="res://entities/effects/snow explosion/snow_particle.tscn" id="1_ytsrj"]
+
+[node name="SnowExplosion" type="Node2D" node_paths=PackedStringArray("snow_particles")]
+y_sort_enabled = true
+script = ExtResource("1_myo3k")
+start_size = 1
+snow_particles = [NodePath("SnowParticle"), NodePath("SnowParticle2"), NodePath("SnowParticle3"), NodePath("SnowParticle4")]
+
+[node name="SnowParticle" parent="." instance=ExtResource("1_ytsrj")]
+direction = Vector2(1, 1)
+
+[node name="SnowParticle2" parent="." instance=ExtResource("1_ytsrj")]
+direction = Vector2(-1, 1)
+
+[node name="SnowParticle3" parent="." instance=ExtResource("1_ytsrj")]
+direction = Vector2(-1, -1)
+
+[node name="SnowParticle4" parent="." instance=ExtResource("1_ytsrj")]
+direction = Vector2(1, -1)

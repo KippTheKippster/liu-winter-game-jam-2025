@@ -9,12 +9,10 @@ var circle_shape: CircleShape2D
 var active: bool
 var radius: float = 16.0
 
-var target_list: Array[Creature]
+var target_list: Array[Target]
 var penguin_list: Array[Penguin]
+var trooper_list: Array[Trooper]
 
-var surprise_effect_list: Array[Node2D]
-
-const SURPRISE_EFFECT_SCENE = preload("res://entities/effects/surprise/surprise_effect.tscn")
 @onready var circle_sub_viewport: SubViewport = %CircleSubViewport
 @onready var circle_draw_node: Node2D = %CircleDrawNode
 @onready var circle_sprite: Sprite2D = %CircleSprite
@@ -81,58 +79,55 @@ func update_lists() -> void:
 	#penguin_list.clear()
 	
 	for area in get_overlapping_areas():
-		var creature := Utils.find_child_of_class(area, "Creature")
-		if creature:
-			if creature.owner is Penguin:
-				var penguin := creature.owner as Penguin
-				if not penguin_list.has(penguin):
-					penguin_list.append(penguin)
-					play_surprise_effect(penguin)
-					penguin.command_area_entered.emit(self)
-			else:
-				target_list.append(creature)
-
-
-func play_surprise_effect(penguin: Penguin) -> void:
-	var effect := SURPRISE_EFFECT_SCENE.instantiate() as Node2D
-	surprise_effect_list.append(effect)
-	effect.position = Vector2(0.0, -8.0)
-	penguin.add_child(effect)
+		var trooper := Utils.find_child_of_class(area, "Trooper") as Trooper
+		if trooper and trooper.is_responsive() and not trooper_list.has(trooper):
+			trooper.selected = true
+			trooper_list.append(trooper)
+		
+		var target := Utils.find_child_of_class(area, "Target") as Target
+		if target:
+			target_list.append(target)
 
 
 func release_command() -> void:
-	for effect in surprise_effect_list:
-		if is_instance_valid(effect):
-			effect.queue_free()
+	for trooper in trooper_list:
+		if is_instance_valid(trooper):
+			trooper.selected = false
 	
+	trooper_list.clear()
 	penguin_list.clear()
 	active = false
 
 
 func apply_command() -> void:
-	print("Applying to: ", penguin_list.size())
-	if target_list.is_empty():
-		for penguin in penguin_list:
-			if is_instance_valid(penguin):
-				penguin.flow_field_walker.target_point = get_global_mouse_position()
-				#penguin.walk_target = penguin.get_global_mouse_position()
-				#flow_field.set_target_coords(flow_field.point_to_coords(get_global_mouse_position()))
-				#penguin.action_target = "idle"
-				penguin.state_chart.send_event("task_travel_request")
-	else:
-		var closest_distance := 9999999999.0
-		var closest_target: Creature
-		for target: Creature in target_list:
-			var distance := global_position.distance_squared_to(target.global_position)
-			if distance < closest_distance:
-				closest_distance = distance
-				closest_target = target
+	for target in target_list:
+		if trooper_list.is_empty():
+			release_command()
+			return
+		
+		for i in trooper_list.size():
+			var change_occured := false
+			for j in trooper_list.size() - i - 1:
+				var left := trooper_list[j]
+				var right := trooper_list[j + 1]
+				if right.is_target_prioritized(target, left):
+					trooper_list[j] = right
+					trooper_list[j + 1] = left
+					change_occured = true
+			
+			if not change_occured:
+				break
+		
+		for trooper in trooper_list:
+			trooper_list.remove_at(0)
+			if is_instance_valid(trooper) and trooper.responsive:
+				trooper.command_applied.emit(global_position, target)
+				trooper.selected = false
+				break
 	
-		for penguin in penguin_list:
-			if is_instance_valid(penguin):
-				penguin.state_chart.send_event("task_idle_request")
-				penguin.request_next_task(closest_target)
+	for trooper in trooper_list:
+		if is_instance_valid(trooper) and trooper.responsive:
+			trooper.command_applied.emit(global_position, null)
+			trooper.selected = false
 	
 	release_command()
-	
-	surprise_effect_list.clear()

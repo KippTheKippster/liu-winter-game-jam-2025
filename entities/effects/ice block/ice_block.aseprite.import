@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://w776q837702e"
+path="res://.godot/imported/ice_block.aseprite-4e51b6b9d84df579387d2f33a1f1c16f.res"
+
+[deps]
+
+source_file="res://entities/effects/ice block/ice_block.aseprite"
+dest_files=["res://.godot/imported/ice_block.aseprite-4e51b6b9d84df579387d2f33a1f1c16f.res"]
+
+[params]
+

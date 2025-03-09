@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+const SNOW_EXPLOSION_SCENE = preload("res://entities/effects/snow explosion/snow_explosion.tscn")
+const SnowExplosion = preload("res://entities/effects/snow explosion/snow_explosion.gd")
+
 @onready var creature: Creature = $TreeArea/Creature
 @onready var vertical_group: VerticalGroup = $VerticalGroup
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -30,6 +33,10 @@ func _on_hide_state_exited() -> void:
 	creature.active = true
 	creature.detection_range_squared = 96.0 * 96.0
 	tree_sprite.offset.x = 0
+	
+	var snow_explosion := SNOW_EXPLOSION_SCENE.instantiate() as SnowExplosion
+	snow_explosion.position = position
+	add_sibling(snow_explosion)
 
 
 func _on_jump_state_entered() -> void:

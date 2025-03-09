@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://byrpgpbqmjh38"]
+[gd_scene load_steps=14 format=3 uid="uid://byrpgpbqmjh38"]
 
 [ext_resource type="Texture2D" uid="uid://b5dqh86dx232u" path="res://entities/props/igloo/igloo.png" id="1_v83l2"]
 [ext_resource type="Script" uid="uid://d0bvyj83wj2cj" path="res://entities/props/igloo/igloo.gd" id="1_y4o24"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="2_h736q"]
 [ext_resource type="Texture2D" uid="uid://l8ujhgbcecqw" path="res://entities/carry objects/assets/meat.png" id="4_jf8h7"]
 [ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="6_bb8px"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="6_qgu0d"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4o24"]
 radius = 3.0
@@ -158,6 +159,13 @@ detection_range = 12.0
 creature_layer = 32
 creature_mask = 4
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="Target" type="Node2D" parent="Area2D"]
+position = Vector2(15, 0)
+script = ExtResource("6_qgu0d")
+range = 6.0
+target_layer = 1
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_fs5pr")

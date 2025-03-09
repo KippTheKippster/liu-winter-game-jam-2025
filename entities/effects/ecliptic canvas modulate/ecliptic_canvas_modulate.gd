@@ -17,7 +17,7 @@ func _ready() -> void:
 func start() -> void:
 	var tween := create_tween()
 	#tween.tween_method(update_color, 0.0, 1.0, duration)
-	time = 0.0
+	#time = 0.0
 	tween.tween_property(self, "time", 1.0, duration)
 
 

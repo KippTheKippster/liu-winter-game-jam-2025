@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="LiU Winter Game Jam 2025"
-run/main_scene="uid://doiwfgk1hy5nb"
+run/main_scene="uid://u6xkfu7kmg6i"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="uid://yhjpfck7w0md"
 

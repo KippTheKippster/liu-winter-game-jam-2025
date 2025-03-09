@@ -32,8 +32,8 @@ func _notification(what: int) -> void:
 			
 			for health_instance in get_overlapping_health_instances():
 				var result := health_instance.damage(self, (health_instance.global_position - global_position).normalized(), owner)
-				if result:
-					damage_dealt.emit(result)
+				#if result:
+				#	damage_dealt.emit(result)
 
 
 func get_overlapping_health_instances() -> Array[HealthInstance]:

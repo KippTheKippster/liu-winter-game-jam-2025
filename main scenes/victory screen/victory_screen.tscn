@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cuk00dl6jnaub" path="res://main scenes/victory screen/victory_screen.gd" id="1_2qqnb"]
 [ext_resource type="Texture2D" uid="uid://c7cgp87rg58mj" path="res://entities/boffus/seal.png" id="2_ello2"]
-[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin.tscn" id="3_ello2"]
+[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin_old.tscn" id="3_ello2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xf3sy"]
 atlas = ExtResource("2_ello2")

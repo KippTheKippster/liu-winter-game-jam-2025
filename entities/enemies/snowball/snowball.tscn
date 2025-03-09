@@ -78,7 +78,7 @@ stream = ExtResource("3_k03ai")
 pitch_scale = 1.2
 
 [node name="FrameTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.15
 autostart = true
 
 [node name="GrowTimer" type="Timer" parent="."]

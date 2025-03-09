@@ -4,12 +4,15 @@ class_name FishingHole
 @onready var catch_timer: Timer = $CatchTimer
 @onready var carriable_launcher: CarriableLauncher = $CarriableLauncher
 @onready var splash_audio: AudioStreamPlayer2D = $SplashAudio
+@onready var seat_marker: Marker2D = %SeatMarker
+@onready var target: Target = $Area2D/Target
 
 var caught_count: int = 0
 
-var occupant: Penguin:
+var occupant: Node2D:
 	set(value):
 		occupant = value
+		target.occupant = occupant
 		if occupant:
 			reset_timer()
 		else:

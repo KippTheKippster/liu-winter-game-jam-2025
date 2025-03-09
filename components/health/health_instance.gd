@@ -60,6 +60,7 @@ func damage(damage_instance: DamageInstance, damage_direction: Vector2 = Vector2
 	result.final_damage = final_damage
 	
 	damage_received.emit(result)
+	damage_instance.damage_dealt.emit(result)
 	
 	return result
 

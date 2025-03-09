@@ -10,7 +10,7 @@ func _ready() -> void:
 		timer.one_shot = true
 		timer.autostart = true
 		timer.timeout.connect(func() -> void:
-			var penguin := PENGUIN_SCENE.instantiate() as Penguin
+			var penguin := PENGUIN_SCENE.instantiate() as Penguin2
 			carriable.add_sibling(penguin)
 			penguin.vertical_group.jump()
 			penguin.global_position = carriable.global_position

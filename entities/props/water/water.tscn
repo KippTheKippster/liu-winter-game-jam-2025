@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://cobh34bindth6"]
+[gd_scene load_steps=16 format=3 uid="uid://cobh34bindth6"]
 
 [ext_resource type="Script" uid="uid://di7niy8ede00r" path="res://entities/props/water/water.gd" id="1_u6w4r"]
 [ext_resource type="Material" uid="uid://cdegfkl3e6eei" path="res://entities/props/water/water_material.tres" id="2_aiarx"]
 [ext_resource type="Texture2D" uid="uid://chh5i3rqa42yi" path="res://entities/props/water/water.png" id="2_u6w4r"]
+[ext_resource type="Texture2D" uid="uid://bk8qlibv8fa1o" path="res://entities/carry objects/assets/squid.png" id="4_sqpvx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u6w4r"]
 size = Vector2(8, 8)
@@ -82,7 +83,13 @@ script = ExtResource("1_u6w4r")
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource("RectangleShape2D_u6w4r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-1, -8)
+texture = ExtResource("4_sqpvx")
 
 [node name="ReflectionSprite" type="Sprite2D" parent="."]
 material = ExtResource("2_aiarx")

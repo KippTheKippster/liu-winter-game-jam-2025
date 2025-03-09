@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dy1ro51wo76ye"]
+
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="1_dcxwo"]
+[ext_resource type="Script" uid="uid://cj66oh6u4mvgk" path="res://entities/effects/snow explosion/snow_particle.gd" id="1_t6eg6"]
+[ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="2_gvhii"]
+[ext_resource type="Texture2D" uid="uid://bm0f0ukd0owux" path="res://entities/effects/snow explosion/snow_particle.png" id="3_gvhii"]
+
+[node name="SnowParticle" type="Node2D"]
+script = ExtResource("1_t6eg6")
+speed = 30.0
+
+[node name="VerticalGroup" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_dcxwo")
+gravity = 400.0
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
+
+[node name="FlipGroup" type="Node2D" parent="VerticalGroup"]
+unique_name_in_owner = true
+script = ExtResource("2_gvhii")
+available_flip_directions = 3
+metadata/_custom_type_script = "uid://bhjyv2astlcwo"
+
+[node name="Sprite2D" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
+unique_name_in_owner = true
+texture = ExtResource("3_gvhii")
+hframes = 3

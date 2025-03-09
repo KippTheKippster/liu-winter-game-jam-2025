@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b5b5xtqraqply"
+path="res://.godot/imported/snow_particle.aseprite-8db6e3a27cdc13e6deb8c46b1b1df6af.res"
+
+[deps]
+
+source_file="res://entities/effects/snow explosion/snow_particle.aseprite"
+dest_files=["res://.godot/imported/snow_particle.aseprite-8db6e3a27cdc13e6deb8c46b1b1df6af.res"]
+
+[params]
+

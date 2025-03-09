@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://cb418taoi0lmu"]
+[gd_scene load_steps=18 format=3 uid="uid://cb418taoi0lmu"]
 
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="1_6e1ve"]
 [ext_resource type="Script" uid="uid://dcn1sww4vmul3" path="res://entities/props/fishing hole/fishing_hole.gd" id="1_fhw1b"]
 [ext_resource type="Texture2D" uid="uid://baiyefuhnxt1w" path="res://entities/props/fishing hole/fishing_hole.png" id="1_iymk4"]
 [ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="2_f0v64"]
 [ext_resource type="Script" uid="uid://w8824multbqq" path="res://components/carriable/carriable_launcher.gd" id="4_iuctg"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="4_urh2d"]
 [ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/carry objects/carry_object.tscn" id="5_phrop"]
 [ext_resource type="Resource" uid="uid://460toaio7pbp" path="res://entities/carry objects/carry object types/food_fish.tres" id="6_5sior"]
 [ext_resource type="AudioStream" uid="uid://dhld5jkoee3qx" path="res://audio/water_splash.wav" id="7_jvnwy"]
@@ -59,11 +60,6 @@ shape = SubResource("CircleShape2D_o7ldn")
 script = ExtResource("2_f0v64")
 metadata/_custom_type_script = "uid://cospm7wq6xrv6"
 
-[node name="FlowFieldSolid2" type="Node2D" parent="."]
-position = Vector2(-8, 0)
-script = ExtResource("2_f0v64")
-metadata/_custom_type_script = "uid://cospm7wq6xrv6"
-
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -71,11 +67,21 @@ position = Vector2(-3, 0)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_6e1ve")
 
+[node name="Target" type="Node2D" parent="Area2D"]
+position = Vector2(-7.5, 1.5)
+script = ExtResource("4_urh2d")
+range = 6.0
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
 [node name="Creature" type="Node2D" parent="Area2D"]
 position = Vector2(-7.5, 1.5)
 script = ExtResource("1_6e1ve")
 creature_layer = 8
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="SeatMarker" type="Marker2D" parent="Area2D/Creature"]
+unique_name_in_owner = true
+gizmo_extents = 5.0
 
 [node name="HoleSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_iuctg")

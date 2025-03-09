@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://d1ukp6d0k6q5k"]
+[gd_scene load_steps=28 format=3 uid="uid://d1ukp6d0k6q5k"]
 
 [ext_resource type="Script" uid="uid://bbsl81r0wf2fj" path="res://entities/enemies/tree mimic/tree_mimic.gd" id="1_8px78"]
 [ext_resource type="Texture2D" uid="uid://be2ttm3fnpxo6" path="res://entities/enemies/tree mimic/tree_mimic.png" id="1_46bnf"]
@@ -14,6 +14,7 @@
 [ext_resource type="Resource" uid="uid://ij3135nwm4f0" path="res://entities/enemies/tree mimic/tree_mimic_log.tres" id="5_c64xc"]
 [ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="5_f1x1y"]
 [ext_resource type="Script" uid="uid://dtvh4vikgt2v" path="res://addons/godot_state_charts/animation_player_state.gd" id="6_0y8im"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="7_qq355"]
 [ext_resource type="Script" uid="uid://br85gcxolt6xv" path="res://addons/godot_state_charts/expression_guard.gd" id="12_4j5ei"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f1x1y"]
@@ -212,9 +213,14 @@ creature_layer = 1
 creature_mask = 2
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
+[node name="Target" type="Node2D" parent="TreeArea"]
+script = ExtResource("7_qq355")
+range = 12.0
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
 [node name="HealthInstance" type="Node2D" parent="TreeArea"]
 script = ExtResource("3_4j5ei")
-base_health = 30.0
+base_health = 3.0
 damage_mask = 5
 metadata/_custom_type_script = "uid://dvljb35mh14xv"
 

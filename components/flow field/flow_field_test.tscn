@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cwi7uo0kjc0rk"]
 
-[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin.tscn" id="1_2q1yj"]
+[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin_old.tscn" id="1_2q1yj"]
 [ext_resource type="Script" uid="uid://b4vs823sxp54e" path="res://components/flow field/flow_field_test.gd" id="1_hba3q"]
 [ext_resource type="Script" uid="uid://drtrpfwntdaa2" path="res://components/flow field/flow_field_manager.gd" id="1_my22q"]
 [ext_resource type="Script" uid="uid://baptqcm2qgns6" path="res://main scenes/game/command_area.gd" id="3_3gdm3"]

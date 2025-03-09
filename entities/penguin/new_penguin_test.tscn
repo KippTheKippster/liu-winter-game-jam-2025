@@ -1,0 +1,414 @@
+[gd_scene load_steps=15 format=3 uid="uid://u6xkfu7kmg6i"]
+
+[ext_resource type="Script" uid="uid://cmgk8vbxsuxqc" path="res://entities/penguin/new_penguin_test.gd" id="1_40l0n"]
+[ext_resource type="PackedScene" uid="uid://bwf71bc7425hy" path="res://main scenes/game/command_area.tscn" id="1_o2an7"]
+[ext_resource type="PackedScene" uid="uid://cg32rxn6me2vm" path="res://entities/player camera/player_camera.tscn" id="2_7uktq"]
+[ext_resource type="PackedScene" uid="uid://c56uuvk1wh8tk" path="res://entities/props/tree/tree.tscn" id="3_iliu0"]
+[ext_resource type="PackedScene" uid="uid://c7hpad4xy14l2" path="res://entities/penguin/penguin.tscn" id="4_33baq"]
+[ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/carry objects/carry_object.tscn" id="5_fubsj"]
+[ext_resource type="PackedScene" uid="uid://wwoo0xbgbrpv" path="res://entities/props/wall/snow_wall.tscn" id="5_qnixe"]
+[ext_resource type="Script" uid="uid://drtrpfwntdaa2" path="res://components/flow field/flow_field_manager.gd" id="6_14sp0"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="6_q2ddb"]
+[ext_resource type="Resource" uid="uid://460toaio7pbp" path="res://entities/carry objects/carry object types/food_fish.tres" id="9_g2gbj"]
+[ext_resource type="PackedScene" uid="uid://d1ukp6d0k6q5k" path="res://entities/enemies/tree mimic/tree_mimic.tscn" id="10_eix0w"]
+[ext_resource type="PackedScene" uid="uid://cb418taoi0lmu" path="res://entities/props/fishing hole/fishing_hole.tscn" id="12_vlp6r"]
+[ext_resource type="PackedScene" uid="uid://byrpgpbqmjh38" path="res://entities/props/igloo/igloo.tscn" id="13_v2e4s"]
+[ext_resource type="PackedScene" uid="uid://c6re2egyy0hux" path="res://entities/enemies/snowball/snowball.tscn" id="14_f0nr5"]
+
+[node name="NewPenguinTest" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_40l0n")
+
+[node name="StateChartDebugger" parent="." instance=ExtResource("6_q2ddb")]
+process_mode = 3
+offset_left = 164.0
+offset_top = 4.0
+offset_right = 599.0
+offset_bottom = 348.0
+initial_node_to_watch = NodePath("../Level/Penguin")
+
+[node name="PlayerCamera" parent="." instance=ExtResource("2_7uktq")]
+process_mode = 3
+
+[node name="Level" type="Node2D" parent="."]
+process_mode = 1
+y_sort_enabled = true
+
+[node name="CommandArea" parent="Level" instance=ExtResource("1_o2an7")]
+
+[node name="FlowFieldManager" type="Node2D" parent="Level"]
+script = ExtResource("6_14sp0")
+metadata/_custom_type_script = "uid://drtrpfwntdaa2"
+
+[node name="Penguin" parent="Level" instance=ExtResource("4_33baq")]
+position = Vector2(92, 52)
+
+[node name="Penguin3" parent="Level" instance=ExtResource("4_33baq")]
+position = Vector2(84, 52)
+
+[node name="Penguin4" parent="Level" instance=ExtResource("4_33baq")]
+position = Vector2(124, 52)
+
+[node name="Penguin5" parent="Level" instance=ExtResource("4_33baq")]
+position = Vector2(140, 52)
+
+[node name="Penguin2" parent="Level" instance=ExtResource("4_33baq")]
+position = Vector2(148, -12)
+
+[node name="CarryObject" parent="Level" instance=ExtResource("5_fubsj")]
+position = Vector2(20, 52)
+carry_object_type = ExtResource("9_g2gbj")
+
+[node name="CarryObject2" parent="Level" instance=ExtResource("5_fubsj")]
+position = Vector2(20, 4)
+
+[node name="TreeMimic" parent="Level" instance=ExtResource("10_eix0w")]
+position = Vector2(116, -36)
+
+[node name="Props" type="Node2D" parent="Level"]
+y_sort_enabled = true
+
+[node name="Tree" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(-62, -22)
+
+[node name="Tree2" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(-58, 0)
+
+[node name="Tree3" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(-41, -18)
+
+[node name="Tree4" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(76, 33)
+
+[node name="Tree5" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(82, 24)
+
+[node name="Tree6" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(86, 33)
+
+[node name="Tree7" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(97, -16)
+
+[node name="Tree8" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(86, -23)
+
+[node name="Tree9" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(95, -27)
+
+[node name="Tree10" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(-38, 33)
+
+[node name="Tree11" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(-34, 40)
+
+[node name="Tree12" parent="Level/Props" instance=ExtResource("3_iliu0")]
+position = Vector2(-29, 32)
+
+[node name="SnowWall" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, -4)
+
+[node name="SnowWall2" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 4)
+
+[node name="SnowWall9" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-84, -52)
+
+[node name="SnowWall10" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-76, -52)
+
+[node name="SnowWall3" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, -20)
+
+[node name="SnowWall4" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, -12)
+
+[node name="SnowWall5" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, -36)
+
+[node name="SnowWall6" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, -28)
+
+[node name="SnowWall7" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, -52)
+
+[node name="SnowWall11" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-60, -52)
+
+[node name="SnowWall12" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-52, -52)
+
+[node name="SnowWall13" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-68, -52)
+
+[node name="SnowWall14" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-36, -52)
+
+[node name="SnowWall15" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-28, -52)
+
+[node name="SnowWall16" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-44, -52)
+
+[node name="SnowWall17" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-12, -52)
+
+[node name="SnowWall18" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-4, -52)
+
+[node name="SnowWall19" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-20, -52)
+
+[node name="SnowWall20" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(12, -52)
+
+[node name="SnowWall21" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(20, -52)
+
+[node name="SnowWall22" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(4, -52)
+
+[node name="SnowWall23" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(36, -52)
+
+[node name="SnowWall24" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(44, -52)
+
+[node name="SnowWall25" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(28, -52)
+
+[node name="SnowWall26" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(60, -52)
+
+[node name="SnowWall27" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(68, -52)
+
+[node name="SnowWall28" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(52, -52)
+
+[node name="SnowWall29" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(84, -52)
+
+[node name="SnowWall30" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(92, -52)
+
+[node name="SnowWall31" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(76, -52)
+
+[node name="SnowWall32" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(100, -52)
+
+[node name="SnowWall33" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(116, -52)
+
+[node name="SnowWall34" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(124, -52)
+
+[node name="SnowWall35" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(108, -52)
+
+[node name="SnowWall36" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(140, -52)
+
+[node name="SnowWall37" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(148, -52)
+
+[node name="SnowWall38" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(132, -52)
+
+[node name="SnowWall47" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-84, 100)
+
+[node name="SnowWall48" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-76, 100)
+
+[node name="SnowWall49" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 100)
+
+[node name="SnowWall50" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-60, 100)
+
+[node name="SnowWall52" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-52, 100)
+
+[node name="SnowWall55" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-68, 100)
+
+[node name="SnowWall56" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-36, 100)
+
+[node name="SnowWall57" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-28, 100)
+
+[node name="SnowWall58" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-44, 100)
+
+[node name="SnowWall59" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-12, 100)
+
+[node name="SnowWall60" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-4, 100)
+
+[node name="SnowWall61" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-20, 100)
+
+[node name="SnowWall62" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(12, 100)
+
+[node name="SnowWall63" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(20, 100)
+
+[node name="SnowWall64" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(4, 100)
+
+[node name="SnowWall65" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(36, 100)
+
+[node name="SnowWall66" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(44, 100)
+
+[node name="SnowWall67" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(28, 100)
+
+[node name="SnowWall68" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(60, 100)
+
+[node name="SnowWall69" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(68, 100)
+
+[node name="SnowWall70" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(52, 100)
+
+[node name="SnowWall71" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(84, 100)
+
+[node name="SnowWall72" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(92, 100)
+
+[node name="SnowWall73" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(76, 100)
+
+[node name="SnowWall74" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(100, 100)
+
+[node name="SnowWall75" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(116, 100)
+
+[node name="SnowWall76" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(124, 100)
+
+[node name="SnowWall77" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(108, 100)
+
+[node name="SnowWall78" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(140, 100)
+
+[node name="SnowWall79" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(148, 100)
+
+[node name="SnowWall80" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(132, 100)
+
+[node name="SnowWall8" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, -44)
+
+[node name="SnowWall39" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 60)
+
+[node name="SnowWall40" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 68)
+
+[node name="SnowWall41" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 44)
+
+[node name="SnowWall42" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 52)
+
+[node name="SnowWall43" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 28)
+
+[node name="SnowWall44" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 36)
+
+[node name="SnowWall45" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 12)
+
+[node name="SnowWall46" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 20)
+
+[node name="SnowWall51" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 92)
+
+[node name="SnowWall53" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 76)
+
+[node name="SnowWall54" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(-92, 84)
+
+[node name="SnowWall81" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, -4)
+
+[node name="SnowWall82" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 4)
+
+[node name="SnowWall83" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, -20)
+
+[node name="SnowWall84" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, -12)
+
+[node name="SnowWall85" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, -36)
+
+[node name="SnowWall86" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, -28)
+
+[node name="SnowWall87" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, -52)
+
+[node name="SnowWall88" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 100)
+
+[node name="SnowWall89" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, -44)
+
+[node name="SnowWall90" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 60)
+
+[node name="SnowWall91" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 68)
+
+[node name="SnowWall92" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 44)
+
+[node name="SnowWall93" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 52)
+
+[node name="SnowWall94" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 28)
+
+[node name="SnowWall95" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 36)
+
+[node name="SnowWall96" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 12)
+
+[node name="SnowWall97" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 20)
+
+[node name="SnowWall98" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 92)
+
+[node name="SnowWall99" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 76)
+
+[node name="SnowWall100" parent="Level/Props" instance=ExtResource("5_qnixe")]
+position = Vector2(156, 84)
+
+[node name="FishingHole" parent="." instance=ExtResource("12_vlp6r")]
+position = Vector2(44, 52)
+
+[node name="Igloo" parent="." instance=ExtResource("13_v2e4s")]
+position = Vector2(-36, 60)
+
+[node name="Snowball" parent="." instance=ExtResource("14_f0nr5")]
+position = Vector2(60, 52)
