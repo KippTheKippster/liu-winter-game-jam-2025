@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="CarryObjectType" load_steps=3 format=3 uid="uid://3756488067p0"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://3756488067p0"]
 
-[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="1_w8v8u"]
+[ext_resource type="Script" uid="uid://dya4eivvy77v4" path="res://entities/carry objects/carry_object_type_equipment.gd" id="1_w8v8u"]
 [ext_resource type="Texture2D" uid="uid://cakoo2h6ch6y" path="res://entities/carry objects/assets/pool_ring.png" id="2_vupem"]
 
 [resource]

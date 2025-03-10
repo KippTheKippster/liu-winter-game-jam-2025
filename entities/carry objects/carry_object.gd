@@ -4,6 +4,8 @@ extends Carriable
 
 @onready var object_sprite: Sprite2D = %ObjectSprite
 
+var velocity: Vector2
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	update_sprite.call_deferred()
@@ -12,6 +14,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	enabled = vertical_group.is_on_floor()
+	if not vertical_group.is_on_floor():
+		position += velocity * delta
 
 
 func _on_carry_object_type_changed() -> void:
@@ -28,6 +32,7 @@ func update_sprite() -> void:
 		visible = false
 
 
-func _on_placed(height: float) -> void:
+func _on_placed(height: float, new_velocity: Vector2) -> void:
+	velocity = new_velocity
 	vertical_group.height = height
 	vertical_group.jump()

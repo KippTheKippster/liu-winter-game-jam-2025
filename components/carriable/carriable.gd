@@ -25,7 +25,7 @@ func pickup() -> void:
 	old_owner_parent.remove_child(self)
 
 
-func place(place_position: Vector2, height: float = 1.0, new_parent_override: Node = null) -> void:
+func place(place_position: Vector2, height: float = 1.0, velocity: Vector2 = Vector2.ZERO, new_parent_override: Node = null) -> void:
 	if new_parent_override:
 		new_parent_override.add_child(self)
 	else:
@@ -33,4 +33,4 @@ func place(place_position: Vector2, height: float = 1.0, new_parent_override: No
 	
 	global_position = place_position
 	
-	placed.emit(height)
+	placed.emit(height, velocity)

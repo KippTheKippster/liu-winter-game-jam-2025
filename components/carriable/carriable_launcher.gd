@@ -5,6 +5,7 @@ class_name CarriableLauncher
 
 @export var creature: Creature
 @export var start_height = 0.0
+@export var start_velocity: Vector2
 
 var carriables: Array[Carriable]
 
@@ -22,11 +23,11 @@ func _ready() -> void:
 func launch() -> void:
 	if launch_all_at_once:
 		for carriable in carriables:
-			carriable.place(global_position, start_height, owner.get_parent())
+			carriable.place(global_position, start_height, start_velocity, owner.get_parent())
 		
 		carriables.clear()
 	else:
 		if carriables.size() > 0:
 			var carriable := carriables[0]
-			carriable.place(global_position, start_height, owner.get_parent())
+			carriable.place(global_position, start_height, start_velocity, owner.get_parent())
 			carriables.remove_at(0)

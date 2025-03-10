@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://u6xkfu7kmg6i"]
+[gd_scene load_steps=16 format=3 uid="uid://u6xkfu7kmg6i"]
 
 [ext_resource type="Script" uid="uid://cmgk8vbxsuxqc" path="res://entities/penguin/new_penguin_test.gd" id="1_40l0n"]
 [ext_resource type="PackedScene" uid="uid://bwf71bc7425hy" path="res://main scenes/game/command_area.tscn" id="1_o2an7"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://wwoo0xbgbrpv" path="res://entities/props/wall/snow_wall.tscn" id="5_qnixe"]
 [ext_resource type="Script" uid="uid://drtrpfwntdaa2" path="res://components/flow field/flow_field_manager.gd" id="6_14sp0"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="6_q2ddb"]
+[ext_resource type="Resource" uid="uid://3756488067p0" path="res://entities/carry objects/carry object types/equipment_pool_ring.tres" id="9_fex1r"]
 [ext_resource type="Resource" uid="uid://460toaio7pbp" path="res://entities/carry objects/carry object types/food_fish.tres" id="9_g2gbj"]
 [ext_resource type="PackedScene" uid="uid://d1ukp6d0k6q5k" path="res://entities/enemies/tree mimic/tree_mimic.tscn" id="10_eix0w"]
 [ext_resource type="PackedScene" uid="uid://cb418taoi0lmu" path="res://entities/props/fishing hole/fishing_hole.tscn" id="12_vlp6r"]
@@ -26,7 +27,7 @@ offset_left = 164.0
 offset_top = 4.0
 offset_right = 599.0
 offset_bottom = 348.0
-initial_node_to_watch = NodePath("../Level/Penguin")
+initial_node_to_watch = NodePath("../Level/Penguin3")
 
 [node name="PlayerCamera" parent="." instance=ExtResource("2_7uktq")]
 process_mode = 3
@@ -62,6 +63,7 @@ carry_object_type = ExtResource("9_g2gbj")
 
 [node name="CarryObject2" parent="Level" instance=ExtResource("5_fubsj")]
 position = Vector2(20, 4)
+carry_object_type = ExtResource("9_fex1r")
 
 [node name="TreeMimic" parent="Level" instance=ExtResource("10_eix0w")]
 position = Vector2(116, -36)

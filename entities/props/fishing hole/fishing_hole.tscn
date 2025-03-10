@@ -91,11 +91,10 @@ autoplay = "default"
 frame_progress = 0.527054
 
 [node name="CarriableLauncher" type="Node2D" parent="."]
-visible = false
-position = Vector2(0, -6.5)
 script = ExtResource("4_iuctg")
 launch_all_at_once = false
 start_height = 1.0
+start_velocity = Vector2(0, -10)
 metadata/_custom_type_script = "uid://w8824multbqq"
 
 [node name="Food" parent="CarriableLauncher" instance=ExtResource("5_phrop")]

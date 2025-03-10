@@ -32,7 +32,7 @@ func spawn_penguin() -> void:
 	#carry_object.global_position = spawn_marker.global_position
 	#add_sibling(carry_object)
 	#carry_object.pickup()
-	carry_object.place(spawn_marker.global_position, 1.0, self)
+	carry_object.place(spawn_marker.global_position, 1.0, Vector2.ZERO, self)
 	carry_object.carry_object_type = PENGUIN_EGG
 
 

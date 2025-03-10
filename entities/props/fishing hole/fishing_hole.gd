@@ -1,6 +1,8 @@
 extends Node2D
 class_name FishingHole
 
+signal finished
+
 @onready var catch_timer: Timer = $CatchTimer
 @onready var carriable_launcher: CarriableLauncher = $CarriableLauncher
 @onready var splash_audio: AudioStreamPlayer2D = $SplashAudio
@@ -21,7 +23,11 @@ var occupant: Node2D:
 
 func _on_catch_timer_timeout() -> void:
 	caught_count += 1
-	reset_timer()
+	if caught_count >= 3:
+		target.active = false
+		finished.emit()
+	else:
+		reset_timer()
 	carriable_launcher.launch()
 	splash_audio.play()
 
