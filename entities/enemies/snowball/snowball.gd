@@ -13,6 +13,7 @@ const SNOW_EXPLOSION_SCENE = preload("res://entities/effects/snow explosion/snow
 @onready var scared_audio: AudioStreamPlayer2D = $ScaredAudio
 @onready var grow_timer: Timer = $GrowTimer
 @onready var damage_instance: DamageInstance = $DamageInstance
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @export var speed: float = 20.0
 @export var direction: Vector2 = Vector2.RIGHT
@@ -91,7 +92,8 @@ func destroy() -> void:
 	add_sibling(snow_explosion)
 	snow_explosion.position = position
 	
-	queue_free()
+	animation_player.play("smash")
+	#queue_free()
 
 
 func _on_frame_timer_timeout() -> void:

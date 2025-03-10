@@ -163,6 +163,7 @@ metadata/_custom_type_script = "uid://1ce5wdegx8y"
 [node name="Target" type="Node2D" parent="Area2D"]
 position = Vector2(15, 0)
 script = ExtResource("6_qgu0d")
+size = 6.0
 range = 6.0
 target_layer = 1
 metadata/_custom_type_script = "uid://xtcqp3h7d5p4"

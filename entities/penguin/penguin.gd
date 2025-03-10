@@ -65,6 +65,12 @@ func _ready() -> void:
 			if carriable:
 				return false
 		
+		if target_owner == fishing_hole:
+			return true
+		
+		if fishing_hole:
+			return false
+		
 		return (
 			global_position.distance_squared_to(target.global_position) < 
 			comparator.global_position.distance_squared_to(target.global_position)
@@ -98,7 +104,7 @@ func get_command_target_point() -> Vector2:
 
 func is_in_command_target_point_range() -> bool:
 	if is_command_target_valid():
-		return global_position.distance_to(command_target.global_position) <= command_target.range
+		return global_position.distance_to(command_target.global_position) <= command_target.size
 	else:
 		return global_position.distance_to(command_point) <= 4.0
 

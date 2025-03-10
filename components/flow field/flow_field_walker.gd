@@ -4,6 +4,8 @@ class_name FlowFieldWalker
 @export var reverse_path: bool
 @export var max_path_follow_length: int = 10
 
+var used: bool
+
 var flow_field_manager: FlowFieldManager
 var flow_field: FlowField
 var target_coords: Vector2i:
@@ -14,7 +16,8 @@ var target_coords: Vector2i:
 
 
 var target_point: Vector2:
-	set(value):
+	set(value): 
+		used = true
 		var old_coords := target_coords
 		target_point = value
 		var new_coords := target_coords
@@ -23,11 +26,13 @@ var target_point: Vector2:
 				flow_field_manager.remove_user_from_flow_field(old_coords)
 				flow_field = null
 			
-			flow_field = flow_field_manager.add_user_to_flow_field(new_coords)
+		flow_field = flow_field_manager.add_user_to_flow_field(new_coords)
 
 
 func _enter_tree() -> void:
 	flow_field_manager = Utils.find_child_of_class(get_tree().root, "FlowFieldManager")
+	if used:
+		target_point = target_point
 
 
 func _exit_tree() -> void:

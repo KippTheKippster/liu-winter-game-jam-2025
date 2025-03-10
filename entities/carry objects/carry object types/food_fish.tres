@@ -5,7 +5,8 @@
 
 [resource]
 script = ExtResource("1_m8xv0")
+carry_object_type_instance_path = ""
 eatable = true
+penguin_interest = true
 texture = ExtResource("2_1ohae")
-offset = Vector2(0, -2)
-metadata/_custom_type_script = "uid://d2bdbs6pakajn"
+offset = Vector2(-0.5, -1)

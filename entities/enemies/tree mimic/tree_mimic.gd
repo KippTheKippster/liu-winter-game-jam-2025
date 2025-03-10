@@ -3,6 +3,7 @@ extends CharacterBody2D
 const SNOW_EXPLOSION_SCENE = preload("res://entities/effects/snow explosion/snow_explosion.tscn")
 const SnowExplosion = preload("res://entities/effects/snow explosion/snow_explosion.gd")
 
+@onready var flow_field_walker: FlowFieldWalker = $FlowFieldWalker
 @onready var creature: Creature = $TreeArea/Creature
 @onready var vertical_group: VerticalGroup = $VerticalGroup
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -60,4 +61,6 @@ func _on_burrow_state_processing(delta: float) -> void:
 func _on_crouch_state_exited() -> void:
 	var target := creature.get_next_creature_target()
 	if creature.get_next_creature_target():
-		velocity = (target.global_position - global_position).normalized() * 20.0
+		flow_field_walker.target_point = target.global_position
+		velocity = flow_field_walker.get_direction() * 20.0
+		#velocity = (target.global_position - global_position).normalized() * 20.0

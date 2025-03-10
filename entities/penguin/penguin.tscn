@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://c7hpad4xy14l2"]
+[gd_scene load_steps=54 format=3 uid="uid://c7hpad4xy14l2"]
 
 [ext_resource type="Script" uid="uid://brvh5lksny7bm" path="res://entities/penguin/penguin.gd" id="1_a0yya"]
 [ext_resource type="Texture2D" uid="uid://i4w0p1oyi77" path="res://entities/penguin/assets/penguin.png" id="1_r5j68"]
@@ -20,6 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://cirnpw06lu0hx" path="res://audio/damaged.wav" id="9_l4dxa"]
 [ext_resource type="PackedScene" uid="uid://bc3mimnplcu7g" path="res://entities/effects/fire particles/fire_particles.tscn" id="9_ploiq"]
 [ext_resource type="AudioStream" uid="uid://c8h5wevow5ask" path="res://audio/jump.wav" id="10_8tthm"]
+[ext_resource type="Texture2D" uid="uid://d4ntnaphsrl7v" path="res://entities/carry objects/assets/fish.png" id="11_gbc55"]
 [ext_resource type="AudioStream" uid="uid://cjmsjcp8wuc8p" path="res://audio/penguin_die.wav" id="13_elkqi"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://b0nfx46nxw3r5" path="res://entities/penguin/animation nodes/penguin_root_state_machine.tres" id="13_ouyml"]
 [ext_resource type="AudioStream" uid="uid://cxxqxw1fl0cbm" path="res://audio/penguin_scared_randomizer.tres" id="13_ploiq"]
@@ -55,46 +56,6 @@ random_pitch = 1.1
 random_volume_offset_db = 2.0
 streams_count = 1
 stream_0/stream = ExtResource("13_elkqi")
-
-[sub_resource type="Animation" id="Animation_qqawb"]
-length = 0.2
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../EquipmentSprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = false
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../CarryObjectSprite:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2(0, -8)]
-}
 
 [sub_resource type="Animation" id="Animation_u5wb6"]
 length = 0.7
@@ -394,7 +355,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0, -7)]
+"values": [Vector2(0, -6)]
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l4dxa"]
@@ -517,9 +478,48 @@ tracks/1/keys = {
 "values": [9, 10]
 }
 
+[sub_resource type="Animation" id="Animation_gbc55"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EquipmentSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CarryObjectSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, -7)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uw7px"]
 _data = {
-&"RESET": SubResource("Animation_qqawb"),
+&"RESET": SubResource("Animation_gbc55"),
 &"die": SubResource("Animation_u5wb6"),
 &"fish": SubResource("Animation_l4dxa"),
 &"idle": SubResource("Animation_r5j68"),
@@ -675,7 +675,10 @@ metadata/_aseprite_wizard_source_file_hash_ = "942c2eb1c1360c07630eb860664f5466"
 
 [node name="CarryObjectSprite" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
 unique_name_in_owner = true
-position = Vector2(0, -8)
+visible = false
+position = Vector2(0, -7)
+texture = ExtResource("11_gbc55")
+offset = Vector2(0, -1)
 
 [node name="Effects" type="Node2D" parent="."]
 
@@ -715,7 +718,6 @@ stream = SubResource("AudioStreamRandomizer_ekrph")
 bus = &"Effects"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-active = false
 deterministic = true
 root_node = NodePath("../VerticalGroup/FlipGroup/PenguinSprite")
 libraries = {
@@ -729,7 +731,7 @@ advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 parameters/idle_blend_space/blend_position = Vector2(0, 0)
 parameters/idle_blend_tree/flee_blend/blend_amount = 0.0
-parameters/idle_blend_tree/idle_carry_blend/blend_amount = 0.0
+parameters/idle_blend_tree/idle_carry_blend/blend_amount = 1.0
 parameters/idle_blend_tree/idle_walk_blend/blend_amount = 0.0
 parameters/idle_blend_tree/jump_blend/blend_amount = 0.0
 parameters/idle_blend_tree/swim_blend/blend_amount = 0.0

@@ -6,7 +6,7 @@ extends Carriable
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	update_sprite()
+	update_sprite.call_deferred()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -15,7 +15,8 @@ func _process(delta: float) -> void:
 
 
 func _on_carry_object_type_changed() -> void:
-	update_sprite.call_deferred()
+	if is_node_ready():
+		update_sprite.call_deferred()
 
 
 func update_sprite() -> void:

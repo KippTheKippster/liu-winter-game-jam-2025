@@ -70,7 +70,9 @@ shape = SubResource("CapsuleShape2D_6e1ve")
 [node name="Target" type="Node2D" parent="Area2D"]
 position = Vector2(-7.5, 1.5)
 script = ExtResource("4_urh2d")
+size = 6.0
 range = 6.0
+singular = true
 metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 
 [node name="Creature" type="Node2D" parent="Area2D"]

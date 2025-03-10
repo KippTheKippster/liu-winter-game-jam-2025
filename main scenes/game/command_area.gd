@@ -26,7 +26,6 @@ func _ready() -> void:
 		)
 
 
-
 func _process(delta: float) -> void:
 	global_position = get_global_mouse_position()
 	
@@ -99,7 +98,17 @@ func release_command() -> void:
 	active = false
 
 
+
+func sort_closest(a: Target, b: Target, point: Vector2) -> bool:
+	if a.priority != b.priority:
+		return a.priority > b.priority
+	
+	return a.global_position.distance_squared_to(point) < b.global_position.distance_squared_to(point)
+
+
 func apply_command() -> void:
+	target_list.sort_custom(sort_closest.bind(global_position))
+	
 	for target in target_list:
 		if trooper_list.is_empty():
 			release_command()
@@ -118,12 +127,14 @@ func apply_command() -> void:
 			if not change_occured:
 				break
 		
-		for trooper in trooper_list:
+		for i in trooper_list.size():
+			var trooper := trooper_list[0]
 			trooper_list.remove_at(0)
 			if is_instance_valid(trooper) and trooper.responsive:
 				trooper.command_applied.emit(global_position, target)
 				trooper.selected = false
-				break
+				if target.singular:
+					break
 	
 	for trooper in trooper_list:
 		if is_instance_valid(trooper) and trooper.responsive:

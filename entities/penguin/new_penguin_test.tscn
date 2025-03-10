@@ -17,6 +17,7 @@
 
 [node name="NewPenguinTest" type="Node2D"]
 process_mode = 3
+y_sort_enabled = true
 script = ExtResource("1_40l0n")
 
 [node name="StateChartDebugger" parent="." instance=ExtResource("6_q2ddb")]
@@ -41,10 +42,10 @@ script = ExtResource("6_14sp0")
 metadata/_custom_type_script = "uid://drtrpfwntdaa2"
 
 [node name="Penguin" parent="Level" instance=ExtResource("4_33baq")]
-position = Vector2(92, 52)
+position = Vector2(4, 60)
 
 [node name="Penguin3" parent="Level" instance=ExtResource("4_33baq")]
-position = Vector2(84, 52)
+position = Vector2(12, 12)
 
 [node name="Penguin4" parent="Level" instance=ExtResource("4_33baq")]
 position = Vector2(124, 52)
@@ -56,7 +57,7 @@ position = Vector2(140, 52)
 position = Vector2(148, -12)
 
 [node name="CarryObject" parent="Level" instance=ExtResource("5_fubsj")]
-position = Vector2(20, 52)
+position = Vector2(28, 52)
 carry_object_type = ExtResource("9_g2gbj")
 
 [node name="CarryObject2" parent="Level" instance=ExtResource("5_fubsj")]
@@ -64,6 +65,9 @@ position = Vector2(20, 4)
 
 [node name="TreeMimic" parent="Level" instance=ExtResource("10_eix0w")]
 position = Vector2(116, -36)
+
+[node name="TreeMimic2" parent="Level" instance=ExtResource("10_eix0w")]
+position = Vector2(60, -20)
 
 [node name="Props" type="Node2D" parent="Level"]
 y_sort_enabled = true
