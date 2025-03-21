@@ -1,4 +1,5 @@
 extends Node
 
-signal raft_penguin_entered(penguins: Array[Penguin])
-signal raft_penguin_exited(penguins: Array[Penguin])
+signal raft_departed(penguin_list: Array[Penguin2])
+signal penguin_borned(penguin: Penguin2)
+signal penguin_killed(penguin: Penguin2)

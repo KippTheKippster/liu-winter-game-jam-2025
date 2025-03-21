@@ -1,7 +1,14 @@
 class_name Penguin2
 extends CharacterBody2D
 
+const CarryObject = preload("res://entities/carry objects/carry_object.gd")
+const CARRY_OBJECT_SCENE = preload("res://entities/carry objects/carry_object.tscn")
+
+const Raft = preload("res://entities/props/raft/raft.gd")
+
 @onready var flow_field_walker: FlowFieldWalker = $FlowFieldWalker
+@onready var danger_target_detector: TargetDetector = $DangerTargetDetector
+@onready var carriable_target_detector: TargetDetector = $CarriableTargetDetector
 @onready var damage_instance: DamageInstance = $DamageInstance
 @onready var trooper: Trooper = %Trooper
 @onready var health_instance: HealthInstance = %HealthInstance
@@ -32,6 +39,7 @@ var carriable: Carriable:
 		animation_tree.set("parameters/idle_blend_tree/idle_carry_blend/blend_amount", blend_amount)
 		animation_tree.set("parameters/idle_blend_tree/walk_carry_blend/blend_amount", blend_amount)
 		animation_tree.set("parameters/idle_blend_tree/swim_carry_blend/blend_amount", blend_amount)
+		animation_tree.set("parameters/idle_blend_tree/jump_carry_blend/blend_amount", blend_amount)
 
 var equipment_type: CarryObjectTypeEquipment
 
@@ -39,6 +47,7 @@ var command_target: Target
 var command_point: Vector2
 
 var enemy_health_instance: HealthInstance
+var danger_target: Target
 var fishing_hole: FishingHole
 
 var desired_action: StringName:
@@ -49,8 +58,23 @@ var desired_action: StringName:
 			if changed:
 				state_chart.set_expression_property("desired_action", desired_action)
 
+var swimming: bool:
+	set(value):
+		var changed := value != swimming
+		swimming = value
+		if changed:
+			if swimming:
+				animation_tree.set("parameters/idle_blend_tree/swim_blend/blend_amount", 1.0)
+				if equipment_type != preload("res://entities/carry objects/carry object types/equipment_pool_ring.tres"):
+					if carriable:
+						throw_carriable(-velocity.normalized() * 8.0)
+			else:
+				animation_tree.set("parameters/idle_blend_tree/swim_blend/blend_amount", 0.0)
+
 
 func _ready() -> void:
+	SignalBus.penguin_borned.emit(self)
+	
 	animation_tree.set("parameters/idle_blend_tree/time_scale/scale", randf_range(0.8, 1.2))
 	animation_tree.set("parameters/idle_blend_tree/idle_carry_blend/blend_amount", 0.0)
 	animation_tree.set("parameters/idle_blend_tree/walk_carry_blend/blend_amount", 0.0)
@@ -61,12 +85,12 @@ func _ready() -> void:
 		return not health_instance.is_dead()
 	
 	trooper.is_target_prioritized_callable = func(target: Target, comparator: Trooper) -> bool:
-		var target_owner := target.owner
-		if target_owner is Carriable:
+		var holder := target.owner
+		if holder is Carriable:
 			if carriable:
 				return false
 		
-		if target_owner == fishing_hole:
+		if holder == fishing_hole:
 			return true
 		
 		if fishing_hole:
@@ -90,6 +114,10 @@ func _process(delta: float) -> void:
 		animation_tree.set("parameters/idle_blend_tree/jump_blend/blend_amount", 0.0)
 	else:
 		animation_tree.set("parameters/idle_blend_tree/jump_blend/blend_amount", 1.0)
+	
+	danger_target = danger_target_detector.get_next_target()
+	if danger_target != null:
+		state_chart.send_event("request_task_panic")
 
 
 func _physics_process(delta: float) -> void:
@@ -99,6 +127,21 @@ func _physics_process(delta: float) -> void:
 func throw_carriable(carraible_velocity: Vector2 = Vector2.ZERO) -> void:
 	carriable.place(global_position, 1.0, carraible_velocity, get_parent())
 	carriable = null
+
+
+func throw_new_carriable(item_type: CarryObjectType) -> void:
+	var carry_object := CARRY_OBJECT_SCENE.instantiate() as CarryObject
+	carry_object.carry_object_type = item_type
+	carry_object.place(global_position, 1.0, Vector2.ZERO, get_parent())
+
+
+func throw_items() -> void:
+	if carriable: 
+		throw_carriable()
+	
+	if equipment_type != null:
+		state_chart.send_event("unequip")
+		throw_new_carriable(equipment_type)
 
 
 func get_command_target_point() -> Vector2:
@@ -115,35 +158,64 @@ func is_in_command_target_point_range() -> bool:
 		return global_position.distance_to(command_point) <= 4.0
 
 
+func equip(type: CarryObjectTypeEquipment) -> void:
+	equipment_type = type
+	state_chart.send_event(equipment_type.state_request)
+
+
 func interact_with_target(target: Target) -> void:
-	var target_owner := target.owner
-	if target_owner is Carriable:
-		carriable = target_owner
+	var holder := target.holder
+	if holder is Carriable:
+		if carriable:
+			throw_carriable()
+		
+		carriable = holder
 		carriable.pickup()
 		state_chart.send_event("request_task_idle")
+		carriable_target_detector.active = false
 		if carriable.carry_object_type is CarryObjectTypeEquipment:
-			equipment_type = carriable.carry_object_type
-			carriable.queue_free()
-			carriable = null
-			state_chart.send_event(equipment_type.state_request)
+			state_chart.send_event("unequip")
+			carry_object_sprite.visible = false
+			#equipment_type = carriable.carry_object_type
+			state_chart.send_event("request_action_equip") # DANGER Could be interrupted
 		
 		return
 	
-	var health_instance := Utils.find_child_of_class(target_owner, "HealthInstance") as HealthInstance
-	if health_instance:
-		enemy_health_instance = health_instance
+	#var health_instance := Utils.find_child_of_class(holder, "HealthInstance") as HealthInstance
+	if holder is HealthInstance:
+		enemy_health_instance = holder
 		desired_action = "attack"
 		return
 	
-	if target_owner is FishingHole:
-		fishing_hole = target_owner
+	if holder is Boffus:
+		if carriable and carriable.carry_object_type.is_food():
+			throw_carriable()
+		
+		state_chart.send_event("request_task_idle")
+		return
+	
+	if holder is FishingHole:
+		fishing_hole = holder
 		desired_action = "fish"
 		return
 	
-	if target_owner is Igloo:
+	if holder is Igloo:
 		#carriable = null
 		if carriable:
 			throw_carriable()
+		
+		state_chart.send_event("request_task_idle")
+		return
+	
+	if holder is Raft:
+		if holder.fuelled:
+			holder.add_penguin(self)
+		else:
+			if carriable and holder.fuel_object_types.has(carriable.carry_object_type):
+				carriable.queue_free()
+				carriable = null
+				holder.fuelled = true
+				holder.add_penguin(self)
 		
 		return
 
@@ -152,6 +224,11 @@ func is_command_target_valid() -> bool:
 	return (
 		is_instance_valid(command_target) and command_target.is_inside_tree() 
 		and command_target.active and (not command_target.occupant or command_target.occupant == self))
+
+
+func kill() -> void:
+	SignalBus.penguin_killed.emit(self)
+	queue_free()
 
 
 func _on_trooper_command_applied(point: Vector2, target: Target) -> void:
@@ -166,11 +243,33 @@ func _on_health_instance_damage_received(result: DamageResult) -> void:
 	state_chart.send_event("damage_recieved")
 
 
+func _on_tile_detector_cell_changed(layer: TileMapLayer, current_coords: Vector2i, old_coords: Vector2i) -> void:
+	var is_water_cell: bool
+	var tile_data := layer.get_cell_tile_data(current_coords)
+	if tile_data:
+		is_water_cell = tile_data.get_custom_data("water")
+	
+	swimming = is_water_cell
+
+
 #region Task States
 
 # Idle
 func _on_task_idle_state_entered() -> void:
 	desired_action = "idle"
+	danger_target_detector.active = true
+
+
+func _on_task_idle_state_exited() -> void:
+	#carriable_target_detector.active = true
+	pass
+
+
+func _on_task_idle_state_processing(delta: float) -> void:
+	var next_carriable_target := carriable_target_detector.get_next_target()
+	if next_carriable_target and next_carriable_target.holder is Carriable:
+		command_target = next_carriable_target
+		state_chart.send_event("request_task_move_to_target")
 
 
 # Move to Target
@@ -205,10 +304,33 @@ func _on_task_interact_with_target_state_processing(delta: float) -> void:
 	if not is_command_target_valid() or not is_in_command_target_point_range():
 		state_chart.send_event("request_task_move_to_target")
 
+# Panic
+func _on_task_panic_state_entered() -> void:
+	danger_target_detector.active = false
+	animation_tree.set("parameters/idle_blend_tree/panic_blend/blend_amount", 1.0)
+	flow_field_walker.reverse_path = true
+	flow_field_walker.target_point = danger_target.global_position
+	desired_action = "walk"
+	if carriable:
+		throw_carriable()
+
+
+func _on_task_panic_state_exited() -> void:
+	animation_tree.set("parameters/idle_blend_tree/panic_blend/blend_amount", 0.0)
+	flow_field_walker.reverse_path = false
+	danger_target = null
+
 
 #endregion
 
 #region Action States
+
+# Idle
+
+func _on_action_idle_state_entered() -> void:
+	pass
+	#danger_target_detector.active = true
+
 
 # Walk
 func _on_action_walk_state_exited() -> void:
@@ -225,7 +347,15 @@ func _on_action_walk_state_physics_processing(delta: float) -> void:
 
 # Attack
 func _on_action_attack_state_entered() -> void:
+	if not is_instance_valid(enemy_health_instance):
+		print("enemy_health_instance is invalid!")
+		state_chart.send_event("cancel_action_attack")
+		desired_action = "idle"
+		#state_chart.send_event("request_task_idle") # Should actions be able to dictate tasks?
+		return
+	
 	velocity = walk_speed * (enemy_health_instance.global_position - global_position).normalized()
+	flip_group.flip_towards(velocity)
 	vertical_group.jump()
 	
 	enemy_health_instance.damage(damage_instance)
@@ -258,6 +388,21 @@ func _on_action_fish_state_exited() -> void:
 	fishing_hole.occupant = null
 
 
+# Equip
+
+func _on_action_equip_state_entered() -> void:
+	carry_object_sprite.visible = true
+
+
+func _on_action_equip_state_exited() -> void:
+	if equipment_type:
+		throw_new_carriable(equipment_type)
+	
+	equip(carriable.carry_object_type)
+	carriable.queue_free()
+	carriable = null
+
+
 # Knockback
 func _on_action_knockback_state_entered() -> void:
 	velocity = recieved_damage_result.damage_direction * 30.0
@@ -277,7 +422,7 @@ func _on_action_stun_state_exited() -> void:
 
 # Die
 func _on_action_die_state_entered() -> void:
-	Utils.call_delayed(self, 2.0, queue_free)
+	Utils.call_delayed(self, 2.0, kill)
 	velocity = Vector2.ZERO
 	#carriable = null
 	if carriable:
@@ -292,8 +437,12 @@ func _on_action_die_state_entered() -> void:
 #region Equipment
 
 func _on_equipment_equipped_state_entered() -> void:
+	#equipment_sprite.frame_coords.y = equipment_type.sprite_frame_coords_y
 	equipment_sprite.visible = true
-	equipment_sprite.frame_coords.y = equipment_type.sprite_frame_coords_y
+
+
+func _on_equipment_equipped_state_exited() -> void:
+	pass
 
 
 #endregion

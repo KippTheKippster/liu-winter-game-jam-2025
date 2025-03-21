@@ -15,7 +15,8 @@ signal carry_object_type_changed
 	set(value):
 		carry_object_type = value
 		carry_object_type_changed.emit()
-		carry_object_type.apply(self)
+		if not Engine.is_editor_hint():
+			carry_object_type.apply(self)
 
 
 var old_owner_parent: Node

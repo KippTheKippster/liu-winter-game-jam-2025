@@ -1,9 +1,7 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://cdegfkl3e6eei"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cdegfkl3e6eei"]
 
 [ext_resource type="Shader" uid="uid://bq67t8tv58j0f" path="res://entities/props/water/water_material.gdshader" id="1_cie0b"]
-[ext_resource type="Texture2D" uid="uid://c5jbn83vaify1" path="res://entities/skies/starry_sky_01.png" id="2_cie0b"]
 
 [resource]
 shader = ExtResource("1_cie0b")
-shader_parameter/sky_sampler = ExtResource("2_cie0b")
-shader_parameter/sky_texture_size = Vector2(360, 360)
+shader_parameter/sky_texture_size = Vector2(0, 0)

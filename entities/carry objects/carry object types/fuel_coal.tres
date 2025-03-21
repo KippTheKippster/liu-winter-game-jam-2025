@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CarryObjectType" load_steps=3 format=3 uid="uid://dnh38vsc5xr1o"]
+
+[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="1_3om5a"]
+[ext_resource type="Texture2D" uid="uid://ca6b4r6t7n62y" path="res://entities/carry objects/assets/coal.png" id="2_2uib7"]
+
+[resource]
+script = ExtResource("1_3om5a")
+carry_object_type_instance_path = ""
+edible = true
+penguin_interest = true
+texture = ExtResource("2_2uib7")
+offset = Vector2(0, -2)
+layer = 8
+metadata/_custom_type_script = "uid://b4d3ek51qeeju"

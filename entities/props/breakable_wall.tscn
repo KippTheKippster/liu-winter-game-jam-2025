@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://hya1a4703i6q"]
+[gd_scene load_steps=8 format=3 uid="uid://hya1a4703i6q"]
 
 [ext_resource type="Texture2D" uid="uid://c641n2k7daecj" path="res://entities/props/breakable wall/breakable_wall.png" id="1_6ol58"]
 [ext_resource type="Script" uid="uid://ncc0yry0y1g6" path="res://entities/props/breakable_wall.gd" id="1_w63bi"]
 [ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="2_xx7j8"]
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="3_0disk"]
 [ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="4_hnoyx"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="4_kwoy1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ol58"]
 resource_local_to_scene = true
@@ -33,23 +34,26 @@ health_instance = NodePath("../HealthInstance")
 creature_layer = 1
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
+[node name="Target" type="Node2D" parent="Area2D" node_paths=PackedStringArray("holder")]
+script = ExtResource("4_kwoy1")
+size = 8.0
+holder = NodePath("../HealthInstance")
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
 [node name="HorizontalGroup" type="Node2D" parent="."]
 
 [node name="FlowFieldSolid" type="Node2D" parent="HorizontalGroup"]
 position = Vector2(-8, 0)
 script = ExtResource("4_hnoyx")
-flood_cell_on_tree_exit = true
 metadata/_custom_type_script = "uid://cospm7wq6xrv6"
 
 [node name="FlowFieldSolid2" type="Node2D" parent="HorizontalGroup"]
 script = ExtResource("4_hnoyx")
-flood_cell_on_tree_exit = true
 metadata/_custom_type_script = "uid://cospm7wq6xrv6"
 
 [node name="FlowFieldSolid3" type="Node2D" parent="HorizontalGroup"]
 position = Vector2(8, 0)
 script = ExtResource("4_hnoyx")
-flood_cell_on_tree_exit = true
 metadata/_custom_type_script = "uid://cospm7wq6xrv6"
 
 [node name="Sprite2D" type="Sprite2D" parent="HorizontalGroup"]
@@ -62,18 +66,15 @@ hframes = 2
 [node name="FlowFieldSolid" type="Node2D" parent="VerticalGroup"]
 position = Vector2(0, -8)
 script = ExtResource("4_hnoyx")
-flood_cell_on_tree_exit = true
 metadata/_custom_type_script = "uid://cospm7wq6xrv6"
 
 [node name="FlowFieldSolid2" type="Node2D" parent="VerticalGroup"]
 script = ExtResource("4_hnoyx")
-flood_cell_on_tree_exit = true
 metadata/_custom_type_script = "uid://cospm7wq6xrv6"
 
 [node name="FlowFieldSolid3" type="Node2D" parent="VerticalGroup"]
 position = Vector2(0, 8)
 script = ExtResource("4_hnoyx")
-flood_cell_on_tree_exit = true
 metadata/_custom_type_script = "uid://cospm7wq6xrv6"
 
 [node name="Sprite2D" type="Sprite2D" parent="VerticalGroup"]

@@ -1,7 +1,9 @@
 extends Node2D
 class_name FlowFieldManager
 
+@export var flood_start_marker: Node2D
 @export var cell_size: int = 8
+@export var cells_rect: Rect2i = Rect2i(-25, -25, 75, 75)
 
 var cells: Dictionary[Vector2i, int]
 
@@ -17,7 +19,10 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	cells[Vector2i.ZERO] = -1
-	flood_cell.call_deferred.call_deferred(Vector2i(4, 4)) # UGLY
+	#flood_cell.call_deferred.call_deferred(Vector2i(4, 4)) # UGLY
+	for x in range(cells_rect.position.x, cells_rect.size.x):
+		for y in range(cells_rect.position.y, cells_rect.size.y):
+			cells[Vector2i(x, y)] = -1
 
 
 func flood_cell(coords: Vector2i, count: int = 0) -> void:

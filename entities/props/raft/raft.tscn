@@ -1,10 +1,77 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5e3a7824mb0s"]
+[gd_scene load_steps=22 format=3 uid="uid://b5e3a7824mb0s"]
 
 [ext_resource type="Script" uid="uid://dw4yqocvldxan" path="res://entities/props/raft/raft.gd" id="1_475i2"]
 [ext_resource type="Texture2D" uid="uid://dn1k8n487kplk" path="res://entities/props/raft/raft.png" id="1_u8t7x"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="2_8y8ng"]
+[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="2_plbnp"]
+[ext_resource type="Texture2D" uid="uid://c5yc3nw3upm7a" path="res://entities/props/raft/steamboat.png" id="3_dah45"]
+[ext_resource type="Resource" uid="uid://dnh38vsc5xr1o" path="res://entities/carry objects/carry object types/fuel_coal.tres" id="3_qlvug"]
+[ext_resource type="PackedScene" uid="uid://ccfxeig7h0gpy" path="res://entities/effects/smoke particles/smoke_particles.tscn" id="7_qlvug"]
+[ext_resource type="Texture2D" uid="uid://i4w0p1oyi77" path="res://entities/penguin/assets/penguin.png" id="8_x7s55"]
+[ext_resource type="AudioStream" uid="uid://c5xyrvxq7rgjg" path="res://audio/steamboat_horn.wav" id="9_17tka"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u8t7x"]
-size = Vector2(24, 24)
+size = Vector2(54, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvqxn"]
+atlas = ExtResource("8_x7s55")
+region = Rect2(17, 17, 17, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbdpr"]
+atlas = ExtResource("8_x7s55")
+region = Rect2(34, 17, 17, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17tka"]
+atlas = ExtResource("8_x7s55")
+region = Rect2(0, 0, 17, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0pdnq"]
+atlas = ExtResource("8_x7s55")
+region = Rect2(17, 0, 17, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pb7i8"]
+atlas = ExtResource("8_x7s55")
+region = Rect2(51, 17, 17, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ha8bl"]
+atlas = ExtResource("8_x7s55")
+region = Rect2(68, 17, 17, 17)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qlvug"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mvqxn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbdpr")
+}],
+"loop": true,
+"name": &"fish",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17tka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0pdnq")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pb7i8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ha8bl")
+}],
+"loop": true,
+"name": &"sleep",
+"speed": 5.0
+}]
 
 [sub_resource type="Animation" id="Animation_dah45"]
 length = 0.001
@@ -19,6 +86,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Steamboat/SmokeParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_475i2"]
@@ -39,24 +118,168 @@ tracks/0/keys = {
 "values": [0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_8y8ng"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Steamboat:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Steamboat/SmokeParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8y8ng"]
 _data = {
 &"RESET": SubResource("Animation_dah45"),
-&"bob": SubResource("Animation_475i2")
+&"bob": SubResource("Animation_475i2"),
+&"roll": SubResource("Animation_8y8ng")
 }
 
 [node name="Raft" type="Node2D"]
-z_index = -1
 script = ExtResource("1_475i2")
+fuel_object_types = Array[ExtResource("2_plbnp")]([ExtResource("3_qlvug")])
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+zoom = Vector2(2, 2)
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="Target" type="Node2D" parent="Area2D"]
+position = Vector2(0, -15)
+script = ExtResource("2_8y8ng")
+size = 12.0
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, -1.5)
 shape = SubResource("RectangleShape2D_u8t7x")
 
 [node name="Raft" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("1_u8t7x")
 hframes = 2
+
+[node name="Steamboat" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_dah45")
+offset = Vector2(-4, -4)
+hframes = 2
+vframes = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/props/raft/steamboat.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "7533171019a0f36d06fb9c9ab5d0356d"
+
+[node name="SmokeParticles" parent="Steamboat" instance=ExtResource("7_qlvug")]
+position = Vector2(1, -15)
+emitting = false
+amount = 12
+
+[node name="PenguinSprites" type="Node2D" parent="Steamboat"]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Steamboat/PenguinSprites"]
+position = Vector2(17, -5)
+sprite_frames = SubResource("SpriteFrames_qlvug")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.805038
+
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="Steamboat/PenguinSprites"]
+position = Vector2(13, -1)
+sprite_frames = SubResource("SpriteFrames_qlvug")
+animation = &"fish"
+autoplay = "fish"
+frame_progress = 0.123997
+
+[node name="Sprite2D3" type="AnimatedSprite2D" parent="Steamboat/PenguinSprites"]
+position = Vector2(6, -1)
+scale = Vector2(-1, 1)
+sprite_frames = SubResource("SpriteFrames_qlvug")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.805038
+
+[node name="Sprite2D4" type="AnimatedSprite2D" parent="Steamboat/PenguinSprites"]
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_qlvug")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.470965
+
+[node name="Sprite2D5" type="AnimatedSprite2D" parent="Steamboat/PenguinSprites"]
+position = Vector2(-5, -5)
+sprite_frames = SubResource("SpriteFrames_qlvug")
+animation = &"sleep"
+autoplay = "sleep"
+frame_progress = 0.805038
+
+[node name="Sprite2D6" type="AnimatedSprite2D" parent="Steamboat/PenguinSprites"]
+position = Vector2(-11, -1)
+scale = Vector2(-1, 1)
+sprite_frames = SubResource("SpriteFrames_qlvug")
+animation = &"fish"
+autoplay = "fish"
+frame_progress = 0.123997
+
+[node name="Sprite2D7" type="AnimatedSprite2D" parent="Steamboat/PenguinSprites"]
+position = Vector2(5, -13)
+sprite_frames = SubResource("SpriteFrames_qlvug")
+animation = &"fish"
+autoplay = "sleep"
+frame_progress = 0.0770492
+
+[node name="Sprite2D8" type="AnimatedSprite2D" parent="Steamboat/PenguinSprites"]
+position = Vector2(0, -10)
+scale = Vector2(-1, 1)
+sprite_frames = SubResource("SpriteFrames_qlvug")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.470965
+
+[node name="Sprite2D9" type="AnimatedSprite2D" parent="Steamboat/PenguinSprites"]
+position = Vector2(9, -10)
+sprite_frames = SubResource("SpriteFrames_qlvug")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.470965
+
+[node name="HornAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_17tka")
+volume_db = -5.0
+bus = &"Effects"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -64,5 +287,8 @@ libraries = {
 }
 autoplay = "bob"
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[node name="TransitionTimer" type="Timer" parent="."]
+wait_time = 7.0
+one_shot = true
+
+[connection signal="timeout" from="TransitionTimer" to="." method="_on_transition_timer_timeout"]

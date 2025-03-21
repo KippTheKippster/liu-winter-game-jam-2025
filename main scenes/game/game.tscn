@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://doiwfgk1hy5nb"]
+[gd_scene load_steps=16 format=3 uid="uid://doiwfgk1hy5nb"]
 
 [ext_resource type="Script" uid="uid://dya4stv6au8tw" path="res://main scenes/game/game.gd" id="1_mm5ki"]
 [ext_resource type="PackedScene" uid="uid://cyvjgw6e8qecv" path="res://ui/hud/hud.tscn" id="1_qoleo"]
@@ -17,23 +17,13 @@
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_saw4t"]
 
-[sub_resource type="Gradient" id="Gradient_d0g2b"]
-offsets = PackedFloat32Array(0, 0.31348, 0.563786, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.97, 0.97, 0.97, 0.670588, 0.616337, 0.616337, 0.616337, 0.426091, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_yjtjj"]
-gradient = SubResource("Gradient_d0g2b")
-width = 128
-height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
-metadata/_snap_enabled = true
-
-[node name="Game" type="Node"]
+[node name="Game" type="Node" node_paths=PackedStringArray("current_level")]
 process_mode = 3
 script = ExtResource("1_mm5ki")
-metadata/_edit_horizontal_guides_ = [-7.0, -26.0]
+current_level = NodePath("LevelContainer/LevelTest")
+spawn_penguins_on_level_ready = true
+metadata/_edit_horizontal_guides_ = [-7.0, -26.0, 32.0]
+metadata/_edit_vertical_guides_ = [28.0]
 
 [node name="UiLayer" type="CanvasLayer" parent="."]
 
@@ -53,7 +43,6 @@ metadata/_edit_lock_ = true
 
 [node name="PauseMenu" parent="UiLayer" instance=ExtResource("2_6qgw3")]
 unique_name_in_owner = true
-visible = false
 metadata/_edit_lock_ = true
 
 [node name="RaftDepartMenu" parent="UiLayer" instance=ExtResource("4_d0g2b")]
@@ -67,10 +56,6 @@ stream = ExtResource("5_np0q0")
 autoplay = true
 bus = &"Ambient"
 parameters/looping = true
-
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(116, 81)
 
 [node name="Effects" type="Node2D" parent="."]
 
@@ -147,68 +132,34 @@ position = Vector2(152, -560)
 local_coords = true
 
 [node name="EclipticCanvasModulate" parent="Effects" instance=ExtResource("5_o1m1v")]
-color = Color(0.4464, 0.46464, 0.72, 1)
 duration = 240.0
-time = 1.0
 
-[node name="FlowFieldManager" type="Node2D" parent="."]
-z_index = -5
-script = ExtResource("7_ctvcs")
-metadata/_custom_type_script = "uid://drtrpfwntdaa2"
-
-[node name="Level" type="Node2D" parent="."]
+[node name="LevelContainer" type="Node2D" parent="."]
 process_mode = 1
 y_sort_enabled = true
 
-[node name="PlayerCamera" parent="Level" instance=ExtResource("5_orik2")]
+[node name="PlayerCamera" parent="LevelContainer" instance=ExtResource("5_orik2")]
+unique_name_in_owner = true
 position = Vector2(32, 32)
 
-[node name="CommandArea" parent="Level" instance=ExtResource("10_gscv8")]
+[node name="CommandArea" parent="LevelContainer" instance=ExtResource("10_gscv8")]
+unique_name_in_owner = true
 
-[node name="Maze" type="Node2D" parent="Level"]
+[node name="FlowFieldManager" type="Node2D" parent="LevelContainer" node_paths=PackedStringArray("flood_start_marker")]
+position = Vector2(-8, 2)
+script = ExtResource("7_ctvcs")
+flood_start_marker = NodePath("..")
+cells_rect = Rect2i(-20, -20, 65, 40)
+metadata/_custom_type_script = "uid://drtrpfwntdaa2"
+
+[node name="Maze" type="Node2D" parent="LevelContainer"]
 y_sort_enabled = true
 script = ExtResource("7_euirq")
 generate_on_ready = false
 maze_properties = ExtResource("13_d0g2b")
 metadata/_custom_type_script = "uid://cighei1gf4iov"
 
-[node name="LevelTest" parent="Level" instance=ExtResource("14_yjtjj")]
-position = Vector2(52, 42)
+[node name="LevelTest" parent="LevelContainer" instance=ExtResource("14_yjtjj")]
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(22, 173)
-color = Color(1, 0.383333, 0, 1)
-texture = SubResource("GradientTexture2D_yjtjj")
-
-[node name="PointLight2D2" type="PointLight2D" parent="."]
-position = Vector2(71, -36)
-color = Color(1, 0.383333, 0, 1)
-texture = SubResource("GradientTexture2D_yjtjj")
-
-[node name="PointLight2D3" type="PointLight2D" parent="."]
-position = Vector2(86, 45)
-color = Color(1, 0, 0.216667, 1)
-energy = 0.85
-texture = SubResource("GradientTexture2D_yjtjj")
-
-[node name="PointLight2D4" type="PointLight2D" parent="."]
-position = Vector2(133, 87)
-color = Color(1, 0.383333, 0, 1)
-texture = SubResource("GradientTexture2D_yjtjj")
-
-[node name="PointLight2D5" type="PointLight2D" parent="."]
-position = Vector2(298, -3)
-color = Color(1, 0.383333, 0, 1)
-texture = SubResource("GradientTexture2D_yjtjj")
-
-[node name="PointLight2D6" type="PointLight2D" parent="."]
-position = Vector2(237, 122)
-color = Color(1, 0.383333, 0, 1)
-texture = SubResource("GradientTexture2D_yjtjj")
-
-[node name="PointLight2D7" type="PointLight2D" parent="."]
-position = Vector2(135, 214)
-color = Color(1, 0.383333, 0, 1)
-texture = SubResource("GradientTexture2D_yjtjj")
-
+[connection signal="depart_request" from="UiLayer/PauseMenu" to="." method="_on_pause_menu_depart_request"]
 [connection signal="depart_accepted" from="UiLayer/RaftDepartMenu" to="." method="_on_raft_depart_menu_depart_accepted"]

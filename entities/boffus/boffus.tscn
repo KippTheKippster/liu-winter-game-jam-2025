@@ -1,17 +1,20 @@
-[gd_scene load_steps=23 format=3 uid="uid://bi80q0c1kcjm"]
+[gd_scene load_steps=26 format=3 uid="uid://bi80q0c1kcjm"]
 
 [ext_resource type="Script" uid="uid://c68e0657600e1" path="res://entities/boffus/boffus.gd" id="1_fh4cr"]
 [ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="2_7eai3"]
 [ext_resource type="Texture2D" uid="uid://c7cgp87rg58mj" path="res://entities/boffus/seal.png" id="2_32cru"]
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="3_mhjrk"]
+[ext_resource type="Script" uid="uid://dci6sv2mtg2l1" path="res://components/flow field/flow_field_walker.gd" id="3_xxmb8"]
 [ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="5_hexm2"]
 [ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="5_maxop"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="6_678nm"]
 [ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="6_g15qm"]
 [ext_resource type="Texture2D" uid="uid://barysjgilhliw" path="res://entities/carry objects/assets/food_penguin.png" id="7_hexm2"]
 [ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="7_mdpm0"]
 [ext_resource type="AudioStream" uid="uid://r7i1erkso4pl" path="res://audio/boffus_eat.wav" id="8_maxop"]
 [ext_resource type="Script" uid="uid://dtvh4vikgt2v" path="res://addons/godot_state_charts/animation_player_state.gd" id="8_mdpm0"]
 [ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="9_5w4lw"]
+[ext_resource type="Script" uid="uid://bbsfd24w06hq0" path="res://entities/penguin/target_detector.gd" id="9_egrm7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_32cru"]
 radius = 5.0
@@ -219,7 +222,12 @@ shape = SubResource("CircleShape2D_32cru")
 
 [node name="FlowFieldSolid" type="Node2D" parent="."]
 script = ExtResource("2_7eai3")
+active = false
 metadata/_custom_type_script = "uid://cospm7wq6xrv6"
+
+[node name="FlowFieldWalker" type="Node2D" parent="."]
+script = ExtResource("3_xxmb8")
+metadata/_custom_type_script = "uid://dci6sv2mtg2l1"
 
 [node name="PenguinCreature" type="Node2D" parent="." node_paths=PackedStringArray("health_instance")]
 unique_name_in_owner = true
@@ -228,6 +236,12 @@ health_instance = NodePath("../Area2D/HealthInstance")
 detection_range = 24.0
 creature_mask = 6
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="PenguinTargetDetector" type="Node2D" parent="."]
+script = ExtResource("9_egrm7")
+range = 24.0
+mask = 3
+metadata/_custom_type_script = "uid://bbsfd24w06hq0"
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -244,11 +258,27 @@ creature_layer = 16
 creature_mask = 6
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
+[node name="HuntTargetDetector" type="Node2D" parent="Area2D"]
+unique_name_in_owner = true
+script = ExtResource("9_egrm7")
+range = 256.0
+mask = 3
+metadata/_custom_type_script = "uid://bbsfd24w06hq0"
+
 [node name="HealthInstance" type="Node2D" parent="Area2D"]
 script = ExtResource("5_hexm2")
 base_health = 120.0
 damage_mask = 0
 metadata/_custom_type_script = "uid://dvljb35mh14xv"
+
+[node name="DangerTarget" type="Node2D" parent="Area2D" node_paths=PackedStringArray("holder")]
+unique_name_in_owner = true
+position = Vector2(0, 8)
+script = ExtResource("6_678nm")
+active = false
+holder = NodePath("../..")
+layer = 4
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 
 [node name="FlipGroup" type="Node2D" parent="."]
 script = ExtResource("5_maxop")
@@ -282,18 +312,25 @@ metadata/_aseprite_wizard_source_file_hash_ = "efcf795996653a4e7dd75ca291f354a5"
 
 [node name="FoodCreature" type="Node2D" parent="FlipGroup"]
 unique_name_in_owner = true
-position = Vector2(24, 0)
+position = Vector2(0, 8)
 script = ExtResource("3_mhjrk")
 detection_range = 12.0
 creature_mask = 4
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
+[node name="FoodTargetDetector" type="Node2D" parent="FlipGroup"]
+unique_name_in_owner = true
+position = Vector2(0, 8)
+script = ExtResource("9_egrm7")
+range = 12.0
+mask = 2
+metadata/_custom_type_script = "uid://bbsfd24w06hq0"
+
 [node name="Path2D" type="Path2D" parent="FlipGroup"]
 curve = SubResource("Curve2D_mhjrk")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="FlipGroup/Path2D"]
-position = Vector2(3, -10)
-progress = 50.4475
+position = Vector2(24, 0)
 rotates = false
 loop = false
 
@@ -410,4 +447,5 @@ delay_in_seconds = "0.0"
 [connection signal="state_entered" from="StateChart/Root/Chase/Charge" to="." method="_on_charge_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Chase/Charge" to="." method="_on_charge_state_exited"]
 [connection signal="state_entered" from="StateChart/Root/Chase/Shoot" to="." method="_on_shoot_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Chase/Shoot" to="." method="_on_shoot_state_exited"]
 [connection signal="state_physics_processing" from="StateChart/Root/Chase/Shoot" to="." method="_on_shoot_state_physics_processing"]

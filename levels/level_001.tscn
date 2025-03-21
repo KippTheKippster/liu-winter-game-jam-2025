@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://d1ukp6d0k6q5k" path="res://entities/enemies/tree mimic/tree_mimic.tscn" id="8_jrmpr"]
 
 [node name="Level001" instance=ExtResource("1_xh6sb")]
-y_sort_enabled = true
 
 [node name="TreeMimic" parent="." index="0" instance=ExtResource("8_jrmpr")]
 position = Vector2(40, 56)
@@ -36,9 +35,6 @@ type = 2
 [node name="Tree5" parent="." index="6" instance=ExtResource("3_io8uw")]
 position = Vector2(68, 53)
 type = 1
-
-[node name="TreeSprite" parent="Tree5" index="3"]
-frame = 1
 
 [node name="Tree6" parent="." index="7" instance=ExtResource("3_io8uw")]
 position = Vector2(82, 25)
@@ -139,5 +135,4 @@ detection_range = 64.0
 [node name="Boffus" parent="." index="35" instance=ExtResource("7_wtxts")]
 position = Vector2(52.9015, 24.9542)
 
-[editable path="Tree5"]
 [editable path="Food"]

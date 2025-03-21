@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cxfmeykoc0drc" path="res://levels/level.gd" id="1_gup2b"]
 
-[node name="LevelTemplate" type="Node2D"]
+[node name="LevelTemplate" type="Node2D" node_paths=PackedStringArray("start_marker")]
 y_sort_enabled = true
 script = ExtResource("1_gup2b")
+camera_limit = Rect2i(-320, -180, 640, 360)
+start_marker = NodePath("StartMarker")
+
+[node name="StartMarker" type="Marker2D" parent="."]

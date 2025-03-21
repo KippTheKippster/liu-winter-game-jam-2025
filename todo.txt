@@ -1,0 +1,24 @@
+#Feed boffus
+#Run in fear
+Return boffus to start point?
+#Use pathfinding for boffus
+#Coal
+#Boffus can eat non edible items
+#Steamboat smoke
+#Steamboat carry penguins
+#Steamboat coal animation
+#Remember penguins
+#Limit camera
+#Rework water detection
+#Fix how game determines if there are no penguins alive
+#Penguin carry jump sprite
+~Auto pickup items
+Rolly polly that crushes penguins
+It auto pick ups igloo items
+Spread out penguins to circle
+Revert panic to action?
+Replace and remove Penguin with Penguin2
+Show penguin equipment of boat
+Highlight objects only when interactable
+Implement Kraken
+Check igloo carriables

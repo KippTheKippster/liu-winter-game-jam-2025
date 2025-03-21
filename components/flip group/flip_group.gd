@@ -44,7 +44,7 @@ func flip_towards(direction: Vector2) -> void:
 
 
 func flip_towards_point(point: Vector2) -> void:
-	flip_towards(point - global_position)
+	flip_towards(global_position - point)
 
 
 func flip_towards_node(node: Node2D) -> void:

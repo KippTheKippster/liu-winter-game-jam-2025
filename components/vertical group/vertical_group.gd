@@ -22,6 +22,7 @@ func _ready() -> void:
 	shadow_sprite.show_behind_parent = true
 	shadow_sprite.z_index = -1
 	shadow_sprite.name = "ShadowSprite"
+	shadow_sprite.global_position = global_position
 	add_child(shadow_sprite)
 
 

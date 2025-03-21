@@ -3,7 +3,9 @@ class_name Boffus
 
 const FOOD_PENGUIN = preload("uid://cvel35rx5kt4s")
 
+@onready var flow_field_walker: FlowFieldWalker = $FlowFieldWalker
 @onready var food_creature: Creature = %FoodCreature
+@onready var food_target_detector: TargetDetector = %FoodTargetDetector
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var flip_group: FlipGroup = $FlipGroup
 @onready var food_sprite: Sprite2D = %FoodSprite
@@ -12,6 +14,9 @@ const FOOD_PENGUIN = preload("uid://cvel35rx5kt4s")
 @onready var state_chart: StateChart = $StateChart
 @onready var boffus_creature: Creature = %BoffusCreature
 @onready var penguin_creature: Creature = %PenguinCreature
+@onready var penguin_target_detector: TargetDetector = $PenguinTargetDetector
+@onready var hunt_target_detector: TargetDetector = %HuntTargetDetector
+@onready var danger_target: Target = %DangerTarget
 
 var allow_eat: bool = false
 
@@ -53,13 +58,14 @@ func _process(delta: float) -> void:
 			)
 	"""
 
-func search_for_food(creature_detector: Creature) -> void:
-	var creature := creature_detector.get_next_creature_target()
-	if creature and creature.carriable:
-		food_sprite.texture = creature.carriable.carry_object_type.texture
-		food_sprite.offset = creature.carriable.carry_object_type.offset
+func search_for_food(target_detector: TargetDetector) -> void:
+	var target := target_detector.get_next_target()
+	
+	if target and target.holder is Carriable:
+		food_sprite.texture = target.holder.carry_object_type.texture
+		food_sprite.offset = target.holder.carry_object_type.offset
 		state_chart.send_event.call_deferred("eat_request")
-		if creature.carriable.carry_object_type == preload("uid://csgrgd3ywh8js"):
+		if target.holder.carry_object_type == preload("uid://csgrgd3ywh8js"):
 			camera_2d.enabled = true
 			camera_2d.make_current()
 			time_label.visible = false
@@ -67,15 +73,15 @@ func search_for_food(creature_detector: Creature) -> void:
 				GlobalUi.transition_screen.change_scene_to_file("res://main scenes/victory screen/victory_screen.tscn", "circle")
 			)
 		
-		creature.owner.queue_free() 
-		print("FOOD")
+		target.owner.queue_free() 
 	
-	if creature and creature.owner is Penguin:
-		var penguin := creature.owner as Penguin
+	if target and target.owner is Penguin2:
+		var penguin := target.owner as Penguin2
 		penguin.global_position = food_sprite.global_position
-		penguin.state_chart.send_event("extra_state_none_request")
-		penguin.queue_free()
-		flip_group.flip_towards_node(creature)
+		#penguin.state_chart.send_event("extra_state_none_request")
+		flip_group.flip_towards_node(penguin)
+		penguin.throw_items()
+		penguin.kill()
 		food_sprite.texture = FOOD_PENGUIN.texture
 		food_sprite.offset = FOOD_PENGUIN.offset
 		state_chart.send_event.call_deferred("eat_request")
@@ -96,15 +102,17 @@ func _on_sleep_state_processing(delta: float) -> void:
 
 func _on_chase_state_entered() -> void:
 	boffus_creature.active = true
+	danger_target.active = true
 
 
 
 func _on_chase_state_exited() -> void:
 	boffus_creature.active = false
+	danger_target.active = false
 
 
 func _on_waking_state_processing(delta: float) -> void:
-	search_for_food(food_creature)
+	search_for_food(food_target_detector)
 
 
 func _on_waking_state_entered() -> void:
@@ -120,18 +128,23 @@ func _on_chase_state_physics_processing(delta: float) -> void:
 
 
 func _on_shoot_state_entered() -> void:
-	var target := boffus_creature.get_next_creature_target()
+	var target := hunt_target_detector.get_next_target()
+	allow_eat = true
 	if target:
 		var dif := (target.global_position - global_position)
 		var speed := clampf(2.0 * dif.length(), 30.0, 60.0)
-		velocity = speed * dif.normalized() 
-		flip_group.flip_towards(velocity)
+		flow_field_walker.target_point = target.global_position
+		velocity = speed * flow_field_walker.get_direction()
+		#velocity = speed * dif.normalized() 
+		
+		if not velocity.is_zero_approx():
+			flip_group.flip_towards(velocity)
 
 
 func _on_charge_state_entered() -> void:
-	allow_eat = true
+	#allow_eat = true
 	velocity = Vector2.ZERO
-	search_for_food(penguin_creature)
+	search_for_food(penguin_target_detector)
 
 
 func _on_shoot_state_physics_processing(delta: float) -> void:
@@ -139,4 +152,9 @@ func _on_shoot_state_physics_processing(delta: float) -> void:
 
 
 func _on_charge_state_exited() -> void:
+	pass
+	#allow_eat = false
+
+
+func _on_shoot_state_exited() -> void:
 	allow_eat = false

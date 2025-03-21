@@ -4,3 +4,4 @@
 
 [resource]
 shader = ExtResource("1_sflce")
+shader_parameter/zoom = Vector2(0, 0)

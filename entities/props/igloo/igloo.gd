@@ -23,17 +23,17 @@ func _process(delta: float) -> void:
 
 
 func spawn_penguin() -> void:
-	#var penguin := PENGUIN_SCENE.instantiate() as Penguin
-	#add_sibling(penguin)
-	#penguin.global_position = spawn_marker.global_position
-	#penguin.vertical_group.jump()
-	var carry_object := CARRY_OBJECT_SCENE.instantiate() as Carriable
+	var penguin := PENGUIN_SCENE.instantiate() as Penguin2
+	add_sibling(penguin)
+	penguin.global_position = spawn_marker.global_position
+	penguin.vertical_group.jump()
+	#var carry_object := CARRY_OBJECT_SCENE.instantiate() as Carriable
 	#add_sibling(carry_object)
 	#carry_object.global_position = spawn_marker.global_position
 	#add_sibling(carry_object)
 	#carry_object.pickup()
-	carry_object.place(spawn_marker.global_position, 1.0, Vector2.ZERO, self)
-	carry_object.carry_object_type = PENGUIN_EGG
+	#carry_object.place(spawn_marker.global_position, 1.0, Vector2.ZERO, get_parent())
+	#carry_object.carry_object_type = PENGUIN_EGG
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

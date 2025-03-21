@@ -5,7 +5,9 @@
 
 [resource]
 script = ExtResource("1_gx2sv")
-eatable = true
+carry_object_type_instance_path = ""
+edible = true
+penguin_interest = true
 texture = ExtResource("2_6gymw")
 offset = Vector2(0, -2)
-metadata/_custom_type_script = "uid://d2bdbs6pakajn"
+layer = 10

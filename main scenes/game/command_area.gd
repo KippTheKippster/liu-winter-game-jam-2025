@@ -10,7 +10,6 @@ var active: bool
 var radius: float = 16.0
 
 var target_list: Array[Target]
-var penguin_list: Array[Penguin]
 var trooper_list: Array[Trooper]
 
 @onready var circle_sub_viewport: SubViewport = %CircleSubViewport
@@ -74,8 +73,11 @@ func _draw() -> void:
 
 
 func update_lists() -> void:
+	for target in target_list:
+		if is_instance_valid(target):
+			target.highlight = false
+	
 	target_list.clear()
-	#penguin_list.clear()
 	
 	for area in get_overlapping_areas():
 		var trooper := Utils.find_child_of_class(area, "Trooper") as Trooper
@@ -84,8 +86,15 @@ func update_lists() -> void:
 			trooper_list.append(trooper)
 		
 		var target := Utils.find_child_of_class(area, "Target") as Target
-		if target:
+		if target and target.active and target.layer & 1 == 0:
+			#target.highlight = true
 			target_list.append(target)
+	
+	target_list.sort_custom(sort_closest.bind(global_position))
+	for i in min(trooper_list.size(), target_list.size()):
+		target_list[i].highlight = true
+		if not target_list[i].singular:
+			return
 
 
 func release_command() -> void:
@@ -93,8 +102,10 @@ func release_command() -> void:
 		if is_instance_valid(trooper):
 			trooper.selected = false
 	
+	for target in target_list:
+		target.highlight = false
+	
 	trooper_list.clear()
-	penguin_list.clear()
 	active = false
 
 
@@ -107,7 +118,10 @@ func sort_closest(a: Target, b: Target, point: Vector2) -> bool:
 
 
 func apply_command() -> void:
-	target_list.sort_custom(sort_closest.bind(global_position))
+	#target_list.sort_custom(sort_closest.bind(global_position))
+	for trooper in trooper_list:
+		if not is_instance_valid(trooper):
+			trooper_list.erase(trooper)
 	
 	for target in target_list:
 		if trooper_list.is_empty():
@@ -130,7 +144,7 @@ func apply_command() -> void:
 		for i in trooper_list.size():
 			var trooper := trooper_list[0]
 			trooper_list.remove_at(0)
-			if is_instance_valid(trooper) and trooper.responsive:
+			if trooper.responsive: # is_instance_valid(trooper) and
 				trooper.command_applied.emit(global_position, target)
 				trooper.selected = false
 				if target.singular:

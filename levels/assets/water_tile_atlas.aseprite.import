@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dvnemjtdngxnk"
+path="res://.godot/imported/water_tile_atlas.aseprite-b583f0385683d203e2e7bf54746ea287.res"
+
+[deps]
+
+source_file="res://levels/assets/water_tile_atlas.aseprite"
+dest_files=["res://.godot/imported/water_tile_atlas.aseprite-b583f0385683d203e2e7bf54746ea287.res"]
+
+[params]
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://kmfgh7wh8vui"]
+[gd_scene load_steps=19 format=3 uid="uid://kmfgh7wh8vui"]
 
 [ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="1_acu58"]
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="1_dlyk1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bi4rnxlt7xpfa" path="res://entities/enemies/goat/goat.gd" id="1_puqcu"]
 [ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="2_b5tiu"]
 [ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="2_m2uf3"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="3_5wktk"]
 [ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="4_m2uf3"]
 [ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="5_wkkvt"]
 [ext_resource type="Script" uid="uid://dtvh4vikgt2v" path="res://addons/godot_state_charts/animation_player_state.gd" id="6_4dkfh"]
@@ -117,6 +118,12 @@ health_instance = NodePath("../HealthInstance")
 creature_layer = 1
 creature_mask = 2
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="Target" type="Node2D" parent="GoatArea" node_paths=PackedStringArray("holder")]
+script = ExtResource("3_5wktk")
+size = 12.0
+holder = NodePath("../HealthInstance")
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 
 [node name="HealthInstance" type="Node2D" parent="GoatArea"]
 script = ExtResource("2_b5tiu")

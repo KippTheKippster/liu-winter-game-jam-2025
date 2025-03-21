@@ -1,7 +1,8 @@
+@tool
 extends Carriable
 
+@onready var target: Target = $Area2D/Target
 @onready var vertical_group: VerticalGroup = $VerticalGroup
-
 @onready var object_sprite: Sprite2D = %ObjectSprite
 
 var velocity: Vector2
@@ -13,6 +14,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	enabled = vertical_group.is_on_floor()
 	if not vertical_group.is_on_floor():
 		position += velocity * delta
@@ -28,6 +32,7 @@ func update_sprite() -> void:
 		visible = true
 		object_sprite.texture = carry_object_type.texture
 		object_sprite.offset = carry_object_type.offset
+		target.layer = carry_object_type.layer
 	else:
 		visible = false
 

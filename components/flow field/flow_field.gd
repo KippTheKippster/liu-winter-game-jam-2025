@@ -60,6 +60,9 @@ func get_cell_direction(cell: Vector2i, include_sub_neigbors: bool = false) -> V
 			and is_cell_valid(cell + Vector2i.RIGHT * vector.x) and is_cell_valid(cell + Vector2i.DOWN * vector.y)):
 			min_cell = neighbor_cell
 	
+	if get_cell_value(min_cell) == -1:
+		return Vector2.ZERO
+	
 	return min_cell - cell
 
 

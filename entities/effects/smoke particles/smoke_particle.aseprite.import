@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://kiajhu5cx0v8"
+path="res://.godot/imported/smoke_particle.aseprite-0f3be3ddb760db7d8844c1a95b387a31.res"
+
+[deps]
+
+source_file="res://entities/effects/smoke particles/smoke_particle.aseprite"
+dest_files=["res://.godot/imported/smoke_particle.aseprite-0f3be3ddb760db7d8844c1a95b387a31.res"]
+
+[params]
+

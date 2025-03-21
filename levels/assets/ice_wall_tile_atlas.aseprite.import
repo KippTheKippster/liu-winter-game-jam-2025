@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bjg4t8hsns4pm"
+path="res://.godot/imported/ice_wall_tile_atlas.aseprite-9de598a0a1e2cb1abb5a68a12f2dc6b4.res"
+
+[deps]
+
+source_file="res://levels/assets/ice_wall_tile_atlas.aseprite"
+dest_files=["res://.godot/imported/ice_wall_tile_atlas.aseprite-9de598a0a1e2cb1abb5a68a12f2dc6b4.res"]
+
+[params]
+

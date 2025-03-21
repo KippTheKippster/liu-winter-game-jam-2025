@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c2k5k25d0x03y"
+path="res://.godot/imported/coal.aseprite-48e9569c7b3c87997a69f3e122bbc1d0.res"
+
+[deps]
+
+source_file="res://entities/carry objects/assets/coal.aseprite"
+dest_files=["res://.godot/imported/coal.aseprite-48e9569c7b3c87997a69f3e122bbc1d0.res"]
+
+[params]
+

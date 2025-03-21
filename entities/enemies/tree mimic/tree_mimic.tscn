@@ -219,11 +219,11 @@ creature_layer = 1
 creature_mask = 2
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
-[node name="Target" type="Node2D" parent="TreeArea"]
+[node name="Target" type="Node2D" parent="TreeArea" node_paths=PackedStringArray("holder")]
 script = ExtResource("7_qq355")
 priority = 1
 size = 12.0
-range = 12.0
+holder = NodePath("../HealthInstance")
 metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 
 [node name="HealthInstance" type="Node2D" parent="TreeArea"]

@@ -3,11 +3,14 @@ class_name FlowFieldWalker
 
 @export var reverse_path: bool
 @export var max_path_follow_length: int = 10
+@export var cell_margin: float = 2.0
 
 var used: bool
 
 var flow_field_manager: FlowFieldManager
 var flow_field: FlowField
+var current_coords: Vector2i
+
 var target_coords: Vector2i:
 	get:
 		return flow_field_manager.point_to_coords(target_point)
@@ -26,13 +29,15 @@ var target_point: Vector2:
 				flow_field_manager.remove_user_from_flow_field(old_coords)
 				flow_field = null
 			
-		flow_field = flow_field_manager.add_user_to_flow_field(new_coords)
+			flow_field = flow_field_manager.add_user_to_flow_field(new_coords)
 
 
 func _enter_tree() -> void:
 	flow_field_manager = Utils.find_child_of_class(get_tree().root, "FlowFieldManager")
 	if used:
 		target_point = target_point
+	else:
+		current_coords = flow_field_manager.point_to_coords(global_position)
 
 
 func _exit_tree() -> void:
@@ -41,8 +46,13 @@ func _exit_tree() -> void:
 		flow_field = null
 
 
+func _process(delta: float) -> void:
+	if flow_field_manager.coords_to_point(current_coords).distance_to(global_position) > flow_field_manager.cell_size + cell_margin:
+		current_coords = flow_field_manager.point_to_coords(global_position)
+
+
 func get_direction() -> Vector2:
-	var coords := flow_field_manager.point_to_coords(global_position)
+	var coords := current_coords #flow_field_manager.point_to_coords(global_position) #current_coords #
 	var cell_path := get_cell_path(coords)
 	var direction := Vector2.ZERO
 	var direction_sign := 1 
@@ -53,8 +63,13 @@ func get_direction() -> Vector2:
 	for i in cell_path.size():
 		direction += Vector2(cell_path[i]).normalized() * direction_sign
 	
-	if direction == Vector2.ZERO or flow_field.get_cell_value(coords) < max_path_follow_length:
-		direction += (target_point - global_position).normalized() * direction_sign
+	var cell_value := flow_field.get_cell_value(coords)
+	if direction == Vector2.ZERO and cell_value == -1:
+		return Vector2.ZERO 
+	
+	if direction == Vector2.ZERO or cell_value < max_path_follow_length:
+		if cell_path.size() == max_path_follow_length:
+			direction += (target_point - global_position).normalized() * direction_sign
 	
 	return direction.normalized()
 

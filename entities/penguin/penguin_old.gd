@@ -1,5 +1,5 @@
 extends CharacterBody2D
-class_name Penguin
+class_name PenguinOld
 
 signal creature_target_changed
 signal command_area_entered(command_area: Area2D)

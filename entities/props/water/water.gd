@@ -1,21 +1,24 @@
+@tool
 extends Node2D
 
+@onready var reflection_sprite: Sprite2D = %ReflectionSprite
+#@onready var shader_material: ShaderMaterial = reflection_sprite.material
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+var i = 1
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
-
+	if reflection_sprite:
+		if Engine.is_editor_hint():
+			reflection_sprite.set("instance_shader_parameters/scale", get_viewport_transform().get_scale())
+		else:
+			reflection_sprite.set("instance_shader_parameters/scale", get_viewport().get_camera_2d().zoom)
+			
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body is Penguin:
+	if body is Penguin2:
 		body.overlapping_water_count += 1
 
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body is Penguin:
+	if body is Penguin2:
 		body.overlapping_water_count -= 1

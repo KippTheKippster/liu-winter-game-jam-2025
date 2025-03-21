@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://csjrxfar6kjjg"]
+
+[ext_resource type="Texture2D" uid="uid://cvfoodcsh2elr" path="res://entities/props/tree/tree.png" id="1_rcmvh"]
+[ext_resource type="Shader" uid="uid://ifpue3how8ri" path="res://reflection test/reflection_test.gdshader" id="2_oe8au"]
+[ext_resource type="Script" uid="uid://bsw8qpxsxq8r5" path="res://reflection test/reflection.gd" id="3_qastj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qastj"]
+shader = ExtResource("2_oe8au")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rcmvh"]
+
+[node name="ReflectionTest" type="Node2D"]
+
+[node name="CanvasGroup" type="CanvasGroup" parent="."]
+
+[node name="Main2" type="Sprite2D" parent="CanvasGroup"]
+rotation = 3.14159
+texture = ExtResource("1_rcmvh")
+offset = Vector2(0, -7)
+region_enabled = true
+region_rect = Rect2(13, 0, 13, 17)
+region_filter_clip_enabled = true
+
+[node name="Main4" type="Sprite2D" parent="CanvasGroup"]
+position = Vector2(-8, 4)
+rotation = 3.14159
+texture = ExtResource("1_rcmvh")
+offset = Vector2(0, -7)
+region_enabled = true
+region_rect = Rect2(13, 0, 13, 17)
+region_filter_clip_enabled = true
+
+[node name="Main6" type="Sprite2D" parent="CanvasGroup"]
+position = Vector2(5, 7)
+rotation = 3.14159
+texture = ExtResource("1_rcmvh")
+offset = Vector2(0, -7)
+region_enabled = true
+region_rect = Rect2(13, 0, 13, 17)
+region_filter_clip_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasGroup"]
+offset_left = -40.0
+offset_top = -23.0
+offset_right = 40.0
+offset_bottom = 7.0
+
+[node name="Main" type="Sprite2D" parent="CanvasGroup"]
+position = Vector2(0, -1)
+texture = ExtResource("1_rcmvh")
+offset = Vector2(0, -7)
+region_enabled = true
+region_rect = Rect2(13, 0, 13, 16)
+region_filter_clip_enabled = true
+
+[node name="Main5" type="Sprite2D" parent="CanvasGroup"]
+position = Vector2(5, 6)
+texture = ExtResource("1_rcmvh")
+offset = Vector2(0, -7)
+region_enabled = true
+region_rect = Rect2(13, 0, 13, 16)
+region_filter_clip_enabled = true
+
+[node name="Main3" type="Sprite2D" parent="CanvasGroup"]
+position = Vector2(-8, 3)
+texture = ExtResource("1_rcmvh")
+offset = Vector2(0, -7)
+region_enabled = true
+region_rect = Rect2(13, 0, 13, 16)
+region_filter_clip_enabled = true
+
+[node name="Reflection" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_qastj")
+instance_shader_parameters/size = Vector2(16, 24)
+position = Vector2(-2.38419e-07, 12)
+scale = Vector2(16, 24)
+texture = SubResource("PlaceholderTexture2D_rcmvh")
+script = ExtResource("3_qastj")
