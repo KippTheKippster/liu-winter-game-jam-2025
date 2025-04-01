@@ -290,6 +290,8 @@ mask = 1
 metadata/_custom_type_script = "uid://bbsfd24w06hq0"
 
 [node name="ShadowSprite" type="Sprite2D" parent="."]
+z_index = -1
+scale = Vector2(2, 2)
 texture = ExtResource("9_7cj2x")
 
 [node name="MaskSprite" type="Sprite2D" parent="."]

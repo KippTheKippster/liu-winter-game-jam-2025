@@ -17,11 +17,14 @@ Return boffus to start point?
 #Fix tile map flow field solids
 #Arch Jumper
 #Implement Kraken
+#Fix reloading level
+#Fix FlowFieldWalker crashing without FlowFieldManager
 ~Auto pickup items
 ~It auto pick ups igloo items
 Revert panic to action?
 Spread out penguins to circle
 Show penguin equipment on boat
-Check igloo carriables
+#Check igloo carriables
 Fix penguin pathfinding around corners
-Fix reloading level
+
+Penguin should jump in to the boat

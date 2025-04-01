@@ -121,8 +121,11 @@ func _ready() -> void:
 				if not raft.fuel_object_types.has(carriable.carry_object_type):
 					return false
 			
-		if holder is Igloo and not carriable:
-			return false
+		if holder is Igloo:
+			if not carriable:
+				return false
+			elif not holder.is_carry_object_type_valid(carriable.carry_object_type):
+				return false
 		
 		if holder is Boffus and not carriable:
 			return false
@@ -230,7 +233,7 @@ func interact_with_target(target: Target) -> void:
 	
 	if holder is Igloo:
 		#carriable = null
-		if carriable:
+		if carriable and holder.is_carry_object_type_valid(carriable.carry_object_type):
 			throw_carriable()
 		
 		state_chart.send_event("request_task_idle")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://u6xkfu7kmg6i"]
+[gd_scene load_steps=16 format=3 uid="uid://u6xkfu7kmg6i"]
 
 [ext_resource type="Script" uid="uid://cmgk8vbxsuxqc" path="res://entities/penguin/new_penguin_test.gd" id="1_40l0n"]
 [ext_resource type="PackedScene" uid="uid://bwf71bc7425hy" path="res://main scenes/game/command_area.tscn" id="1_o2an7"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://c7hpad4xy14l2" path="res://entities/penguin/penguin.tscn" id="4_33baq"]
 [ext_resource type="PackedScene" uid="uid://dwxtrccdrpoyl" path="res://entities/carry objects/carry_object.tscn" id="5_fubsj"]
 [ext_resource type="PackedScene" uid="uid://wwoo0xbgbrpv" path="res://entities/props/wall/snow_wall.tscn" id="5_qnixe"]
-[ext_resource type="Script" uid="uid://drtrpfwntdaa2" path="res://components/flow field/flow_field_manager.gd" id="6_14sp0"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="6_q2ddb"]
 [ext_resource type="Resource" uid="uid://3756488067p0" path="res://entities/carry objects/carry object types/equipment_pool_ring.tres" id="9_fex1r"]
 [ext_resource type="Resource" uid="uid://460toaio7pbp" path="res://entities/carry objects/carry object types/food_fish.tres" id="9_g2gbj"]
@@ -40,10 +39,6 @@ process_mode = 1
 y_sort_enabled = true
 
 [node name="CommandArea" parent="Level" instance=ExtResource("1_o2an7")]
-
-[node name="FlowFieldManager" type="Node2D" parent="Level"]
-script = ExtResource("6_14sp0")
-metadata/_custom_type_script = "uid://drtrpfwntdaa2"
 
 [node name="Penguin" parent="Level" instance=ExtResource("4_33baq")]
 position = Vector2(4, 60)
@@ -446,57 +441,29 @@ position = Vector2(68, 44)
 z_as_relative = false
 position = Vector2(68, 52)
 
-[node name="ReflectionSprite" parent="Water5" index="1"]
-instance_shader_parameters/index = 1
-instance_shader_parameters/scale = Vector2(3.7975, 3.7975)
-
 [node name="Water6" parent="." instance=ExtResource("16_0ih28")]
 z_as_relative = false
 position = Vector2(76, 52)
-
-[node name="ReflectionSprite" parent="Water6" index="1"]
-instance_shader_parameters/index = 1
-instance_shader_parameters/scale = Vector2(3.7975, 3.7975)
 
 [node name="Water7" parent="." instance=ExtResource("16_0ih28")]
 z_as_relative = false
 position = Vector2(84, 52)
 
-[node name="ReflectionSprite" parent="Water7" index="1"]
-instance_shader_parameters/index = 1
-instance_shader_parameters/scale = Vector2(3.7975, 3.7975)
-
 [node name="Water9" parent="." instance=ExtResource("16_0ih28")]
 z_as_relative = false
 position = Vector2(76, 60)
-
-[node name="ReflectionSprite" parent="Water9" index="1"]
-instance_shader_parameters/index = 2
-instance_shader_parameters/scale = Vector2(3.7975, 3.7975)
 
 [node name="Water11" parent="." instance=ExtResource("16_0ih28")]
 z_as_relative = false
 position = Vector2(84, 60)
 
-[node name="ReflectionSprite" parent="Water11" index="1"]
-instance_shader_parameters/index = 2
-instance_shader_parameters/scale = Vector2(3.7975, 3.7975)
-
 [node name="Water10" parent="." instance=ExtResource("16_0ih28")]
 z_as_relative = false
 position = Vector2(76, 68)
 
-[node name="ReflectionSprite" parent="Water10" index="1"]
-instance_shader_parameters/index = 3
-instance_shader_parameters/scale = Vector2(3.7975, 3.7975)
-
 [node name="Water12" parent="." instance=ExtResource("16_0ih28")]
 z_as_relative = false
 position = Vector2(84, 68)
-
-[node name="ReflectionSprite" parent="Water12" index="1"]
-instance_shader_parameters/index = 3
-instance_shader_parameters/scale = Vector2(3.7975, 3.7975)
 
 [node name="Water8" parent="." instance=ExtResource("16_0ih28")]
 z_as_relative = false

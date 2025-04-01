@@ -17,7 +17,7 @@ const CARRY_OBJECT_SCENE = preload("uid://dwxtrccdrpoyl")
 func _process(delta: float) -> void:
 	if allow_eat:
 		var food := creature.get_next_creature_target()
-		if food and food.carriable:
+		if food and food.carriable and is_carry_object_type_valid(food.carriable.carry_object_type):
 			food_sprite.texture = food.carriable.carry_object_type.texture
 			food_sprite.offset = food.carriable.carry_object_type.offset
 			#allow_eat = false
@@ -33,6 +33,10 @@ func _process(delta: float) -> void:
 				#allow_eat = true
 				arch_jumper.queue_free()
 				, ConnectFlags.CONNECT_ONE_SHOT)
+
+
+func is_carry_object_type_valid(type: CarryObjectType) -> bool:
+	return type.is_food()
 
 
 func spawn_penguin() -> void:

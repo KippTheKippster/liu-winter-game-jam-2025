@@ -1,6 +1,7 @@
 extends Node2D
 class_name FlowFieldWalker
 
+@export var active: bool = true
 @export var reverse_path: bool
 @export var max_path_follow_length: int = 10
 @export var cell_margin: float = 2.0
@@ -13,8 +14,14 @@ var current_coords: Vector2i
 
 var target_coords: Vector2i:
 	get:
+		if not active:
+			return Vector2i.ZERO
+		
 		return flow_field_manager.point_to_coords(target_point)
 	set(value):
+		if not active:
+			return
+		
 		target_point = flow_field_manager.coords_to_point(value)
 
 
@@ -34,6 +41,11 @@ var target_point: Vector2:
 
 func _enter_tree() -> void:
 	flow_field_manager = Utils.find_child_of_class(get_tree().root, "FlowFieldManager")
+	if not flow_field_manager:
+		push_error("FlowFieldWalker unable to find FlowFieldManager!")
+		active = false
+		return
+	
 	if used:
 		target_point = target_point
 	else:
@@ -41,17 +53,23 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
-	if flow_field:
+	if flow_field_manager and flow_field:
 		flow_field_manager.remove_user_from_flow_field(target_coords)
 		flow_field = null
 
 
 func _process(delta: float) -> void:
+	if not active:
+		return
+	
 	if flow_field_manager.coords_to_point(current_coords).distance_to(global_position) > flow_field_manager.cell_size + cell_margin:
 		current_coords = flow_field_manager.point_to_coords(global_position)
 
 
 func get_direction() -> Vector2:
+	if not active:
+		return Vector2.ZERO
+	
 	var coords := current_coords #flow_field_manager.point_to_coords(global_position) #current_coords #
 	var cell_path := get_cell_path(coords)
 	var direction := Vector2.ZERO
