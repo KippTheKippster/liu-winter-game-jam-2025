@@ -25,6 +25,7 @@ var selected: bool:
 				surprise_effect = null
 
 var is_target_prioritized_callable: Callable = func(target: Target, comparator: Trooper) -> bool: return false
+var is_target_valid_callable: Callable = func(target: Target, comparator: Trooper) -> bool: return false
 
 
 var is_responsive_callable: Callable = func() -> bool: return true
@@ -34,3 +35,7 @@ func is_responsive() -> bool:
 
 func is_target_prioritized(target: Target, comparator: Trooper) -> bool:
 	return is_target_prioritized_callable.call(target, comparator)
+
+
+func is_target_valid(target: Target) -> bool:
+	return is_target_valid_callable.call(target)

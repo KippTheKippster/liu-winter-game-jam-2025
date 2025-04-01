@@ -66,6 +66,14 @@ func _process(delta: float) -> void:
 	
 	if active:
 		update_lists()
+	
+	for target in target_list:
+		for trooper in trooper_list:
+			if is_instance_valid(trooper) and trooper.is_target_valid(target):
+				target.highlight = true
+				break
+			else:
+				target.highlight = false
 
 
 func _draw() -> void:
@@ -92,7 +100,7 @@ func update_lists() -> void:
 	
 	target_list.sort_custom(sort_closest.bind(global_position))
 	for i in min(trooper_list.size(), target_list.size()):
-		target_list[i].highlight = true
+		#target_list[i].highlight = true
 		if not target_list[i].singular:
 			return
 
@@ -103,7 +111,8 @@ func release_command() -> void:
 			trooper.selected = false
 	
 	for target in target_list:
-		target.highlight = false
+		if is_instance_valid(target):
+			target.highlight = false
 	
 	trooper_list.clear()
 	active = false
@@ -119,9 +128,9 @@ func sort_closest(a: Target, b: Target, point: Vector2) -> bool:
 
 func apply_command() -> void:
 	#target_list.sort_custom(sort_closest.bind(global_position))
-	for trooper in trooper_list:
-		if not is_instance_valid(trooper):
-			trooper_list.erase(trooper)
+	#for trooper in trooper_list:
+	#	if not is_instance_valid(trooper):
+	#		trooper_list.erase(trooper)
 	
 	for target in target_list:
 		if trooper_list.is_empty():
@@ -133,10 +142,11 @@ func apply_command() -> void:
 			for j in trooper_list.size() - i - 1:
 				var left := trooper_list[j]
 				var right := trooper_list[j + 1]
-				if right.is_target_prioritized(target, left):
-					trooper_list[j] = right
-					trooper_list[j + 1] = left
-					change_occured = true
+				if is_instance_valid(left) and is_instance_valid(right):
+					if right.is_target_prioritized(target, left):
+						trooper_list[j] = right
+						trooper_list[j + 1] = left
+						change_occured = true
 			
 			if not change_occured:
 				break
@@ -144,7 +154,7 @@ func apply_command() -> void:
 		for i in trooper_list.size():
 			var trooper := trooper_list[0]
 			trooper_list.remove_at(0)
-			if trooper.responsive: # is_instance_valid(trooper) and
+			if  is_instance_valid(trooper) and trooper.responsive:
 				trooper.command_applied.emit(global_position, target)
 				trooper.selected = false
 				if target.singular:

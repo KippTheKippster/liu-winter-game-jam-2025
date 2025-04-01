@@ -366,6 +366,7 @@ to = NodePath("../../Leap")
 delay_in_seconds = "2.0"
 metadata/_custom_type_script = "uid://dexbj1hgvxsoe"
 
+[connection signal="state_entered" from="StateChart/Root/Hide" to="." method="_on_hide_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Hide" to="." method="_on_hide_state_exited"]
 [connection signal="state_processing" from="StateChart/Root/Hide/Burrow" to="." method="_on_burrow_state_processing"]
 [connection signal="state_processing" from="StateChart/Root/Hide/Unburrow" to="." method="_on_unburrow_state_processing"]

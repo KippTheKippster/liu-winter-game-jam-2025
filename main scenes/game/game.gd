@@ -6,7 +6,7 @@ const CommandArea = preload("res://main scenes/game/command_area.gd")
 const PENGUIN_SCENE = preload("res://entities/penguin/penguin.tscn")
 
 static var current_level_path: StringName = "res://levels/level_001.tscn"
-var penguin_list: Array[Penguin2]
+var penguin_list: Array[Penguin]
 var penguin_spawn_count: int = 3
 var penguin_spawn_equipment_list: Array[CarryObjectTypeEquipment]
 
@@ -88,7 +88,7 @@ func go_to_level(file_path: String) -> void:
 
 func spawn_penguins() -> void:
 	for i in penguin_spawn_count:
-		var penguin := PENGUIN_SCENE.instantiate() as Penguin2
+		var penguin := PENGUIN_SCENE.instantiate() as Penguin
 		level_container.add_child(penguin)
 		penguin.global_position = current_level.start_position + Vector2.from_angle(2.0 * PI * (1.0 * i / penguin_spawn_count)) * 12.0
 		if penguin_spawn_equipment_list.size() > 0:
@@ -97,18 +97,17 @@ func spawn_penguins() -> void:
 			penguin_spawn_equipment_list.remove_at(0)
 
 
-func _on_penguin_borned(penguin: Penguin2) -> void:
+func _on_penguin_borned(penguin: Penguin) -> void:
 	penguin_list.append(penguin)
 
 
-func _on_penguin_killed(penguin: Penguin2) -> void:
+func _on_penguin_killed(penguin: Penguin) -> void:
 	penguin_list.erase(penguin)
 	if penguin_list.is_empty():
 		go_to_level(current_level_path)
 
 
-func _on_raft_departed(boarded_penguin_list: Array[Penguin2]) -> void:
-	print("raft_departed: ", boarded_penguin_list)
+func _on_raft_departed(boarded_penguin_list: Array[Penguin]) -> void:
 	penguin_spawn_count = boarded_penguin_list.size()
 	penguin_spawn_equipment_list.clear()
 	for penguin in boarded_penguin_list:

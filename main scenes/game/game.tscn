@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://doiwfgk1hy5nb"]
+[gd_scene load_steps=17 format=3 uid="uid://doiwfgk1hy5nb"]
 
 [ext_resource type="Script" uid="uid://dya4stv6au8tw" path="res://main scenes/game/game.gd" id="1_mm5ki"]
 [ext_resource type="PackedScene" uid="uid://cyvjgw6e8qecv" path="res://ui/hud/hud.tscn" id="1_qoleo"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bwf71bc7425hy" path="res://main scenes/game/command_area.tscn" id="10_gscv8"]
 [ext_resource type="Resource" uid="uid://b551a0plq5npl" path="res://entities/maze properties/maze_properties_breakable_wall_test.tres" id="13_d0g2b"]
 [ext_resource type="PackedScene" uid="uid://cpsyqlxd4bsnt" path="res://levels/level_test.tscn" id="14_yjtjj"]
+[ext_resource type="PackedScene" uid="uid://cnxjx40u8ir5q" path="res://entities/enemies/kraken arm/kraken_arm_manager.tscn" id="15_yjtjj"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_saw4t"]
 
@@ -43,6 +44,7 @@ metadata/_edit_lock_ = true
 
 [node name="PauseMenu" parent="UiLayer" instance=ExtResource("2_6qgw3")]
 unique_name_in_owner = true
+visible = false
 metadata/_edit_lock_ = true
 
 [node name="RaftDepartMenu" parent="UiLayer" instance=ExtResource("4_d0g2b")]
@@ -160,6 +162,8 @@ maze_properties = ExtResource("13_d0g2b")
 metadata/_custom_type_script = "uid://cighei1gf4iov"
 
 [node name="LevelTest" parent="LevelContainer" instance=ExtResource("14_yjtjj")]
+
+[node name="KrakenArmManager" parent="LevelContainer" instance=ExtResource("15_yjtjj")]
 
 [connection signal="depart_request" from="UiLayer/PauseMenu" to="." method="_on_pause_menu_depart_request"]
 [connection signal="depart_accepted" from="UiLayer/RaftDepartMenu" to="." method="_on_raft_depart_menu_depart_accepted"]

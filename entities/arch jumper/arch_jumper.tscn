@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx2ns68b7vg48"]
+
+[ext_resource type="Script" uid="uid://c403lnxgiy5ii" path="res://entities/arch jumper/arch_jumper.gd" id="1_4s1xg"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="2_nffpa"]
+
+[node name="ArchJumper" type="Node2D"]
+script = ExtResource("1_4s1xg")
+
+[node name="VerticalGroup" type="Node2D" parent="."]
+script = ExtResource("2_nffpa")
+gravity = 300.0
+jump_speed = 140.0
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
+
+[node name="Sprite2D" type="Sprite2D" parent="VerticalGroup"]

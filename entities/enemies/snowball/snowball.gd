@@ -20,7 +20,7 @@ const SNOW_EXPLOSION_SCENE = preload("res://entities/effects/snow explosion/snow
 
 @export var sprites: Array[Sprite2D]
 
-var caught_penguins: Array[Penguin2]:
+var caught_penguins: Array[Penguin]:
 	set(value):
 		caught_penguins = value
 		for i in sprites.size():
@@ -64,7 +64,7 @@ func _process(delta: float) -> void:
 		return
 	
 	var next_creature := creature.get_next_creature_target()
-	if not next_creature or not next_creature.owner or not next_creature.owner is Penguin2:
+	if not next_creature or not next_creature.owner or not next_creature.owner is Penguin:
 		return
 	
 	var penguin := next_creature.owner

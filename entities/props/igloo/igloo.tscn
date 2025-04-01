@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://byrpgpbqmjh38"]
+[gd_scene load_steps=16 format=3 uid="uid://byrpgpbqmjh38"]
 
 [ext_resource type="Texture2D" uid="uid://b5dqh86dx232u" path="res://entities/props/igloo/igloo.png" id="1_v83l2"]
 [ext_resource type="Script" uid="uid://d0bvyj83wj2cj" path="res://entities/props/igloo/igloo.gd" id="1_y4o24"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://l8ujhgbcecqw" path="res://entities/carry objects/assets/meat.png" id="4_jf8h7"]
 [ext_resource type="Script" uid="uid://cospm7wq6xrv6" path="res://components/flow field/flow_field_solid.gd" id="6_bb8px"]
 [ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="6_qgu0d"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="8_0x8dx"]
+[ext_resource type="Texture2D" uid="uid://d4ntnaphsrl7v" path="res://entities/carry objects/assets/fish.png" id="9_spu6f"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4o24"]
 radius = 3.0
@@ -167,6 +169,7 @@ size = 6.0
 metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 
 [node name="Path2D" type="Path2D" parent="."]
+visible = false
 curve = SubResource("Curve2D_fs5pr")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
@@ -179,6 +182,16 @@ loop = false
 unique_name_in_owner = true
 visible = false
 texture = ExtResource("4_jf8h7")
+
+[node name="VerticalGroup" type="Node2D" parent="."]
+visible = false
+position = Vector2(15, 0)
+script = ExtResource("8_0x8dx")
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
+
+[node name="VerticalFoodSprite" type="Sprite2D" parent="VerticalGroup"]
+unique_name_in_owner = true
+texture = ExtResource("9_spu6f")
 
 [node name="SpawnMarker" type="Marker2D" parent="."]
 position = Vector2(5, 8)

@@ -1,5 +1,8 @@
 extends Node2D
 
+const ARCH_JUMPER_SCENE = preload("res://entities/arch jumper/arch_jumper.tscn")
+const ArchJumper = preload("res://entities/arch jumper/arch_jumper.gd")
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var penguin_sprites: Node2D = %PenguinSprites
 @onready var transition_timer: Timer = $TransitionTimer
@@ -21,7 +24,7 @@ var velocity: float = 0.0
 
 var departing: bool 
 
-var penguin_list: Array[Penguin2] = []
+var penguin_list: Array[Penguin] = []
 var penguin_sprite_list: Array[AnimatedSprite2D] = []
 
 func _ready() -> void:
@@ -31,7 +34,7 @@ func _ready() -> void:
 		penguin_sprite_list.append(sprite)
 
 
-func add_penguin(penguin: Penguin2) -> void:
+func add_penguin(penguin: Penguin) -> void:
 	penguin.get_parent().remove_child(penguin)
 	penguin_list.append(penguin)
 	var sprite := penguin_sprite_list[penguin_list.size() - 1]
@@ -39,6 +42,18 @@ func add_penguin(penguin: Penguin2) -> void:
 	#sprite.play(sprite.animation)
 	if penguin_list.size() == 3:
 		depart()
+
+
+func provide_fuel(point: Vector2, type: CarryObjectType) -> void:
+	var arch_jumper := ARCH_JUMPER_SCENE.instantiate() as ArchJumper
+	arch_jumper.global_position = point
+	add_sibling(arch_jumper)
+	arch_jumper.copy_carry_object_sprite(type)
+	arch_jumper.jump_to_point(global_position)
+	arch_jumper.landed.connect(func() -> void:
+		fuelled = true
+		arch_jumper.queue_free()
+		, ConnectFlags.CONNECT_ONE_SHOT)
 
 
 func _process(delta: float) -> void:

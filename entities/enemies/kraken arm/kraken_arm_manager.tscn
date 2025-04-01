@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnxjx40u8ir5q"]
+
+[ext_resource type="Script" uid="uid://cj35pssmllk4j" path="res://entities/enemies/kraken arm/kraken_arm_manager.gd" id="1_vhpse"]
+
+[node name="KrakenArmManager" type="Node"]
+script = ExtResource("1_vhpse")

@@ -1,4 +1,4 @@
-class_name Penguin2
+class_name Penguin
 extends CharacterBody2D
 
 const CarryObject = preload("res://entities/carry objects/carry_object.gd")
@@ -71,6 +71,15 @@ var swimming: bool:
 			else:
 				animation_tree.set("parameters/idle_blend_tree/swim_blend/blend_amount", 0.0)
 
+var in_deep_water: bool:
+	set(value):
+		var changed := in_deep_water != value
+		in_deep_water = value
+		if changed:
+			if in_deep_water:
+				SignalBus.penguin_entered_deep_water.emit(self)
+			else:
+				SignalBus.penguin_exited_deep_water.emit(self)
 
 func _ready() -> void:
 	SignalBus.penguin_borned.emit(self)
@@ -100,6 +109,26 @@ func _ready() -> void:
 			global_position.distance_squared_to(target.global_position) < 
 			comparator.global_position.distance_squared_to(target.global_position)
 			)
+	
+	trooper.is_target_valid_callable = func(target: Target) -> bool:
+		var holder := target.owner
+		if holder is Raft:
+			var raft := holder as Raft
+			if not raft.fuelled:
+				if not carriable:
+					return false
+				
+				if not raft.fuel_object_types.has(carriable.carry_object_type):
+					return false
+			
+		if holder is Igloo and not carriable:
+			return false
+		
+		if holder is Boffus and not carriable:
+			return false
+		
+		return true
+
 
 
 func _process(delta: float) -> void:
@@ -212,10 +241,10 @@ func interact_with_target(target: Target) -> void:
 			holder.add_penguin(self)
 		else:
 			if carriable and holder.fuel_object_types.has(carriable.carry_object_type):
+				holder.provide_fuel(global_position, carriable.carry_object_type)
 				carriable.queue_free()
 				carriable = null
-				holder.fuelled = true
-				holder.add_penguin(self)
+				#holder.add_penguin(self)
 		
 		return
 
@@ -245,11 +274,14 @@ func _on_health_instance_damage_received(result: DamageResult) -> void:
 
 func _on_tile_detector_cell_changed(layer: TileMapLayer, current_coords: Vector2i, old_coords: Vector2i) -> void:
 	var is_water_cell: bool
+	var is_deep_water_cell: bool # TODO Change this to check old_coords instead
 	var tile_data := layer.get_cell_tile_data(current_coords)
 	if tile_data:
 		is_water_cell = tile_data.get_custom_data("water")
+		is_deep_water_cell =  tile_data.get_custom_data("deep_water")
 	
 	swimming = is_water_cell
+	in_deep_water = is_deep_water_cell
 
 
 #region Task States

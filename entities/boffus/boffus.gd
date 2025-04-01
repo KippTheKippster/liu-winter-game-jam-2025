@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Boffus
 
 const FOOD_PENGUIN = preload("uid://cvel35rx5kt4s")
+const ArchJumper = preload("res://entities/arch jumper/arch_jumper.gd")
 
 @onready var flow_field_walker: FlowFieldWalker = $FlowFieldWalker
 @onready var food_creature: Creature = %FoodCreature
@@ -17,6 +18,7 @@ const FOOD_PENGUIN = preload("uid://cvel35rx5kt4s")
 @onready var penguin_target_detector: TargetDetector = $PenguinTargetDetector
 @onready var hunt_target_detector: TargetDetector = %HuntTargetDetector
 @onready var danger_target: Target = %DangerTarget
+@onready var mouth_marker: Marker2D = %MouthMarker
 
 var allow_eat: bool = false
 
@@ -65,6 +67,8 @@ func search_for_food(target_detector: TargetDetector) -> void:
 		food_sprite.texture = target.holder.carry_object_type.texture
 		food_sprite.offset = target.holder.carry_object_type.offset
 		state_chart.send_event.call_deferred("eat_request")
+		ArchJumper.spawn(self, target.holder.carry_object_type, target.global_position, mouth_marker.global_position, func() -> void:
+			pass)
 		if target.holder.carry_object_type == preload("uid://csgrgd3ywh8js"):
 			camera_2d.enabled = true
 			camera_2d.make_current()
@@ -75,9 +79,9 @@ func search_for_food(target_detector: TargetDetector) -> void:
 		
 		target.owner.queue_free() 
 	
-	if target and target.owner is Penguin2:
-		var penguin := target.owner as Penguin2
-		penguin.global_position = food_sprite.global_position
+	if target and target.owner is Penguin:
+		var penguin := target.owner as Penguin
+		#penguin.global_position = food_sprite.global_position
 		#penguin.state_chart.send_event("extra_state_none_request")
 		flip_group.flip_towards_node(penguin)
 		penguin.throw_items()
@@ -85,7 +89,10 @@ func search_for_food(target_detector: TargetDetector) -> void:
 		food_sprite.texture = FOOD_PENGUIN.texture
 		food_sprite.offset = FOOD_PENGUIN.offset
 		state_chart.send_event.call_deferred("eat_request")
-		
+		ArchJumper.spawn(self, FOOD_PENGUIN, penguin.global_position, mouth_marker.global_position, func() -> void:
+			pass)
+
+
 
 
 func _on_eat_state_exited() -> void:

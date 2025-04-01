@@ -5,6 +5,7 @@ const SnowExplosion = preload("res://entities/effects/snow explosion/snow_explos
 
 @onready var flow_field_walker: FlowFieldWalker = $FlowFieldWalker
 @onready var creature: Creature = $TreeArea/Creature
+@onready var target: Target = $TreeArea/Target
 @onready var vertical_group: VerticalGroup = $VerticalGroup
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var state_chart: StateChart = $StateChart
@@ -29,8 +30,13 @@ func _process(delta: float) -> void:
 	state_chart.set_expression_property("vertical_velocity", vertical_group.velocity)
 
 
+func _on_hide_state_entered() -> void:
+	target.active = false
+
+
 func _on_hide_state_exited() -> void:
 	animation_player.play("idle")
+	target.active = true
 	creature.active = true
 	creature.detection_range_squared = 96.0 * 96.0
 	tree_sprite.offset.x = 0
