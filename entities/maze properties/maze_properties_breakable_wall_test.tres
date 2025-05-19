@@ -11,7 +11,7 @@
 
 [resource]
 script = ExtResource("8_7jrgl")
-seed = 0
+maze_seed = 0
 distinct_room_scene_groups = Dictionary[ExtResource("1_lqien"), int]({
 ExtResource("2_igbtm"): 1
 })

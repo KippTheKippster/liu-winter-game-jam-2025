@@ -1,7 +1,11 @@
 extends Node2D
 
-const ARCH_JUMPER_SCENE = preload("res://entities/arch jumper/arch_jumper.tscn")
-const ArchJumper = preload("res://entities/arch jumper/arch_jumper.gd")
+const ARCH_JUMPER_SCENE = preload("uid://dx2ns68b7vg48")
+const ArchJumper = preload("uid://c403lnxgiy5ii")
+
+signal penguin_boarded(penguin: Penguin)
+signal departed
+signal left
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var penguin_sprites: Node2D = %PenguinSprites
@@ -40,8 +44,13 @@ func add_penguin(penguin: Penguin) -> void:
 	var sprite := penguin_sprite_list[penguin_list.size() - 1]
 	sprite.visible = true # TODO Add check
 	#sprite.play(sprite.animation)
-	if penguin_list.size() == 3:
+	
+	penguin_boarded.emit(penguin)
+	
+	if get_tree().get_node_count_in_group("penguin") == 0:
 		depart()
+	#if penguin_list.size() == 3:
+		#depart()
 
 
 func provide_fuel(point: Vector2, type: CarryObjectType) -> void:
@@ -73,8 +82,9 @@ func depart() -> void:
 	camera_2d.enabled = true
 	camera_2d.make_current()
 	horn_audio.play()
+	
+	departed.emit()
 
 
 func _on_transition_timer_timeout() -> void:
-	#GlobalUi.transition_screen.change_scene_to_file("res://main scenes/game/game.tscn")
-	SignalBus.raft_departed.emit(penguin_list)
+	left.emit()

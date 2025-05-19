@@ -82,11 +82,11 @@ func add_solid(coords: Vector2i) -> void:
 	#print(solid_cells[coords])
 
 
-func remove_solid(coords: Vector2i, flood_cell: bool = false) -> void:
+func remove_solid(coords: Vector2i, flood_removed_solid_cell: bool = false) -> void:
 	print(coords)
 	solid_cells[coords] -= 1
 	if solid_cells.get(coords) == 0:
 		solid_cells.erase(coords)
 	
-	if flood_cell and not cells.has(coords):
+	if flood_removed_solid_cell and not cells.has(coords):
 		flood_cell(coords)

@@ -59,14 +59,14 @@ func _on_unburrow_state_processing(delta: float) -> void:
 
 
 func _on_burrow_state_processing(delta: float) -> void:
-	var target := creature.get_next_creature_target()
-	if target:
+	var next_target := creature.get_next_creature_target()
+	if next_target:
 		state_chart.send_event("unburrow_request")
 
 
 func _on_crouch_state_exited() -> void:
-	var target := creature.get_next_creature_target()
+	var next_target := creature.get_next_creature_target()
 	if creature.get_next_creature_target():
-		flow_field_walker.target_point = target.global_position
+		flow_field_walker.target_point = next_target.global_position
 		velocity = flow_field_walker.get_direction() * 20.0
-		#velocity = (target.global_position - global_position).normalized() * 20.0
+		#velocity = (next_target.global_position - global_position).normalized() * 20.0

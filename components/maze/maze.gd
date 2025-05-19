@@ -79,7 +79,7 @@ func create_path(start_coords: Vector2i, start_direction: Vector2i = Vector2i.RI
 		for j in rng.randi_range(min_length, max_length):
 			#print(current_coords)
 			var scene_group: RoomSceneGroup
-			var rand := rng.randf()
+			var _rand := rng.randf()
 			#if rand < 0.8:
 			scene_group = maze_properties.room_scene_group_corridor
 			#elif rand < 0.92:

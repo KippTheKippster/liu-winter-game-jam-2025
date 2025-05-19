@@ -15,14 +15,17 @@ var highlight: bool:
 	set(value):
 		var changed := highlight != value
 		highlight = value
+		
 		if not highlight_node:
 			return
 		
 		if changed:
 			if highlight:
 				pass
-				#highlight_node.modulate = Color(1.5, 1.5, 1.5)
-				#time = 0.0
+				#if time > 0.0:
+				#	#highlight_node.modulate = Color(1.5, 1.5, 1.5)
+				#	time = 0.0
+				#	print(time)
 			else:
 				highlight_node.modulate = Color(1.0, 1.0, 1.0)
 
@@ -42,3 +45,5 @@ func _process(delta: float) -> void:
 		highlight_node.modulate = remap(cos(time * 8.0), -1.0, 1.0, 0.8, 1.0) * Color(1.5, 1.5, 1.5, 10.0)
 		#print(remap(cos(time * 4.0), -1.0, 1.0, 0.8, 1.0), " : ", cos(time))
 		time += delta
+	else:
+		time = 0.0

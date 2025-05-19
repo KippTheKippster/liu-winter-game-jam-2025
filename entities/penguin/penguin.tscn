@@ -844,12 +844,14 @@ metadata/_custom_type_script = "uid://dci6sv2mtg2l1"
 [node name="CarriableTargetDetector" type="Node2D" parent="."]
 script = ExtResource("4_ouyml")
 range = 12.0
+detection_range = 12.0
 mask = 8
 metadata/_custom_type_script = "uid://bbsfd24w06hq0"
 
 [node name="DangerTargetDetector" type="Node2D" parent="."]
 script = ExtResource("4_ouyml")
 range = 32.0
+detection_range = 32.0
 mask = 4
 metadata/_custom_type_script = "uid://bbsfd24w06hq0"
 
@@ -914,7 +916,6 @@ texture = ExtResource("1_r5j68")
 offset = Vector2(-0.5, -2.5)
 hframes = 5
 vframes = 4
-frame = 1
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": true,
@@ -943,7 +944,6 @@ texture = ExtResource("9_5wlyb")
 offset = Vector2(-0.5, -2.5)
 hframes = 4
 vframes = 3
-frame = 1
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "pending_changes": {}

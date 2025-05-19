@@ -29,7 +29,7 @@ var caught_penguins: Array[Penguin]:
 
 
 var penguin_limit: int = 1
-var snowball_size: Size = 0:
+var snowball_size: Size:
 	set(value):
 		snowball_size = value
 		match value:
@@ -82,9 +82,9 @@ func _process(delta: float) -> void:
 func destroy() -> void:
 	for penguin in caught_penguins:
 		add_sibling(penguin)
-		var direction := Vector2.from_angle(2.0 * PI * randf())
-		penguin.position = position + direction
-		penguin.health_instance.damage(damage_instance, direction) # DANGER if direction is the same twice then the penguins will be stuck in eachother
+		var launch_direction := Vector2.from_angle(2.0 * PI * randf())
+		penguin.position = position + launch_direction
+		penguin.health_instance.damage(damage_instance, launch_direction) # DANGER if direction is the same twice then the penguins will be stuck in eachother
 		#penguin.vertical_group.jump()
 	
 	var snow_explosion := SNOW_EXPLOSION_SCENE.instantiate() as SnowExplosion

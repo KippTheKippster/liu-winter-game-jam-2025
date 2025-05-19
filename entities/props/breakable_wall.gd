@@ -25,15 +25,15 @@ func remove_side() -> void:
 			remove_child(vertical_group)
 			vertical_group.queue_free()
 			rectangle_shape.size = Vector2(24.0, 8.0)
-			for child in horizontal_group.get_children():
-				if child is FlowFieldSolid:
-					child.flood_cell_on_tree_exit
+			#for child in horizontal_group.get_children():
+			#	if child is FlowFieldSolid:
+			#		child.flood_cell_on_tree_exit
 			
 		Orientation.VERTICAL:
 			vertical_group.visible = true
 			remove_child(horizontal_group)
 			horizontal_group.queue_free()
 			rectangle_shape.size = Vector2(8.0, 24.0)
-			for child in vertical_group.get_children():
-				if child is FlowFieldSolid:
-					child.flood_cell_on_tree_exit
+			#for child in vertical_group.get_children():
+			#	if child is FlowFieldSolid:
+			#		child.flood_cell_on_tree_exit

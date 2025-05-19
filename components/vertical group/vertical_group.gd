@@ -2,6 +2,7 @@ extends Node2D
 class_name VerticalGroup
 
 signal jumped
+signal landed
 
 @export var gravity: float = 500.0
 @export var jump_speed: float = 120.0
@@ -27,11 +28,14 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	velocity -= gravity * delta
+	if not is_on_floor():
+		velocity -= gravity * delta
+	
 	height += velocity * delta
 	if height < 0.0:
 		height = 0.0
 		velocity = 0.0
+		landed.emit()
 	
 	shadow_sprite.visible = not is_on_floor()
 	shadow_sprite.global_position = global_position + height * Vector2.DOWN

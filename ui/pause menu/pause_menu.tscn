@@ -54,4 +54,6 @@ text = "Depart"
 layout_mode = 2
 text = "Quit"
 
+[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/DepartButton" to="." method="_on_depart_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

@@ -1,19 +1,21 @@
 extends Node
 class_name Game
 
-const CommandArea = preload("res://main scenes/game/command_area.gd")
+const CommandArea = preload("uid://baptqcm2qgns6")
+const PauseMenu = preload("uid://bd3kurkl5qw2t")
+const Raft = preload("uid://dw4yqocvldxan")
 
-const PENGUIN_SCENE = preload("res://entities/penguin/penguin.tscn")
+const PENGUIN_SCENE = preload("uid://c7hpad4xy14l2")
 
-static var current_level_path: StringName = "res://levels/level_001.tscn"
+static var current_level_path: StringName = "uid://pgubkf04gmmt"
 var penguin_list: Array[Penguin]
 var penguin_spawn_count: int = 3
 var penguin_spawn_equipment_list: Array[CarryObjectTypeEquipment]
 
 @onready var ui_layer: CanvasLayer = $UiLayer
 @onready var raft_depart_menu: Control = %RaftDepartMenu
+@onready var pause_menu: PauseMenu = %PauseMenu
 @onready var level_container: Node2D = $LevelContainer
-@onready var pause_menu: Control = %PauseMenu
 @onready var command_area: CommandArea = %CommandArea
 @onready var player_camera: Camera2D = %PlayerCamera
 
@@ -24,7 +26,6 @@ var penguin_spawn_equipment_list: Array[CarryObjectTypeEquipment]
 func _ready() -> void:
 	SignalBus.penguin_borned.connect(_on_penguin_borned)
 	SignalBus.penguin_killed.connect(_on_penguin_killed)
-	SignalBus.raft_departed.connect(_on_raft_departed)
 	
 	if load_level_on_ready:
 		if current_level:
@@ -36,17 +37,9 @@ func _ready() -> void:
 	
 	prepare_level()
 	
-	
 	ui_layer.visible = true
 	pause_menu.visible = false
-	#sub_viewport.world_2d = get_viewport().world_2d
-
-
-#func _enter_tree() -> void:
-
-
-#func _exit_tree() -> void:
-#	SignalBus.raft_departed.disconnect(go_to_level)
+	pause_menu.allow_depart = false
 
 
 func _process(delta: float) -> void:
@@ -55,13 +48,22 @@ func _process(delta: float) -> void:
 
 
 func toggle_paused() -> void:
-	pause_menu.visible = !pause_menu.visible
-	get_tree().paused = pause_menu.visible
+	set_paused(!pause_menu.visible)
+
+
+func set_paused(paused: bool) -> void:
+	pause_menu.visible = paused
+	get_tree().paused = paused
 
 
 func prepare_level() -> void:
 	player_camera.global_position = current_level.start_position
 	player_camera.camera_limit = current_level.camera_limit
+	if current_level.raft:
+		current_level.raft.penguin_boarded.connect(_on_raft_penguin_boarded.bind(current_level.raft))
+		current_level.raft.departed.connect(_on_raft_departed.bind(current_level.raft))
+		current_level.raft.left.connect(_on_raft_left.bind(current_level.raft))
+	
 	spawn_penguins()
 
 
@@ -69,7 +71,6 @@ func instantiate_level() -> void:
 	var level_scene := ResourceLoader.load(current_level_path) as PackedScene
 	current_level = level_scene.instantiate()
 	level_container.add_child(current_level)
-
 
 
 func go_to_level(file_path: String) -> void:
@@ -107,19 +108,39 @@ func _on_penguin_killed(penguin: Penguin) -> void:
 		go_to_level(current_level_path)
 
 
-func _on_raft_departed(boarded_penguin_list: Array[Penguin]) -> void:
-	penguin_spawn_count = boarded_penguin_list.size()
+func _on_raft_penguin_boarded(penguin: Penguin, raft: Raft) -> void:
+	if not raft.departing:
+		pause_menu.allow_depart = true
+
+
+func _on_raft_departed(raft: Raft) -> void:
+	pause_menu.allow_depart = false
+
+
+func _on_raft_left(raft: Raft) -> void:
+	penguin_spawn_count = raft.penguin_list.size()
 	penguin_spawn_equipment_list.clear()
-	for penguin in boarded_penguin_list:
+	for penguin in raft.penguin_list:
 		if penguin.equipment_type:
 			penguin_spawn_equipment_list.append(penguin.equipment_type)
 	
 	go_to_level(current_level.next_level_path)
 
 
+
 func _on_raft_depart_menu_depart_accepted() -> void:
 	go_to_level(current_level.next_level_path)
 
 
-func _on_pause_menu_depart_request() -> void:
-	go_to_level(current_level.next_level_path)
+func _on_pause_menu_continue_requested() -> void:
+	toggle_paused()
+
+
+func _on_pause_menu_depart_requested() -> void:
+	if current_level.raft and current_level.raft.fuelled:
+		set_paused(false)
+		current_level.raft.depart()
+
+
+func _on_pause_menu_quit_requested() -> void:
+	GlobalUi.transition_screen.change_scene_to_file("uid://c2ykvkkivub6e")

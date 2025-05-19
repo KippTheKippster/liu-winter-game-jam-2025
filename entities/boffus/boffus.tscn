@@ -240,6 +240,7 @@ metadata/_custom_type_script = "uid://1ce5wdegx8y"
 [node name="PenguinTargetDetector" type="Node2D" parent="."]
 script = ExtResource("9_egrm7")
 range = 24.0
+detection_range = 24.0
 mask = 3
 metadata/_custom_type_script = "uid://bbsfd24w06hq0"
 
@@ -262,6 +263,7 @@ metadata/_custom_type_script = "uid://1ce5wdegx8y"
 unique_name_in_owner = true
 script = ExtResource("9_egrm7")
 range = 256.0
+detection_range = 256.0
 mask = 3
 metadata/_custom_type_script = "uid://bbsfd24w06hq0"
 
@@ -327,6 +329,7 @@ unique_name_in_owner = true
 position = Vector2(0, 8)
 script = ExtResource("9_egrm7")
 range = 12.0
+detection_range = 12.0
 mask = 2
 metadata/_custom_type_script = "uid://bbsfd24w06hq0"
 

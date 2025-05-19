@@ -23,6 +23,8 @@ SignalBus="*res://globals/signal_bus/signal_bus.tscn"
 [debug]
 
 gdscript/warnings/unused_parameter=0
+gdscript/warnings/unused_signal=0
+gdscript/warnings/int_as_enum_without_cast=0
 
 [display]
 
@@ -32,7 +34,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/canvas_transform_menu/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/interaction_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/canvas_transform_menu/plugin.cfg", "res://addons/dual_grid_tile_map_layer/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg")
 
 [global_group]
 

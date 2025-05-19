@@ -1,7 +1,7 @@
 extends Resource
 class_name MazeProperties
 
-@export var seed: int = 0
+@export var maze_seed: int = 0
 @export_group("Room Scene Groups")
 @export var distinct_room_scene_groups: Dictionary[RoomSceneGroup, int]
 @export_subgroup("Standard Room Scene Groups")

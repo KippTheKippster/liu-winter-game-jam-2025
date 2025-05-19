@@ -1,8 +1,11 @@
 extends Node2D
 class_name Level
 
+const Raft = preload("uid://dw4yqocvldxan")
+
 @export var camera_limit: Rect2i
 @export var start_marker: Marker2D
+@export var raft: Raft
 var start_position: Vector2
 @export_file("*.tscn", "*.scn") var next_level_path: String = "res://levels/level_001.tscn"
 

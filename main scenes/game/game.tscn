@@ -140,6 +140,8 @@ duration = 240.0
 process_mode = 1
 y_sort_enabled = true
 
+[node name="KrakenArmManager" parent="LevelContainer" instance=ExtResource("15_yjtjj")]
+
 [node name="PlayerCamera" parent="LevelContainer" instance=ExtResource("5_orik2")]
 unique_name_in_owner = true
 position = Vector2(32, 32)
@@ -163,7 +165,7 @@ metadata/_custom_type_script = "uid://cighei1gf4iov"
 
 [node name="LevelTest" parent="LevelContainer" instance=ExtResource("14_yjtjj")]
 
-[node name="KrakenArmManager" parent="LevelContainer" instance=ExtResource("15_yjtjj")]
-
-[connection signal="depart_request" from="UiLayer/PauseMenu" to="." method="_on_pause_menu_depart_request"]
+[connection signal="continue_requested" from="UiLayer/PauseMenu" to="." method="_on_pause_menu_continue_requested"]
+[connection signal="depart_requested" from="UiLayer/PauseMenu" to="." method="_on_pause_menu_depart_requested"]
+[connection signal="quit_requested" from="UiLayer/PauseMenu" to="." method="_on_pause_menu_quit_requested"]
 [connection signal="depart_accepted" from="UiLayer/RaftDepartMenu" to="." method="_on_raft_depart_menu_depart_accepted"]

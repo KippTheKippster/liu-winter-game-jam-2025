@@ -241,7 +241,18 @@ func interact_with_target(target: Target) -> void:
 	
 	if holder is Raft:
 		if holder.fuelled:
-			holder.add_penguin(self)
+			#holder.add_penguin(self)
+			flow_field_walker.target_point = holder.global_position
+			vertical_group.landed.connect((func(raft: Raft) -> void:
+				if global_position.distance_to(raft.global_position) < 12.0:
+					raft.add_penguin(self)
+				).bind(holder), ConnectFlags.CONNECT_ONE_SHOT)
+			
+			if carriable:
+				throw_carriable()
+			
+			if vertical_group.is_on_floor():
+				vertical_group.jump()
 		else:
 			if carriable and holder.fuel_object_types.has(carriable.carry_object_type):
 				holder.provide_fuel(global_position, carriable.carry_object_type)

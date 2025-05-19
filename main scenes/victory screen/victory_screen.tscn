@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cuk00dl6jnaub" path="res://main scenes/victory screen/victory_screen.gd" id="1_2qqnb"]
 [ext_resource type="Texture2D" uid="uid://c7cgp87rg58mj" path="res://entities/boffus/seal.png" id="2_ello2"]
-[ext_resource type="PackedScene" uid="uid://d4ac7bikwtscv" path="res://entities/penguin/penguin_old.tscn" id="3_ello2"]
+[ext_resource type="PackedScene" uid="uid://c7hpad4xy14l2" path="res://entities/penguin/penguin.tscn" id="3_ello2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xf3sy"]
 atlas = ExtResource("2_ello2")
@@ -30,6 +30,16 @@ animations = [{
 follow_viewport_enabled = true
 script = ExtResource("1_2qqnb")
 
+[node name="Label" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 124.0
+offset_right = 160.0
+offset_bottom = 217.0
+text = "HOORAY! YOU FED BOFFUS THE BIG MEAT AND HE IS HAPPY! :)"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
 [node name="SealSprite" type="AnimatedSprite2D" parent="."]
 process_mode = 3
 position = Vector2(86, 45)
@@ -38,65 +48,55 @@ sprite_frames = SubResource("SpriteFrames_bhath")
 animation = &"idle"
 offset = Vector2(1, -3)
 
-[node name="Label" type="Label" parent="."]
-offset_left = 20.0
-offset_top = 124.0
-offset_right = 160.0
-offset_bottom = 154.0
-text = "HOORAY! YOU FED BOFFUS THE BIG MEAT AND HE IS HAPPY! :)"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-autostart = true
-
-[node name="Penguin" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(15, 94)
 
-[node name="Penguin2" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin2" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(44, 81)
 
-[node name="Penguin3" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin3" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(34, 112)
 
-[node name="Penguin4" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin4" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(70, 106)
 
-[node name="Penguin5" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin5" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(56, 98)
 
-[node name="Penguin6" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin6" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(93, 85)
 
-[node name="Penguin7" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin7" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(99, 106)
 
-[node name="Penguin8" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin8" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(123, 103)
 
-[node name="Penguin9" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin9" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(125, 89)
 
-[node name="Penguin10" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin10" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(110, 93)
 
-[node name="Penguin11" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin11" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(148, 118)
 
-[node name="Penguin12" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin12" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(163, 98)
 
-[node name="Penguin13" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin13" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(142, 100)
 
-[node name="Penguin14" parent="Timer" instance=ExtResource("3_ello2")]
+[node name="Penguin14" parent="." instance=ExtResource("3_ello2")]
 position = Vector2(151, 81)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 zoom = Vector2(2, 2)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

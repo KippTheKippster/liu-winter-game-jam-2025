@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://jiyfmovwn8r2"
+path="res://.godot/imported/floor_tile_atlas.aseprite-3cf3efefb4f9d7d21b9cd0380aa1efab.res"
+
+[deps]
+
+source_file="res://levels/assets/floor_tile_atlas.aseprite"
+dest_files=["res://.godot/imported/floor_tile_atlas.aseprite-3cf3efefb4f9d7d21b9cd0380aa1efab.res"]
+
+[params]
+

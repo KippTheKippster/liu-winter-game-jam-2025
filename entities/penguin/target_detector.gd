@@ -7,6 +7,8 @@ class_name TargetDetector
 		range = value
 		#range_squared = pow(value, 2.0)
 
+@export var detection_range: float = 48.0
+
 @export_flags("Penguin", "Food", "Danger", "Penguin Carriable") var mask: int
 
 var range_squared: float:
@@ -16,6 +18,8 @@ var range_squared: float:
 
 func _ready() -> void:
 	range_squared = range * range
+	if detection_range != range:
+		print("RANGE INVALID: ", get_path())
 
 
 func get_next_target() -> Target:
