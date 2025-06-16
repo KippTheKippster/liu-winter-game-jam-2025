@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwlg3dvktdxo5"]
+
+[ext_resource type="PackedScene" uid="uid://c4vwlvp4nkygl" path="res://levels/level_template.tscn" id="1_k6ygf"]
+
+[node name="Level004" instance=ExtResource("1_k6ygf")]
+
+[node name="Label" type="Label" parent="." index="1"]
+offset_right = 40.0
+offset_bottom = 8.0
+text = "Level004"

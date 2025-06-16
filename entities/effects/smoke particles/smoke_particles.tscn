@@ -39,4 +39,5 @@ material = SubResource("CanvasItemMaterial_i7dbv")
 amount = 6
 texture = ExtResource("1_i7dbv")
 lifetime = 2.0
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_2pa67")

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CarryObjectType" load_steps=3 format=3 uid="uid://be1c6v2dam34l"]
+
+[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="1_yi0lt"]
+[ext_resource type="Texture2D" uid="uid://kcbab047w5nn" path="res://entities/carry objects/assets/tool_dynamite.png" id="2_i8t0a"]
+
+[resource]
+script = ExtResource("1_yi0lt")
+carry_object_type_instance_path = ""
+carriable_scene_path = "uid://cmyuoffo3bnki"
+edible = false
+penguin_interest = false
+texture = ExtResource("2_i8t0a")
+offset = Vector2(0, 0)
+layer = 8
+metadata/_custom_type_script = "uid://dya4eivvy77v4"

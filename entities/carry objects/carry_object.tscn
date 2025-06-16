@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwxtrccdrpoyl"]
+[gd_scene load_steps=8 format=3 uid="uid://dwxtrccdrpoyl"]
 
 [ext_resource type="Script" uid="uid://h18rt7fqatef" path="res://entities/carry objects/carry_object.gd" id="1_qsx2l"]
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="2_hgf20"]
@@ -6,11 +6,18 @@
 [ext_resource type="Texture2D" uid="uid://l8ujhgbcecqw" path="res://entities/carry objects/assets/meat.png" id="4_fm0f1"]
 [ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="5_28bt1"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_28bt1"]
+radius = 2.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_mllgo"]
 radius = 4.12311
 
-[node name="CarryObject" type="Node2D"]
+[node name="CarryObject" type="CharacterBody2D"]
+collision_layer = 0
 script = ExtResource("1_qsx2l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_28bt1")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -23,10 +30,9 @@ carriable = NodePath("../..")
 creature_layer = 4
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
-[node name="Target" type="Node2D" parent="Area2D" node_paths=PackedStringArray("holder")]
+[node name="Target" type="Node2D" parent="Area2D"]
 script = ExtResource("5_28bt1")
 singular = true
-holder = NodePath("../..")
 layer = 10
 metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 

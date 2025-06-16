@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_gx2sv")
 carry_object_type_instance_path = ""
+carriable_scene_path = "uid://dwxtrccdrpoyl"
 edible = true
 penguin_interest = true
 texture = ExtResource("2_6gymw")

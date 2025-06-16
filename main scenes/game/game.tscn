@@ -8,20 +8,20 @@
 [ext_resource type="AudioStream" uid="uid://chkf6omxlyit8" path="res://audio/wind.ogg" id="5_np0q0"]
 [ext_resource type="PackedScene" uid="uid://dofjqsq6jc4oy" path="res://entities/effects/ecliptic canvas modulate/ecliptic_canvas_modulate.tscn" id="5_o1m1v"]
 [ext_resource type="PackedScene" uid="uid://cg32rxn6me2vm" path="res://entities/player camera/player_camera.tscn" id="5_orik2"]
+[ext_resource type="PackedScene" uid="uid://cuxb28s6enho6" path="res://ui/debug/debug_menu.tscn" id="5_yjtjj"]
 [ext_resource type="Script" uid="uid://drtrpfwntdaa2" path="res://components/flow field/flow_field_manager.gd" id="7_ctvcs"]
 [ext_resource type="Script" uid="uid://cighei1gf4iov" path="res://components/maze/maze.gd" id="7_euirq"]
 [ext_resource type="Texture2D" uid="uid://c5jbn83vaify1" path="res://entities/skies/starry_sky_01.png" id="7_o1m1v"]
 [ext_resource type="PackedScene" uid="uid://bwf71bc7425hy" path="res://main scenes/game/command_area.tscn" id="10_gscv8"]
 [ext_resource type="Resource" uid="uid://b551a0plq5npl" path="res://entities/maze properties/maze_properties_breakable_wall_test.tres" id="13_d0g2b"]
-[ext_resource type="PackedScene" uid="uid://cpsyqlxd4bsnt" path="res://levels/level_test.tscn" id="14_yjtjj"]
 [ext_resource type="PackedScene" uid="uid://cnxjx40u8ir5q" path="res://entities/enemies/kraken arm/kraken_arm_manager.tscn" id="15_yjtjj"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_saw4t"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("current_level")]
+[node name="Game" type="Node"]
 process_mode = 3
 script = ExtResource("1_mm5ki")
-current_level = NodePath("LevelContainer/LevelTest")
+load_level_on_ready = true
 spawn_penguins_on_level_ready = true
 metadata/_edit_horizontal_guides_ = [-7.0, -26.0, 32.0]
 metadata/_edit_vertical_guides_ = [28.0]
@@ -41,6 +41,8 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 game = NodePath("../..")
 metadata/_edit_lock_ = true
+
+[node name="DebugMenu" parent="UiLayer" instance=ExtResource("5_yjtjj")]
 
 [node name="PauseMenu" parent="UiLayer" instance=ExtResource("2_6qgw3")]
 unique_name_in_owner = true
@@ -62,6 +64,7 @@ parameters/looping = true
 [node name="Effects" type="Node2D" parent="."]
 
 [node name="StaticParallax" type="Parallax2D" parent="Effects"]
+visible = false
 z_index = -10
 scroll_scale = Vector2(0, 0)
 
@@ -148,8 +151,11 @@ position = Vector2(32, 32)
 
 [node name="CommandArea" parent="LevelContainer" instance=ExtResource("10_gscv8")]
 unique_name_in_owner = true
+circle_radius_medium = 4.0
+circle_radius_small = 1.0
 
 [node name="FlowFieldManager" type="Node2D" parent="LevelContainer" node_paths=PackedStringArray("flood_start_marker")]
+unique_name_in_owner = true
 position = Vector2(-8, 2)
 script = ExtResource("7_ctvcs")
 flood_start_marker = NodePath("..")
@@ -162,8 +168,6 @@ script = ExtResource("7_euirq")
 generate_on_ready = false
 maze_properties = ExtResource("13_d0g2b")
 metadata/_custom_type_script = "uid://cighei1gf4iov"
-
-[node name="LevelTest" parent="LevelContainer" instance=ExtResource("14_yjtjj")]
 
 [connection signal="continue_requested" from="UiLayer/PauseMenu" to="." method="_on_pause_menu_continue_requested"]
 [connection signal="depart_requested" from="UiLayer/PauseMenu" to="." method="_on_pause_menu_depart_requested"]

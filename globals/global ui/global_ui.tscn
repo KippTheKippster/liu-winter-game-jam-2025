@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctcogexpfn6w7"]
+
+[ext_resource type="Script" uid="uid://ciep5qlocmfls" path="res://globals/global ui/global_ui.gd" id="1_7llxb"]
+[ext_resource type="PackedScene" uid="uid://wqphjdxgga8b" path="res://ui/transition screen/transition_screen.tscn" id="2_262x2"]
+
+[node name="GlobalUi" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_7llxb")
+
+[node name="TransitionScreen" parent="." instance=ExtResource("2_262x2")]
+mouse_filter = 2

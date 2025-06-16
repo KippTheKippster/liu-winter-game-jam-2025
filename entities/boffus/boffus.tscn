@@ -351,6 +351,7 @@ stream = SubResource("AudioStreamRandomizer_xxmb8")
 bus = &"Effects"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 enabled = false
 zoom = Vector2(4, 4)
 

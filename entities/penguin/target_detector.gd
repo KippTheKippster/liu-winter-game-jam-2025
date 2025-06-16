@@ -2,11 +2,6 @@ extends Node2D
 class_name TargetDetector
 
 @export var active: bool = true
-@export var range: float = 48.0:
-	set(value):
-		range = value
-		#range_squared = pow(value, 2.0)
-
 @export var detection_range: float = 48.0
 
 @export_flags("Penguin", "Food", "Danger", "Penguin Carriable") var mask: int
@@ -16,18 +11,13 @@ var range_squared: float:
 		range_squared = value
 		#range = pow(range_squared, 0.5)
 
-func _ready() -> void:
-	range_squared = range * range
-	if detection_range != range:
-		print("RANGE INVALID: ", get_path())
-
 
 func get_next_target() -> Target:
 	if not active:
 		return
 	
 	var targets := get_tree().get_nodes_in_group("target")
-	var closest_distance := range_squared
+	var closest_distance := detection_range * detection_range
 	var closest_target: Target
 	for target: Target in targets:
 		if target.active and mask & target.layer > 0:

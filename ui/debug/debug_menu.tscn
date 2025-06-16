@@ -1,0 +1,163 @@
+[gd_scene load_steps=15 format=3 uid="uid://cuxb28s6enho6"]
+
+[ext_resource type="Script" uid="uid://4foddly38kpk" path="res://ui/debug/debug_menu.gd" id="1_ppho5"]
+[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="2_ablim"]
+[ext_resource type="Resource" uid="uid://c4slt6xes3eqm" path="res://entities/carry objects/carry object types/food_meat.tres" id="3_dmfgp"]
+[ext_resource type="Resource" uid="uid://dnh38vsc5xr1o" path="res://entities/carry objects/carry object types/fuel_coal.tres" id="4_dmfgp"]
+[ext_resource type="Resource" uid="uid://3756488067p0" path="res://entities/carry objects/carry object types/equipment_pool_ring.tres" id="4_w1wwu"]
+[ext_resource type="Resource" uid="uid://be1c6v2dam34l" path="res://entities/carry objects/carry object types/tool_dynamite.tres" id="6_w1wwu"]
+[ext_resource type="PackedScene" uid="uid://d1ukp6d0k6q5k" path="res://entities/enemies/tree mimic/tree_mimic.tscn" id="7_6whr1"]
+[ext_resource type="Texture2D" uid="uid://cvfoodcsh2elr" path="res://entities/props/tree/tree.png" id="8_205b5"]
+[ext_resource type="PackedScene" uid="uid://kmfgh7wh8vui" path="res://entities/enemies/goat/goat.tscn" id="9_tgw0w"]
+[ext_resource type="Texture2D" uid="uid://mi0cls0ji8iv" path="res://entities/enemies/goat/goat.png" id="10_cjhd0"]
+[ext_resource type="PackedScene" uid="uid://c6re2egyy0hux" path="res://entities/enemies/snowball/snowball.tscn" id="11_44m8r"]
+[ext_resource type="Texture2D" uid="uid://dcrdwuc1br1cw" path="res://entities/props/wall/snow_wall.png" id="12_eene6"]
+[ext_resource type="PackedScene" uid="uid://d0htrdo7jff8v" path="res://entities/enemies/fire cloud/fire_cloud.tscn" id="13_tgw0w"]
+[ext_resource type="Texture2D" uid="uid://diix51sex588r" path="res://entities/props/campfire/campfire.png" id="14_cjhd0"]
+
+[node name="DebugMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ppho5")
+items = Array[ExtResource("2_ablim")]([ExtResource("3_dmfgp"), ExtResource("4_dmfgp"), ExtResource("4_w1wwu"), ExtResource("6_w1wwu")])
+enemies = Dictionary[PackedScene, Texture2D]({
+ExtResource("7_6whr1"): ExtResource("8_205b5"),
+ExtResource("9_tgw0w"): ExtResource("10_cjhd0"),
+ExtResource("11_44m8r"): ExtResource("12_eene6"),
+ExtResource("13_tgw0w"): ExtResource("14_cjhd0")
+})
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ButtonContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SpawnPenguinButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer"]
+layout_mode = 2
+text = "Spawn Penguin (ctrl+1)"
+
+[node name="SpawnItemContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ButtonContainer"]
+layout_mode = 2
+
+[node name="SpawnItemButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/SpawnItemContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Spawn Item (ctrl+2)"
+
+[node name="ShowItemsButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/SpawnItemContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+toggle_mode = true
+text = ">"
+
+[node name="SpawnEnemyContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ButtonContainer"]
+layout_mode = 2
+
+[node name="SpawnEnemyButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/SpawnEnemyContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Spawn Enemy (ctrl+3)"
+
+[node name="ShowEnemiesButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/SpawnEnemyContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+toggle_mode = true
+text = ">"
+
+[node name="FinishLevelButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer"]
+layout_mode = 2
+text = "Finish Level"
+
+[node name="GridsContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ItemContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/GridsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+columns = 3
+
+[node name="EnemyContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/GridsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+columns = 3
+
+[node name="StatsContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="FpsContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/StatsContainer/FpsContainer"]
+layout_mode = 2
+text = "Fps: "
+
+[node name="FpsLabel" type="Label" parent="MarginContainer/HBoxContainer/StatsContainer/FpsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "60"
+horizontal_alignment = 2
+
+[node name="SpeedContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/StatsContainer/SpeedContainer"]
+layout_mode = 2
+text = "Speed:  "
+
+[node name="SpeedLabel" type="Label" parent="MarginContainer/HBoxContainer/StatsContainer/SpeedContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1.0"
+horizontal_alignment = 2
+
+[node name="PenguinContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/StatsContainer/PenguinContainer"]
+layout_mode = 2
+text = "Penguin: "
+
+[node name="PenguinLabel" type="Label" parent="MarginContainer/HBoxContainer/StatsContainer/PenguinContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/SpawnPenguinButton" to="." method="_on_spawn_penguin_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/SpawnItemContainer/SpawnItemButton" to="." method="_on_spawn_equipment_button_pressed"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/ButtonContainer/SpawnItemContainer/ShowItemsButton" to="." method="_on_show_items_button_toggled"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/SpawnEnemyContainer/SpawnEnemyButton" to="." method="_on_spawn_enemy_button_pressed"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/ButtonContainer/SpawnEnemyContainer/ShowEnemiesButton" to="." method="_on_show_enemies_button_toggled"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/FinishLevelButton" to="." method="_on_finish_level_button_pressed"]

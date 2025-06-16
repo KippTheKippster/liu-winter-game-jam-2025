@@ -1,0 +1,428 @@
+[gd_scene load_steps=21 format=3 uid="uid://d0htrdo7jff8v"]
+
+[ext_resource type="Texture2D" uid="uid://ctmtftqlqc3jl" path="res://entities/enemies/fire cloud/fire_cloud.png" id="1_jtda5"]
+[ext_resource type="Script" uid="uid://33mejl5mf3su" path="res://entities/enemies/fire cloud/fire_cloud.gd" id="1_ty2uq"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="3_1g0ke"]
+[ext_resource type="Script" uid="uid://btqcj8uotschi" path="res://components/tile detector/tile_detector.gd" id="3_3gv4x"]
+[ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="4_0rwkf"]
+[ext_resource type="Script" uid="uid://bbsfd24w06hq0" path="res://entities/penguin/target_detector.gd" id="4_cbds5"]
+[ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="5_asad4"]
+[ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="5_by2g2"]
+[ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="5_h6tui"]
+[ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="6_h6tui"]
+[ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="9_b4i52"]
+[ext_resource type="Script" uid="uid://dtvh4vikgt2v" path="res://addons/godot_state_charts/animation_player_state.gd" id="10_3gv4x"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jtda5"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b4i52"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_asad4"]
+radius = 4.0
+
+[sub_resource type="Animation" id="Animation_3gv4x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PuffArea/PuffCollisionShape:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FireCloudArea/FireCloudCollisionShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BugArea/BugCollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FlipGroup/FireCloudSprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BugArea/Target:active")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_0rwkf"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/FireCloudSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PuffArea/PuffCollisionShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FireCloudArea/FireCloudCollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BugArea/BugCollisionShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BugArea/Target:active")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_b4i52"]
+resource_name = "idle"
+length = 0.1
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PuffArea/PuffCollisionShape:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlipGroup/FireCloudSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BugArea/Target:active")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FireCloudArea/FireCloudCollisionShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_asad4"]
+resource_name = "puff"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PuffArea/PuffCollisionShape:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateChart")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"animation_puff_finished"],
+"method": &"send_event"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FlipGroup/FireCloudSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BugArea/Target:active")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3gv4x"]
+_data = {
+&"RESET": SubResource("Animation_3gv4x"),
+&"extinguished": SubResource("Animation_0rwkf"),
+&"idle": SubResource("Animation_b4i52"),
+&"puff": SubResource("Animation_asad4")
+}
+
+[node name="FireCloud" type="Node2D"]
+script = ExtResource("1_ty2uq")
+chase_speed = 12.0
+flee_speed = 6.0
+
+[node name="TargetDetector" type="Node2D" parent="."]
+script = ExtResource("4_cbds5")
+mask = 1
+metadata/_custom_type_script = "uid://bbsfd24w06hq0"
+
+[node name="TileDetector" type="Node2D" parent="."]
+script = ExtResource("3_3gv4x")
+metadata/_custom_type_script = "uid://btqcj8uotschi"
+
+[node name="FireCloudArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 7
+
+[node name="FireCloudCollisionShape" type="CollisionShape2D" parent="FireCloudArea"]
+shape = SubResource("CircleShape2D_jtda5")
+
+[node name="DamageInstance" type="Node2D" parent="FireCloudArea"]
+script = ExtResource("4_0rwkf")
+base_damage = 0.0
+effect = 1
+damage_layer = 2
+metadata/_custom_type_script = "uid://dd5wfdkuccdar"
+
+[node name="PuffArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 7
+
+[node name="PuffCollisionShape" type="CollisionShape2D" parent="PuffArea"]
+shape = SubResource("CircleShape2D_b4i52")
+disabled = true
+
+[node name="DamageInstance" type="Node2D" parent="PuffArea"]
+script = ExtResource("4_0rwkf")
+base_damage = 0.0
+effect = 1
+damage_layer = 2
+metadata/_custom_type_script = "uid://dd5wfdkuccdar"
+
+[node name="BugArea" type="Area2D" parent="."]
+collision_mask = 0
+
+[node name="BugCollisionShape" type="CollisionShape2D" parent="BugArea"]
+shape = SubResource("CircleShape2D_asad4")
+disabled = true
+
+[node name="HealthInstance" type="Node2D" parent="BugArea"]
+script = ExtResource("5_asad4")
+base_health = 20.0
+damage_mask = 5
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
+
+[node name="Target" type="Node2D" parent="BugArea" node_paths=PackedStringArray("holder", "highlight_node")]
+unique_name_in_owner = true
+script = ExtResource("3_1g0ke")
+active = false
+size = 8.0
+holder = NodePath("../HealthInstance")
+highlight_node = NodePath("../..")
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="FlipGroup" type="Node2D" parent="."]
+script = ExtResource("5_h6tui")
+metadata/_custom_type_script = "uid://bhjyv2astlcwo"
+
+[node name="FireCloudSprite" type="Sprite2D" parent="FlipGroup"]
+texture_filter = 1
+texture = ExtResource("1_jtda5")
+offset = Vector2(0, -4)
+hframes = 3
+vframes = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/enemies/fire cloud/fire_cloud.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "46c41e140a9b8d78aa29545bffa3863c"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+deterministic = true
+libraries = {
+&"": SubResource("AnimationLibrary_3gv4x")
+}
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("5_by2g2")
+metadata/_custom_type_script = "uid://cwgjtd2qwnb20"
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("6_h6tui")
+initial_state = NodePath("Lit")
+
+[node name="Extinguish" type="Node" parent="StateChart/Root"]
+script = ExtResource("9_b4i52")
+to = NodePath("../Extinguished")
+event = &"extinguish"
+delay_in_seconds = "0.0"
+
+[node name="Ignite" type="Node" parent="StateChart/Root"]
+script = ExtResource("9_b4i52")
+to = NodePath("../Lit")
+event = &"ignite"
+delay_in_seconds = "0.0"
+
+[node name="Lit" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_h6tui")
+initial_state = NodePath("Chase")
+
+[node name="Chase" type="Node" parent="StateChart/Root/Lit"]
+script = ExtResource("10_3gv4x")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"idle"
+
+[node name="Request Puff" type="Node" parent="StateChart/Root/Lit/Chase"]
+script = ExtResource("9_b4i52")
+to = NodePath("../../Puff")
+event = &"request_puff"
+delay_in_seconds = "0.0"
+
+[node name="Puff" type="Node" parent="StateChart/Root/Lit"]
+script = ExtResource("10_3gv4x")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"puff"
+
+[node name="Animation Puff Finished" type="Node" parent="StateChart/Root/Lit/Puff"]
+script = ExtResource("9_b4i52")
+to = NodePath("../../Chase")
+event = &"animation_puff_finished"
+delay_in_seconds = "0.0"
+
+[node name="Extinguished" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_h6tui")
+initial_state = NodePath("Flee")
+
+[node name="Flee" type="Node" parent="StateChart/Root/Extinguished"]
+script = ExtResource("10_3gv4x")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"extinguished"
+
+[connection signal="tile_detected" from="TileDetector" to="." method="_on_tile_detector_tile_detected"]
+[connection signal="body_entered" from="FireCloudArea" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="PuffArea" to="." method="_on_puff_area_body_entered"]
+[connection signal="damage_received" from="BugArea/HealthInstance" to="." method="_on_health_instance_damage_received"]
+[connection signal="died" from="BugArea/HealthInstance" to="." method="_on_health_instance_died"]
+[connection signal="state_processing" from="StateChart/Root/Lit/Chase" to="." method="_on_chase_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Extinguished/Flee" to="." method="_on_flee_state_entered"]
+[connection signal="state_processing" from="StateChart/Root/Extinguished/Flee" to="." method="_on_flee_state_processing"]

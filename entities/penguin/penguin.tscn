@@ -830,9 +830,10 @@ metadata/_custom_type_script = "uid://br85gcxolt6xv"
 
 [node name="Penguin" type="CharacterBody2D" groups=["penguin"]]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_a0yya")
+effect_fire_wait_time = 5.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_tbc83")
@@ -843,14 +844,12 @@ metadata/_custom_type_script = "uid://dci6sv2mtg2l1"
 
 [node name="CarriableTargetDetector" type="Node2D" parent="."]
 script = ExtResource("4_ouyml")
-range = 12.0
 detection_range = 12.0
 mask = 8
 metadata/_custom_type_script = "uid://bbsfd24w06hq0"
 
 [node name="DangerTargetDetector" type="Node2D" parent="."]
 script = ExtResource("4_ouyml")
-range = 32.0
 detection_range = 32.0
 mask = 4
 metadata/_custom_type_script = "uid://bbsfd24w06hq0"
@@ -863,13 +862,15 @@ metadata/_custom_type_script = "uid://btqcj8uotschi"
 script = ExtResource("4_lsgwc")
 metadata/_custom_type_script = "uid://dd5wfdkuccdar"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="PenguinArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PenguinArea"]
 position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_84b7u")
 
-[node name="Creature" type="Node2D" parent="Area2D"]
+[node name="Creature" type="Node2D" parent="PenguinArea"]
 unique_name_in_owner = true
 script = ExtResource("2_0dlp7")
 free_owner_on_health_instance_died = false
@@ -878,19 +879,19 @@ creature_layer = 2
 creature_mask = 13
 metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
-[node name="Trooper" type="Node2D" parent="Area2D"]
+[node name="Trooper" type="Node2D" parent="PenguinArea"]
 unique_name_in_owner = true
 z_index = 1
 position = Vector2(0, -7)
 script = ExtResource("5_l4dxa")
 metadata/_custom_type_script = "uid://d23qecfq8ywi"
 
-[node name="Target" type="Node2D" parent="Area2D"]
+[node name="Target" type="Node2D" parent="PenguinArea"]
 script = ExtResource("6_bdfa7")
 layer = 1
 metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 
-[node name="HealthInstance" type="Node2D" parent="Area2D"]
+[node name="HealthInstance" type="Node2D" parent="PenguinArea"]
 unique_name_in_owner = true
 script = ExtResource("3_ourdf")
 immortal = true
@@ -969,6 +970,9 @@ position = Vector2(0, -7)
 texture = ExtResource("11_gbc55")
 offset = Vector2(0, -1)
 
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="VerticalGroup/FlipGroup"]
+remote_path = NodePath("../../../Effects/FireParticles")
+
 [node name="Effects" type="Node2D" parent="."]
 
 [node name="FireParticles" parent="Effects" instance=ExtResource("9_ploiq")]
@@ -1025,6 +1029,7 @@ parameters/idle_blend_tree/swim_blend/blend_amount = 0.0
 parameters/idle_blend_tree/swim_carry_blend/blend_amount = 0.0
 parameters/idle_blend_tree/time_scale/scale = 1.0
 parameters/idle_blend_tree/walk_carry_blend/blend_amount = 0.0
+parameters/idle_blend_tree/fire_blend/blend_amount = 0.0
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("3_xlgo3")
@@ -1102,14 +1107,46 @@ delay_in_seconds = "0.0"
 script = ExtResource("4_uw7px")
 initial_state = NodePath("Controllable")
 
+[node name="Request Action Die" type="Node" parent="StateChart/Root/Action"]
+script = ExtResource("7_ci46k")
+to = NodePath("../Uncontrollable/Action Die")
+event = &"request_action_die"
+delay_in_seconds = "0.0"
+
 [node name="Controllable" type="Node" parent="StateChart/Root/Action"]
 script = ExtResource("4_uw7px")
 initial_state = NodePath("Action Idle")
 
 [node name="Action Idle" type="Node" parent="StateChart/Root/Action/Controllable"]
+script = ExtResource("4_uw7px")
+initial_state = NodePath("Action IdleStand")
+
+[node name="Action IdleStand" type="Node" parent="StateChart/Root/Action/Controllable/Action Idle"]
 script = ExtResource("16_qqawb")
-animation_tree = NodePath("../../../../../AnimationTree")
+animation_tree = NodePath("../../../../../../AnimationTree")
 state_name = &"idle_blend_tree"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Action/Controllable/Action Idle/Action IdleStand"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Action IdleSleep")
+delay_in_seconds = "randf_range(16.0, 32.0)"
+
+[node name="Request Action IdleSleep" type="Node" parent="StateChart/Root/Action/Controllable/Action Idle/Action IdleStand"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Action IdleSleep")
+event = &"request_action_idle_sleep"
+delay_in_seconds = "0.0"
+
+[node name="Action IdleSleep" type="Node" parent="StateChart/Root/Action/Controllable/Action Idle"]
+script = ExtResource("16_qqawb")
+animation_tree = NodePath("../../../../../../AnimationTree")
+state_name = &"sleep"
+
+[node name="Selected" type="Node" parent="StateChart/Root/Action/Controllable/Action Idle/Action IdleSleep"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Action IdleStand")
+event = &"selected"
+delay_in_seconds = "0.0"
 
 [node name="DesiredAction Walk" type="Node" parent="StateChart/Root/Action/Controllable/Action Idle"]
 script = ExtResource("7_ci46k")
@@ -1278,11 +1315,11 @@ script = ExtResource("5_vskbl")
 [node name="Equipment PoolRing" type="Node" parent="StateChart/Root/Equipment/Equipment Equipped"]
 script = ExtResource("5_vskbl")
 
-[connection signal="cell_changed" from="TileDetector" to="." method="_on_tile_detector_cell_changed"]
+[connection signal="tile_detected" from="TileDetector" to="." method="_on_tile_detector_tile_detected"]
 [connection signal="damage_dealt" from="DamageInstance" to="Audio/PunchAudio" method="play" unbinds=1]
-[connection signal="command_applied" from="Area2D/Trooper" to="." method="_on_trooper_command_applied"]
-[connection signal="damage_received" from="Area2D/HealthInstance" to="." method="_on_health_instance_damage_received"]
-[connection signal="damage_received" from="Area2D/HealthInstance" to="Audio/DamagedAudio" method="play" unbinds=1]
+[connection signal="command_applied" from="PenguinArea/Trooper" to="." method="_on_trooper_command_applied"]
+[connection signal="selected" from="PenguinArea/Trooper" to="." method="_on_trooper_selected"]
+[connection signal="damage_received" from="PenguinArea/HealthInstance" to="." method="_on_health_instance_damage_received"]
 [connection signal="state_entered" from="StateChart/Root/Task/Task Idle" to="." method="_on_task_idle_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Task/Task Idle" to="." method="_on_task_idle_state_exited"]
 [connection signal="state_processing" from="StateChart/Root/Task/Task Idle" to="." method="_on_task_idle_state_processing"]
@@ -1291,9 +1328,8 @@ script = ExtResource("5_vskbl")
 [connection signal="state_entered" from="StateChart/Root/Task/Task InteractWithTarget" to="." method="_on_task_interact_with_target_state_entered"]
 [connection signal="state_processing" from="StateChart/Root/Task/Task InteractWithTarget" to="." method="_on_task_interact_with_target_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Task/Task Panic" to="." method="_on_task_panic_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/Task/Task Panic" to="Audio/ScaredAudio" method="play"]
 [connection signal="state_exited" from="StateChart/Root/Task/Task Panic" to="." method="_on_task_panic_state_exited"]
-[connection signal="state_entered" from="StateChart/Root/Action/Controllable/Action Idle" to="." method="_on_action_idle_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Action/Controllable/Action Idle/Action IdleSleep" to="." method="_on_action_idle_sleep_state_exited"]
 [connection signal="state_exited" from="StateChart/Root/Action/Controllable/Action Walk" to="." method="_on_action_walk_state_exited"]
 [connection signal="state_physics_processing" from="StateChart/Root/Action/Controllable/Action Walk" to="." method="_on_action_walk_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Action/Controllable/Action Attack" to="." method="_on_action_attack_state_entered"]

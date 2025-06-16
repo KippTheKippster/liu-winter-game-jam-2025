@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://yvpt38uscy0n"
+path="res://.godot/imported/tool_dynamite.aseprite-709a50bb39cd4301f576e4699f792ccd.res"
+
+[deps]
+
+source_file="res://entities/carry objects/assets/tool_dynamite.aseprite"
+dest_files=["res://.godot/imported/tool_dynamite.aseprite-709a50bb39cd4301f576e4699f792ccd.res"]
+
+[params]
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c6re2egyy0hux"]
+[gd_scene load_steps=16 format=3 uid="uid://c6re2egyy0hux"]
 
 [ext_resource type="Script" uid="uid://dixcin2862cqp" path="res://entities/enemies/snowball/snowball.gd" id="1_jqiyb"]
 [ext_resource type="Texture2D" uid="uid://b5ypsiei25uf6" path="res://entities/enemies/snowball/snowball.png" id="1_t1m4k"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="3_axbdc"]
 [ext_resource type="AudioStream" uid="uid://cxxqxw1fl0cbm" path="res://audio/penguin_scared_randomizer.tres" id="3_k03ai"]
 [ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="3_yk20s"]
+[ext_resource type="Script" uid="uid://btqcj8uotschi" path="res://components/tile detector/tile_detector.gd" id="4_nlsuj"]
 [ext_resource type="AudioStream" uid="uid://48f4p0dx282u" path="res://audio/snow_smash.wav" id="8_vhdio"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6lvto"]
@@ -160,6 +161,10 @@ script = ExtResource("3_yk20s")
 base_damage = 0.0
 metadata/_custom_type_script = "uid://dd5wfdkuccdar"
 
+[node name="TileDetector" type="Node2D" parent="."]
+script = ExtResource("4_nlsuj")
+metadata/_custom_type_script = "uid://btqcj8uotschi"
+
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -227,6 +232,7 @@ autostart = true
 wait_time = 3.0
 autostart = true
 
+[connection signal="tile_detected" from="TileDetector" to="." method="_on_tile_detector_tile_detected"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="FrameTimer" to="." method="_on_frame_timer_timeout"]
 [connection signal="timeout" from="GrowTimer" to="." method="_on_grow_timer_timeout"]

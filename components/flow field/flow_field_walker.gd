@@ -38,6 +38,8 @@ var target_point: Vector2:
 			
 			flow_field = flow_field_manager.add_user_to_flow_field(new_coords)
 
+var target_point_offset: Vector2
+
 
 func _enter_tree() -> void:
 	flow_field_manager = Utils.find_child_of_class(get_tree().root, "FlowFieldManager")
@@ -62,15 +64,15 @@ func _process(delta: float) -> void:
 	if not active:
 		return
 	
-	if flow_field_manager.coords_to_point(current_coords).distance_to(global_position) > flow_field_manager.cell_size + cell_margin:
-		current_coords = flow_field_manager.point_to_coords(global_position)
+	#if flow_field_manager.coords_to_point(current_coords).distance_to(global_position) > flow_field_manager.cell_size + cell_margin:
+	#	current_coords = flow_field_manager.point_to_coords(global_position)
 
 
 func get_direction() -> Vector2:
 	if not active:
 		return Vector2.ZERO
 	
-	var coords := current_coords #flow_field_manager.point_to_coords(global_position) #current_coords #
+	var coords := flow_field_manager.point_to_coords(global_position) #current_coords #
 	var cell_path := get_cell_path(coords)
 	var direction := Vector2.ZERO
 	var direction_sign := 1 
@@ -86,8 +88,8 @@ func get_direction() -> Vector2:
 		return Vector2.ZERO 
 	
 	if direction == Vector2.ZERO or cell_value < max_path_follow_length:
-		if cell_path.size() == max_path_follow_length:
-			direction += (target_point - global_position).normalized() * direction_sign
+		if cell_path.size() == max_path_follow_length: # Check if path has been truncated (meaning interpolation will hit a wall)
+			direction += ((target_point + target_point_offset) - global_position).normalized() * direction_sign
 	
 	return direction.normalized()
 

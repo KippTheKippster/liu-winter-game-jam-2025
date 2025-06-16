@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://byrpgpbqmjh38"]
+[gd_scene load_steps=17 format=3 uid="uid://byrpgpbqmjh38"]
 
 [ext_resource type="Texture2D" uid="uid://b5dqh86dx232u" path="res://entities/props/igloo/igloo.png" id="1_v83l2"]
 [ext_resource type="Script" uid="uid://d0bvyj83wj2cj" path="res://entities/props/igloo/igloo.gd" id="1_y4o24"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="6_qgu0d"]
 [ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="8_0x8dx"]
 [ext_resource type="Texture2D" uid="uid://d4ntnaphsrl7v" path="res://entities/carry objects/assets/fish.png" id="9_spu6f"]
+[ext_resource type="AudioStream" uid="uid://cwesqfpkj4mto" path="res://audio/penguin_egg_crack_randomizer.tres" id="10_v0r5t"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4o24"]
 radius = 3.0
@@ -19,7 +20,7 @@ radius = 3.16228
 
 [sub_resource type="Curve2D" id="Curve2D_fs5pr"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 24, 0, 5.118, -0.084, -5.118, 0.084, 15, -27, 0, 0, 0, 0, 3, -10)
+"points": PackedVector2Array(0, 0, 0, 0, 24, 0, 5.118, -0.084, -5.118, 0.084, 15, -27, 0, 0, 0, 0, -1, 0)
 }
 point_count = 3
 
@@ -100,6 +101,7 @@ _data = {
 
 [node name="Igloo" type="Node2D"]
 script = ExtResource("1_y4o24")
+allow_eat = false
 
 [node name="ShadowSprite" type="Sprite2D" parent="."]
 position = Vector2(-1, 2)
@@ -169,12 +171,10 @@ size = 6.0
 metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 
 [node name="Path2D" type="Path2D" parent="."]
-visible = false
 curve = SubResource("Curve2D_fs5pr")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(3, -10)
-progress = 50.4475
+position = Vector2(24, 0)
 rotates = false
 loop = false
 
@@ -195,6 +195,9 @@ texture = ExtResource("9_spu6f")
 
 [node name="SpawnMarker" type="Marker2D" parent="."]
 position = Vector2(5, 8)
+
+[node name="SpawnAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_v0r5t")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -236,6 +236,8 @@ metadata/_custom_type_script = "uid://dvljb35mh14xv"
 shape = SubResource("CircleShape2D_f1x1y")
 
 [node name="DamageArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="DamageInstance" type="Node2D" parent="DamageArea"]
 script = ExtResource("4_k5mec")

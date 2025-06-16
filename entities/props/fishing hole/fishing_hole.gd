@@ -8,6 +8,7 @@ signal finished
 @onready var splash_audio: AudioStreamPlayer2D = $SplashAudio
 @onready var seat_marker: Marker2D = %SeatMarker
 @onready var target: Target = $Area2D/Target
+@onready var hole_sprite: AnimatedSprite2D = $HoleSprite
 
 var caught_count: int = 0
 
@@ -20,6 +21,14 @@ var occupant: Node2D:
 		else:
 			catch_timer.stop()
 
+func _ready() -> void:
+	hole_sprite.play()
+	update_animation()
+
+
+func update_animation() -> void:
+	hole_sprite.animation = str(clampi(carriable_launcher.carriables.size(), 0, 3))
+
 
 func _on_catch_timer_timeout() -> void:
 	caught_count += 1
@@ -30,6 +39,7 @@ func _on_catch_timer_timeout() -> void:
 		reset_timer()
 	carriable_launcher.launch()
 	splash_audio.play()
+	update_animation()
 
 
 func reset_timer() -> void:

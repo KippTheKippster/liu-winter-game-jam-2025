@@ -1,0 +1,122 @@
+[gd_scene load_steps=12 format=3 uid="uid://cmyuoffo3bnki"]
+
+[ext_resource type="Script" uid="uid://dpqmtmtj1okqw" path="res://entities/carry objects/dynamite.gd" id="1_nuull"]
+[ext_resource type="Resource" uid="uid://be1c6v2dam34l" path="res://entities/carry objects/carry object types/tool_dynamite.tres" id="2_03ysd"]
+[ext_resource type="Texture2D" uid="uid://b440bke7gqc03" path="res://entities/carry objects/assets/dynamite.png" id="2_lpt32"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="3_m2tn2"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="4_b23f5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_denof"]
+radius = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m2tn2"]
+radius = 4.12311
+
+[sub_resource type="Animation" id="Animation_denof"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VerticalGroup/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_m2tn2"]
+resource_name = "burn"
+length = 0.2
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VerticalGroup/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_nbnf8"]
+resource_name = "idle"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VerticalGroup/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_denof"]
+_data = {
+&"RESET": SubResource("Animation_denof"),
+&"burn": SubResource("Animation_m2tn2"),
+&"idle": SubResource("Animation_nbnf8")
+}
+
+[node name="Dynamite" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_nuull")
+enabled = true
+carry_object_type = ExtResource("2_03ysd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_denof")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_m2tn2")
+
+[node name="Target" type="Node2D" parent="Area2D"]
+script = ExtResource("4_b23f5")
+singular = true
+layer = 10
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="DangerTarget" type="Node2D" parent="Area2D"]
+script = ExtResource("4_b23f5")
+active = false
+size = 20.0
+singular = true
+layer = 12
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="VerticalGroup" type="Node2D" parent="."]
+script = ExtResource("3_m2tn2")
+gravity = 120.0
+jump_speed = 50.0
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
+
+[node name="Sprite2D" type="Sprite2D" parent="VerticalGroup"]
+unique_name_in_owner = true
+texture = ExtResource("2_lpt32")
+hframes = 3
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_denof")
+}
+autoplay = "idle"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="placed" from="." to="." method="_on_placed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

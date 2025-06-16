@@ -16,12 +16,12 @@ signal left
 var acceleration: float = 10.0
 var velocity: float = 0.0
 
+@export_file("*.tscn") var next_level_path: String = "uid://cti12nwlj0c2n"
 @export var fuelled: bool:
 	set(value):
 		var changed := fuelled != value
 		fuelled = value
-		if changed and fuelled:
-			
+		if changed and fuelled and is_node_ready():
 			animation_player.play("roll")
 
 @export var fuel_object_types: Array[CarryObjectType]
@@ -36,6 +36,10 @@ func _ready() -> void:
 		sprite.speed_scale = randf_range(0.9, 1.2)
 		sprite.visible = false
 		penguin_sprite_list.append(sprite)
+	
+	#set_deferred("fuelled", fuelled)
+	if fuelled:
+		animation_player.play("roll")
 
 
 func add_penguin(penguin: Penguin) -> void:
@@ -69,7 +73,7 @@ func _process(delta: float) -> void:
 	if departing:
 		velocity += acceleration * delta
 		velocity = minf(72.0, velocity)
-		position.x += velocity * delta
+		position += transform.basis_xform(Vector2.RIGHT * velocity * delta)
 
 
 func depart() -> void:

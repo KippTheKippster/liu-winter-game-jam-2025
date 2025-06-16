@@ -2,6 +2,7 @@ extends Resource
 class_name CarryObjectType
 
 @export_file("*.gd") var carry_object_type_instance_path: String
+@export_file var carriable_scene_path: String = "uid://dwxtrccdrpoyl"
 @export var edible: bool = true
 @export var penguin_interest: bool = true
 @export var texture: Texture2D

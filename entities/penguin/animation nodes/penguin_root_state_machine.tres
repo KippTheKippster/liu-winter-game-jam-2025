@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=36 format=3 uid="uid://b0nfx46nxw3r5"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=38 format=3 uid="uid://b0nfx46nxw3r5"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qqawb"]
 animation = &"die"
@@ -8,6 +8,11 @@ animation = &"equip"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l4dxa"]
 animation = &"fish"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_inj5t"]
+animation = &"walk_panic"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_4jlwr"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a0yya"]
 animation = &"idle"
@@ -58,7 +63,8 @@ animation = &"walk"
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_y2nhe"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_uw7px"]
-graph_offset = Vector2(-72.4781, 154.173)
+graph_offset = Vector2(-341.1242, 67.101944)
+nodes/output/position = Vector2(1780, 600)
 nodes/idle_animation/node = SubResource("AnimationNodeAnimation_a0yya")
 nodes/idle_animation/position = Vector2(-720, -100)
 nodes/idle_carry_animation/node = SubResource("AnimationNodeAnimation_ruenj")
@@ -68,35 +74,38 @@ nodes/idle_carry_blend/position = Vector2(-460, -100)
 nodes/idle_walk_blend/node = SubResource("AnimationNodeBlend2_inj5t")
 nodes/idle_walk_blend/position = Vector2(-200, 80)
 nodes/jump_animation/node = SubResource("AnimationNodeAnimation_140e0")
-nodes/jump_animation/position = Vector2(560, 740)
+nodes/jump_animation/position = Vector2(900, 840)
 nodes/jump_blend/node = SubResource("AnimationNodeBlend2_p7wcb")
-nodes/jump_blend/position = Vector2(1080, 500)
+nodes/jump_blend/position = Vector2(1420, 600)
 nodes/jump_carry_animation/node = SubResource("AnimationNodeAnimation_iobwr")
-nodes/jump_carry_animation/position = Vector2(560, 940)
+nodes/jump_carry_animation/position = Vector2(900, 1040)
 nodes/jump_carry_blend/node = SubResource("AnimationNodeBlend2_by88t")
-nodes/jump_carry_blend/position = Vector2(820, 720)
-nodes/output/position = Vector2(1440, 500)
+nodes/jump_carry_blend/position = Vector2(1160, 820)
 nodes/panic_animation/node = SubResource("AnimationNodeAnimation_n4hji")
 nodes/panic_animation/position = Vector2(-200, 480)
 nodes/panic_blend/node = SubResource("AnimationNodeBlend2_140e0")
 nodes/panic_blend/position = Vector2(60, 220)
 nodes/swim_animation/node = SubResource("AnimationNodeAnimation_4jlwr")
-nodes/swim_animation/position = Vector2(20, 580)
+nodes/swim_animation/position = Vector2(360, 680)
 nodes/swim_blend/node = SubResource("AnimationNodeBlend2_cpt7u")
-nodes/swim_blend/position = Vector2(560, 340)
+nodes/swim_blend/position = Vector2(900, 440)
 nodes/swim_carry_animation/node = SubResource("AnimationNodeAnimation_p7wcb")
-nodes/swim_carry_animation/position = Vector2(20, 800)
+nodes/swim_carry_animation/position = Vector2(360, 900)
 nodes/swim_carry_blend/node = SubResource("AnimationNodeBlend2_n4hji")
-nodes/swim_carry_blend/position = Vector2(280, 580)
+nodes/swim_carry_blend/position = Vector2(620, 680)
 nodes/time_scale/node = SubResource("AnimationNodeTimeScale_xlgo3")
-nodes/time_scale/position = Vector2(1260, 500)
+nodes/time_scale/position = Vector2(1600, 600)
 nodes/walk__carry_animation/node = SubResource("AnimationNodeAnimation_bdfa7")
 nodes/walk__carry_animation/position = Vector2(-720, 460)
 nodes/walk_animation/node = SubResource("AnimationNodeAnimation_ouyml")
 nodes/walk_animation/position = Vector2(-720, 280)
 nodes/walk_carry_blend/node = SubResource("AnimationNodeBlend2_y2nhe")
 nodes/walk_carry_blend/position = Vector2(-460, 280)
-node_connections = [&"idle_carry_blend", 0, &"idle_animation", &"idle_carry_blend", 1, &"idle_carry_animation", &"idle_walk_blend", 0, &"idle_carry_blend", &"idle_walk_blend", 1, &"walk_carry_blend", &"jump_blend", 0, &"swim_blend", &"jump_blend", 1, &"jump_carry_blend", &"jump_carry_blend", 0, &"jump_animation", &"jump_carry_blend", 1, &"jump_carry_animation", &"output", 0, &"time_scale", &"panic_blend", 0, &"idle_walk_blend", &"panic_blend", 1, &"panic_animation", &"swim_blend", 0, &"panic_blend", &"swim_blend", 1, &"swim_carry_blend", &"swim_carry_blend", 0, &"swim_animation", &"swim_carry_blend", 1, &"swim_carry_animation", &"time_scale", 0, &"jump_blend", &"walk_carry_blend", 0, &"walk_animation", &"walk_carry_blend", 1, &"walk__carry_animation"]
+nodes/fire_blend/node = SubResource("AnimationNodeBlend2_4jlwr")
+nodes/fire_blend/position = Vector2(420, 320)
+nodes/fire_animation/node = SubResource("AnimationNodeAnimation_inj5t")
+nodes/fire_animation/position = Vector2(120, 600)
+node_connections = [&"output", 0, &"time_scale", &"idle_carry_blend", 0, &"idle_animation", &"idle_carry_blend", 1, &"idle_carry_animation", &"idle_walk_blend", 0, &"idle_carry_blend", &"idle_walk_blend", 1, &"walk_carry_blend", &"jump_blend", 0, &"swim_blend", &"jump_blend", 1, &"jump_carry_blend", &"jump_carry_blend", 0, &"jump_animation", &"jump_carry_blend", 1, &"jump_carry_animation", &"panic_blend", 0, &"idle_walk_blend", &"panic_blend", 1, &"panic_animation", &"swim_blend", 0, &"fire_blend", &"swim_blend", 1, &"swim_carry_blend", &"swim_carry_blend", 0, &"swim_animation", &"swim_carry_blend", 1, &"swim_carry_animation", &"time_scale", 0, &"jump_blend", &"walk_carry_blend", 0, &"walk_animation", &"walk_carry_blend", 1, &"walk__carry_animation", &"fire_blend", 0, &"panic_blend", &"fire_blend", 1, &"fire_animation"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_woodo"]
 animation = &"sleep"
@@ -128,7 +137,8 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_r24b7"]
 
 [resource]
-states/Start/position = Vector2(199, 100)
+states/End/position = Vector2(731, 100)
+states/Start/position = Vector2(271, 100)
 states/die/node = SubResource("AnimationNodeAnimation_qqawb")
 states/die/position = Vector2(537, 193)
 states/equip/node = SubResource("AnimationNodeAnimation_cpt7u")
@@ -142,4 +152,4 @@ states/sleep/position = Vector2(350, 193)
 states/stun/node = SubResource("AnimationNodeAnimation_2j07w")
 states/stun/position = Vector2(537, 9)
 transitions = ["fish", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_by88t"), "idle_blend_tree", "fish", SubResource("AnimationNodeStateMachineTransition_4jlwr"), "stun", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_n4hji"), "idle_blend_tree", "stun", SubResource("AnimationNodeStateMachineTransition_140e0"), "idle_blend_tree", "die", SubResource("AnimationNodeStateMachineTransition_p7wcb"), "die", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_cpt7u"), "idle_blend_tree", "sleep", SubResource("AnimationNodeStateMachineTransition_ufc7y"), "sleep", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_6y7c0"), "Start", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_0lgqk"), "idle_blend_tree", "equip", SubResource("AnimationNodeStateMachineTransition_p1ii7"), "equip", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_r24b7")]
-graph_offset = Vector2(-15, 2)
+graph_offset = Vector2(-31, -21)

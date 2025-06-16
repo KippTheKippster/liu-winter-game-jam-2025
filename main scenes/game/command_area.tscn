@@ -10,6 +10,8 @@ viewport_path = NodePath("CircleSprite/CircleSubViewport")
 
 [node name="CommandArea" type="Area2D"]
 z_index = 1
+collision_layer = 0
+collision_mask = 7
 script = ExtResource("1_7anl8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

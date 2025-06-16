@@ -1,24 +1,26 @@
 extends Node2D
 class_name Trooper
 
-signal command_applied(point: Vector2, target: Target)
+signal command_applied(point: Vector2, point_offset: Vector2, target: Target)
+signal selected
 
-const SURPRISE_EFFECT_SCENE := preload("res://entities/effects/surprise/surprise_effect.tscn")
+const SURPRISE_EFFECT_SCENE := preload("uid://bkhahnu4sqbsx")
 
 @export var responsive: bool = true:
 	set(value):
 		responsive = value
 		if not responsive:
-			selected = false
+			listening = false
 
 var surprise_effect: Node2D
 
-var selected: bool:
+var listening: bool:
 	set(value):
-		selected = value
+		listening = value
 		if value:
 			surprise_effect = SURPRISE_EFFECT_SCENE.instantiate()
 			add_child(surprise_effect)
+			selected.emit()
 		else:
 			if surprise_effect:
 				surprise_effect.queue_free()

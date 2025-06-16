@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://d2fg37q8vew2b"]
+
+[ext_resource type="Script" uid="uid://76k3q7hkyvmr" path="res://entities/explosions/explosion.gd" id="1_2sdno"]
+[ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="1_ehxna"]
+[ext_resource type="Texture2D" uid="uid://d4hb84tpavl13" path="res://entities/explosions/explosion.png" id="1_qjrlg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ehxna"]
+radius = 8.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qjrlg"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ehxna"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 12.0
+gravity = Vector3(0, 0, 0)
+anim_speed_min = 3.0
+anim_speed_max = 3.0
+
+[node name="Explosion" type="Node2D"]
+script = ExtResource("1_2sdno")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ehxna")
+
+[node name="DamageInstance" type="Node2D" parent="Area2D"]
+script = ExtResource("1_ehxna")
+base_damage = 100.0
+damage_layer = 7
+metadata/_custom_type_script = "uid://dd5wfdkuccdar"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_qjrlg")
+emitting = false
+amount = 6
+texture = ExtResource("1_qjrlg")
+one_shot = true
+explosiveness = 0.6
+use_fixed_seed = true
+seed = 7
+process_material = SubResource("ParticleProcessMaterial_ehxna")
+
+[connection signal="ready" from="." to="GPUParticles2D" method="set_emitting" flags=6 binds= [true]]
+[connection signal="finished" from="GPUParticles2D" to="." method="_on_gpu_particles_2d_finished"]

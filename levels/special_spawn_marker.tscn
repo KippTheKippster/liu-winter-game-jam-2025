@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://0jov05s13xnq"]
+
+[ext_resource type="Script" uid="uid://bqfx88n80nadn" path="res://levels/special_spawn_marker.gd" id="1_njptt"]
+
+[node name="SpecialSpawnMarker" type="Node2D"]
+script = ExtResource("1_njptt")

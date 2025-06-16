@@ -9,7 +9,7 @@ var solid_cells: Dictionary[Vector2i, int]
 
 var cell_size: int = 12
 
-enum Direction { LEFT, RIGHT, UP, DOWN, NIL }
+#enum Direction { LEFT, RIGHT, UP, DOWN, NIL }
 const NeighborVectors: Array[Vector2i] = [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]
 const NeighborVectorsIncludeSub: Array[Vector2i] = [
 	Vector2i(1, 0), 
@@ -67,15 +67,6 @@ func get_cell_direction(cell: Vector2i, include_sub_neigbors: bool = false) -> V
 
 
 func set_target_coords(target_coords: Vector2i) -> void:
-	for label in labels:
-		label.queue_free()
-	
-	for color_rect in color_rects:
-		color_rect.queue_free()
-	
-	labels.clear()
-	color_rects.clear()
-	
 	for coords in cells.keys():
 		cells[coords] = -1
 	
@@ -84,7 +75,17 @@ func set_target_coords(target_coords: Vector2i) -> void:
 	var propogating_cells: PackedVector2Array = PackedVector2Array([target_coords])
 	propogate_cells(propogating_cells)
 	
+	## Debug
 	if get_tree().debug_navigation_hint:
+		for label in labels:
+			label.queue_free()
+		
+		for color_rect in color_rects:
+			color_rect.queue_free()
+		
+		labels.clear()
+		color_rects.clear()
+	
 		for cell in cells.keys():
 			var sprite := Sprite2D.new()
 			sprite.texture = preload("res://components/flow field/assets/arrow.png")

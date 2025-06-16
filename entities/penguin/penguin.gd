@@ -4,6 +4,8 @@ extends CharacterBody2D
 const CarryObject = preload("res://entities/carry objects/carry_object.gd")
 const CARRY_OBJECT_SCENE = preload("res://entities/carry objects/carry_object.tscn")
 
+const TOOL_DYNAMITE = preload("uid://be1c6v2dam34l")
+
 const Raft = preload("res://entities/props/raft/raft.gd")
 
 @onready var flow_field_walker: FlowFieldWalker = $FlowFieldWalker
@@ -14,12 +16,20 @@ const Raft = preload("res://entities/props/raft/raft.gd")
 @onready var health_instance: HealthInstance = %HealthInstance
 @onready var vertical_group: VerticalGroup = %VerticalGroup
 @onready var flip_group: FlipGroup = %FlipGroup
+@onready var penguin_sprite: Sprite2D = %PenguinSprite
 @onready var equipment_sprite: Sprite2D = %EquipmentSprite
 @onready var carry_object_sprite: Sprite2D = %CarryObjectSprite
+@onready var fire_particles: GPUParticles2D = %FireParticles
+@onready var damaged_audio: AudioStreamPlayer2D = $Audio/DamagedAudio
+@onready var scared_audio: AudioStreamPlayer2D = %ScaredAudio
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var state_chart: StateChart = $StateChart
 
+
 @export var walk_speed: float = 20.0
+@export var extra_interaction_range: float = 24.0
+
+var allow_ineraction: bool = true
 
 var recieved_damage_result: DamageResult
 
@@ -41,13 +51,15 @@ var carriable: Carriable:
 		animation_tree.set("parameters/idle_blend_tree/swim_carry_blend/blend_amount", blend_amount)
 		animation_tree.set("parameters/idle_blend_tree/jump_carry_blend/blend_amount", blend_amount)
 
-var equipment_type: CarryObjectTypeEquipment
+@export var equipment_type: CarryObjectTypeEquipment
 
-var command_target: Target
 var command_point: Vector2
+var command_point_offset: Vector2
+var command_target: Target
 
 var enemy_health_instance: HealthInstance
 var danger_target: Target
+var danger_point: Vector2
 var fishing_hole: FishingHole
 
 var desired_action: StringName:
@@ -62,8 +74,10 @@ var swimming: bool:
 	set(value):
 		var changed := value != swimming
 		swimming = value
+		
 		if changed:
 			if swimming:
+				effect_fire_active = false
 				animation_tree.set("parameters/idle_blend_tree/swim_blend/blend_amount", 1.0)
 				if equipment_type != preload("res://entities/carry objects/carry object types/equipment_pool_ring.tres"):
 					if carriable:
@@ -81,8 +95,32 @@ var in_deep_water: bool:
 			else:
 				SignalBus.penguin_exited_deep_water.emit(self)
 
+@export var effect_fire_wait_time: float = 2.0
+var effect_fire_time_left: float = 0.0
+var effect_fire_active: bool:
+	set(value):
+		var changed := effect_fire_active != value
+		effect_fire_active = value
+		if swimming:
+			effect_fire_active = false
+		
+		fire_particles.emitting = effect_fire_active
+		if changed:
+			effect_fire_time_left = 0.0
+			if effect_fire_active:
+				scared_audio.play()
+				animation_tree.set("parameters/idle_blend_tree/fire_blend/blend_amount", 1.0)
+			else:
+				animation_tree.set("parameters/idle_blend_tree/fire_blend/blend_amount", 0.0)
+				penguin_sprite.self_modulate = Color.WHITE
+			#state_chart.send_event("request_task_panic")
+
+
 func _ready() -> void:
 	SignalBus.penguin_borned.emit(self)
+	
+	if equipment_type:
+		state_chart.send_event.call_deferred("equip_generic")
 	
 	animation_tree.set("parameters/idle_blend_tree/time_scale/scale", randf_range(0.8, 1.2))
 	animation_tree.set("parameters/idle_blend_tree/idle_carry_blend/blend_amount", 0.0)
@@ -133,9 +171,16 @@ func _ready() -> void:
 		return true
 
 
-
 func _process(delta: float) -> void:
 	state_chart.set_expression_property("on_floor", vertical_group.is_on_floor() and vertical_group.velocity <= 0)
+	
+	penguin_sprite.self_modulate = Color.WHITE.lerp(Color.hex(0x523722ff), effect_fire_time_left / effect_fire_wait_time)
+	
+	if effect_fire_active:
+		effect_fire_time_left += delta
+		if effect_fire_time_left >= effect_fire_wait_time:
+			effect_fire_time_left = effect_fire_wait_time
+			state_chart.send_event("request_action_die")
 	
 	if velocity.is_zero_approx():
 		animation_tree.set("parameters/idle_blend_tree/idle_walk_blend/blend_amount", 0.0)
@@ -146,23 +191,26 @@ func _process(delta: float) -> void:
 		animation_tree.set("parameters/idle_blend_tree/jump_blend/blend_amount", 0.0)
 	else:
 		animation_tree.set("parameters/idle_blend_tree/jump_blend/blend_amount", 1.0)
+
+
+
+func _physics_process(delta: float) -> void:
+	move_and_slide()
 	
 	danger_target = danger_target_detector.get_next_target()
 	if danger_target != null:
 		state_chart.send_event("request_task_panic")
 
 
-func _physics_process(delta: float) -> void:
-	move_and_slide()
-
-
-func throw_carriable(carraible_velocity: Vector2 = Vector2.ZERO) -> void:
+func throw_carriable(carraible_velocity: Vector2 = Vector2.ZERO) -> Carriable:
+	var thrown_carriable := carriable
 	carriable.place(global_position, 1.0, carraible_velocity, get_parent())
 	carriable = null
+	return thrown_carriable
 
 
 func throw_new_carriable(item_type: CarryObjectType) -> void:
-	var carry_object := CARRY_OBJECT_SCENE.instantiate() as CarryObject
+	var carry_object := load(item_type.carriable_scene_path).instantiate() as Carriable
 	carry_object.carry_object_type = item_type
 	carry_object.place(global_position, 1.0, Vector2.ZERO, get_parent())
 
@@ -185,9 +233,13 @@ func get_command_target_point() -> Vector2:
 
 func is_in_command_target_point_range() -> bool:
 	if is_command_target_valid():
-		return global_position.distance_to(command_target.global_position) <= command_target.size
+		var extra_range := 0.0
+		if is_ranged_interaction_allowed(command_target):
+			extra_range = extra_interaction_range
+		
+		return global_position.distance_to(command_target.global_position) <= command_target.size + extra_range
 	else:
-		return global_position.distance_to(command_point) <= 4.0
+		return global_position.distance_to(command_point) <= 0.5
 
 
 func equip(type: CarryObjectTypeEquipment) -> void:
@@ -195,11 +247,20 @@ func equip(type: CarryObjectTypeEquipment) -> void:
 	state_chart.send_event(equipment_type.state_request)
 
 
+func is_ranged_interaction_allowed(target: Target) -> bool:
+	if carriable and carriable.carry_object_type == TOOL_DYNAMITE:
+		return true
+	
+	return false
+
+
 func interact_with_target(target: Target) -> void:
 	var holder := target.holder
 	if holder is Carriable:
 		if carriable:
 			throw_carriable()
+		
+		state_chart.send_event("cancel_action_equip")
 		
 		carriable = holder
 		carriable.pickup()
@@ -215,8 +276,15 @@ func interact_with_target(target: Target) -> void:
 	
 	#var health_instance := Utils.find_child_of_class(holder, "HealthInstance") as HealthInstance
 	if holder is HealthInstance:
-		enemy_health_instance = holder
-		desired_action = "attack"
+		if carriable and carriable.carry_object_type == TOOL_DYNAMITE:
+			var dir = (holder.global_position - global_position).normalized()
+			var thrown_carriable := throw_carriable(dir * 24.0)
+			thrown_carriable.position += dir * 2.0
+			thrown_carriable.ignite()
+		else:
+			enemy_health_instance = holder
+			desired_action = "attack"
+		
 		return
 	
 	if holder is Boffus:
@@ -245,7 +313,8 @@ func interact_with_target(target: Target) -> void:
 			flow_field_walker.target_point = holder.global_position
 			vertical_group.landed.connect((func(raft: Raft) -> void:
 				if global_position.distance_to(raft.global_position) < 12.0:
-					raft.add_penguin(self)
+					if is_inside_tree():
+						raft.add_penguin(self)
 				).bind(holder), ConnectFlags.CONNECT_ONE_SHOT)
 			
 			if carriable:
@@ -270,32 +339,53 @@ func is_command_target_valid() -> bool:
 
 
 func kill() -> void:
+	if equipment_type:
+		var carry_object := CARRY_OBJECT_SCENE.instantiate() as CarryObject
+		carry_object.carry_object_type = equipment_type
+		carriable = carry_object
+		throw_carriable()
+	
 	SignalBus.penguin_killed.emit(self)
 	queue_free()
 
 
-func _on_trooper_command_applied(point: Vector2, target: Target) -> void:
+func _on_trooper_command_applied(point: Vector2, offset: Vector2, target: Target) -> void:
 	command_target = target
-	command_point = point
+	command_point = point + offset
+	#command_point_offset = Vector2.RIGHT * 8.0 # offset FIXME
 	
 	state_chart.send_event("request_task_move_to_target")
 
 
 func _on_health_instance_damage_received(result: DamageResult) -> void:
 	recieved_damage_result = result
-	state_chart.send_event("damage_recieved")
+	if recieved_damage_result.damage_instance.effect == DamageInstance.Effect.FIRE:
+		danger_point = result.damage_instance.global_position
+		state_chart.send_event("request_task_panic")
+		effect_fire_active = true
+	
+	if recieved_damage_result.final_damage > 0:
+		damaged_audio.play()
+		state_chart.send_event("damage_recieved")
 
 
-func _on_tile_detector_cell_changed(layer: TileMapLayer, current_coords: Vector2i, old_coords: Vector2i) -> void:
+func _on_tile_detector_tile_detected(layer: TileMapLayer, coords: Vector2i) -> void:
 	var is_water_cell: bool
 	var is_deep_water_cell: bool # TODO Change this to check old_coords instead
-	var tile_data := layer.get_cell_tile_data(current_coords)
+	var tile_data := layer.get_cell_tile_data(coords)
 	if tile_data:
-		is_water_cell = tile_data.get_custom_data("water")
-		is_deep_water_cell =  tile_data.get_custom_data("deep_water")
+		if tile_data.has_custom_data("water"):
+			is_water_cell = tile_data.get_custom_data("water")
+		
+		if tile_data.has_custom_data("deep_water"):
+			is_deep_water_cell = tile_data.get_custom_data("deep_water")
 	
 	swimming = is_water_cell
 	in_deep_water = is_deep_water_cell
+
+
+func _on_trooper_selected() -> void:
+	state_chart.send_event("selected")
 
 
 #region Task States
@@ -324,20 +414,24 @@ func _on_task_move_to_target_state_entered() -> void:
 		if is_command_target_valid():
 			state_chart.send_event("request_task_interact_with_target")
 		else:
+			global_position = command_point
 			state_chart.send_event("request_task_idle")
 		return
 	
+	flow_field_walker.target_point_offset = command_point_offset
 	flow_field_walker.target_point = get_command_target_point()
 	desired_action = "walk"
 
 
 func _on_task_move_to_target_state_processing(delta: float) -> void:
+	flow_field_walker.target_point_offset = command_point_offset
 	flow_field_walker.target_point = get_command_target_point()
 	
 	if is_in_command_target_point_range():
 		if is_command_target_valid():
 			state_chart.send_event("request_task_interact_with_target")
 		else:
+			global_position = command_point
 			state_chart.send_event("request_task_idle")
 
 
@@ -355,16 +449,22 @@ func _on_task_panic_state_entered() -> void:
 	danger_target_detector.active = false
 	animation_tree.set("parameters/idle_blend_tree/panic_blend/blend_amount", 1.0)
 	flow_field_walker.reverse_path = true
-	flow_field_walker.target_point = danger_target.global_position
+	if danger_target:
+		flow_field_walker.target_point = danger_target.global_position # FIXME Sometimes this is called when it is null
+	else:
+		flow_field_walker.target_point = danger_point
+	
 	desired_action = "walk"
 	if carriable:
 		throw_carriable()
+	
+	scared_audio.play()
 
 
 func _on_task_panic_state_exited() -> void:
 	animation_tree.set("parameters/idle_blend_tree/panic_blend/blend_amount", 0.0)
 	flow_field_walker.reverse_path = false
-	danger_target = null
+	#danger_target = null
 
 
 #endregion
@@ -372,10 +472,8 @@ func _on_task_panic_state_exited() -> void:
 #region Action States
 
 # Idle
-
-func _on_action_idle_state_entered() -> void:
-	pass
-	#danger_target_detector.active = true
+func _on_action_idle_sleep_state_exited() -> void:
+	vertical_group.jump(vertical_group.jump_speed * 0.6)
 
 
 # Walk
@@ -435,7 +533,6 @@ func _on_action_fish_state_exited() -> void:
 
 
 # Equip
-
 func _on_action_equip_state_entered() -> void:
 	carry_object_sprite.visible = true
 
@@ -444,9 +541,10 @@ func _on_action_equip_state_exited() -> void:
 	if equipment_type:
 		throw_new_carriable(equipment_type)
 	
-	equip(carriable.carry_object_type)
-	carriable.queue_free()
-	carriable = null
+	if carriable and carriable.carry_object_type is CarryObjectTypeEquipment: # HACK BRUH
+		equip(carriable.carry_object_type)
+		carriable.queue_free()
+		carriable = null
 
 
 # Knockback

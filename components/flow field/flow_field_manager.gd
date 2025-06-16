@@ -10,6 +10,7 @@ var cells: Dictionary[Vector2i, int]
 var flow_field_list: Dictionary[Vector2i, FlowField]
 var flow_field_user_list: Dictionary[Vector2i, int]
 var solid_cells: Dictionary[Vector2i, int]
+var coords_queue: Array[Vector2i]
 
 
 func _enter_tree() -> void:
@@ -20,6 +21,26 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	cells[Vector2i.ZERO] = -1
 	#flood_cell.call_deferred.call_deferred(Vector2i(4, 4)) # UGLY
+
+
+func _process(delta: float) -> void:
+	var size = coords_queue.size()
+	for i in size:
+		var coords := coords_queue.pop_back() as Vector2i
+		if not flow_field_list.has(coords):
+			continue
+		
+		var flow_field := flow_field_list[coords]
+		if flow_field.cells[coords] == 0:
+			continue
+		
+		flow_field.set_target_coords(coords)
+		break
+
+
+
+func reset_cells() -> void:
+	cells.clear()
 	for x in range(cells_rect.position.x, cells_rect.size.x):
 		for y in range(cells_rect.position.y, cells_rect.size.y):
 			cells[Vector2i(x, y)] = -1
@@ -52,7 +73,11 @@ func add_user_to_flow_field(target_coords: Vector2i) -> FlowField:
 	flow_field.cell_size = cell_size
 	flow_field.cells = cells.duplicate()
 	flow_field.solid_cells = solid_cells
-	flow_field.set_target_coords(target_coords)
+	#flow_field.set_target_coords(target_coords)
+	if coords_queue.is_empty():
+		flow_field.set_target_coords(target_coords)
+	
+	coords_queue.append(target_coords)
 	flow_field_list[target_coords] = flow_field
 	
 	return flow_field
@@ -78,13 +103,24 @@ func coords_to_point(coords: Vector2i) -> Vector2i:
 
 func add_solid(coords: Vector2i) -> void:
 	solid_cells.get_or_add(coords, 0)
+	#solid_cells.get_or_add(coords + Vector2i.RIGHT, 0)
+	#solid_cells.get_or_add(coords + Vector2i.LEFT, 0)
+	#solid_cells.get_or_add(coords + Vector2i.UP, 0)
+	#solid_cells.get_or_add(coords + Vector2i.DOWN, 0)
 	solid_cells[coords] += 1
+	#solid_cells[coords + Vector2i.RIGHT] += 1
+	#solid_cells[coords + Vector2i.LEFT] += 1
+	#solid_cells[coords + Vector2i.UP] += 1
+	#solid_cells[coords + Vector2i.DOWN] += 1
 	#print(solid_cells[coords])
 
 
 func remove_solid(coords: Vector2i, flood_removed_solid_cell: bool = false) -> void:
-	print(coords)
 	solid_cells[coords] -= 1
+	#solid_cells[coords + Vector2i.RIGHT] -= 1
+	#solid_cells[coords + Vector2i.LEFT] -= 1
+	#solid_cells[coords + Vector2i.UP] -= 1
+	#solid_cells[coords + Vector2i.DOWN] -= 1
 	if solid_cells.get(coords) == 0:
 		solid_cells.erase(coords)
 	

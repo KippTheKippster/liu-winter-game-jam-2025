@@ -12,7 +12,7 @@ var penguin: Penguin
 var time: float 
 
 func _process(delta: float) -> void:
-	if is_instance_valid(penguin):
+	if is_instance_valid(penguin) and penguin.is_inside_tree():
 		global_position = penguin.global_position
 		time += delta
 		if time >= grab_wait_time:

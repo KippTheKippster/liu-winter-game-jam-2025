@@ -153,11 +153,12 @@ _data = {
 &"roll": SubResource("Animation_8y8ng")
 }
 
-[node name="Raft" type="Node2D"]
+[node name="Raft" type="Node2D" groups=["raft"]]
 script = ExtResource("1_475i2")
 fuel_object_types = Array[ExtResource("2_plbnp")]([ExtResource("3_qlvug")])
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 enabled = false
 zoom = Vector2(2, 2)
 

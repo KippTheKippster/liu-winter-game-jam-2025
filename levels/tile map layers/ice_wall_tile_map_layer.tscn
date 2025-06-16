@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dij5iy3e81fr7"]
+
+[ext_resource type="Texture2D" uid="uid://62rdfpces2hm" path="res://levels/assets/ice_wall_tile_atlas.png" id="1_uc4xs"]
+[ext_resource type="Script" uid="uid://dsntx2ur2a6ei" path="res://components/flow field/flow_field_tile_map_layer_solid.gd" id="2_oneck"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f33k1"]
+texture = ExtResource("1_uc4xs")
+texture_region_size = Vector2i(12, 12)
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+
+[sub_resource type="TileSet" id="TileSet_6hwsd"]
+tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_f33k1")
+
+[node name="IceWallTileMapLayer" type="TileMapLayer" groups=["interactable_tile_map"]]
+y_sort_enabled = true
+tile_set = SubResource("TileSet_6hwsd")
+
+[node name="FlowFieldTileMapLayerSolid" type="Node" parent="."]
+script = ExtResource("2_oneck")
+metadata/_custom_type_script = "uid://dsntx2ur2a6ei"

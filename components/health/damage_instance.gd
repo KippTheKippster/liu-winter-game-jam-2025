@@ -3,6 +3,12 @@
 extends Node2D
 class_name DamageInstance
 
+enum Effect {
+	NONE,
+	FIRE,
+	ICE
+}
+
 const DAMAGE_LAYER_HINT_STRING = "World,Enemy,Penguin"
 
 signal damage_dealt(result: DamageResult)
@@ -12,7 +18,7 @@ signal damage_dealt(result: DamageResult)
 
 var area: Area2D
 var damage_layer: int = 1
-
+@export var effect: Effect = Effect.NONE
 
 func _notification(what: int) -> void:
 	match what:
@@ -53,6 +59,7 @@ static func get_damage_layer_property_list(property_name: String = "damage_layer
 			"hint": PROPERTY_HINT_FLAGS,
 			"hint_string": DAMAGE_LAYER_HINT_STRING
 		}
+
 
 func _get_property_list() -> Array[Dictionary]:
 	var property_list: Array[Dictionary] = []

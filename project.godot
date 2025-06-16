@@ -12,13 +12,15 @@ config_version=5
 
 config/name="Feed Seal Boffus"
 run/main_scene="uid://doiwfgk1hy5nb"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://yhjpfck7w0md"
 
 [autoload]
 
-GlobalUi="*res://globals/global_ui/global_ui.tscn"
-SignalBus="*res://globals/signal_bus/signal_bus.tscn"
+GlobalUi="*res://globals/global ui/global_ui.tscn"
+SignalBus="*res://globals/signal bus/signal_bus.tscn"
+Debug="*res://globals/debug/debug.gd"
+Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
 
 [debug]
 
@@ -31,10 +33,11 @@ gdscript/warnings/int_as_enum_without_cast=0
 window/size/viewport_width=640
 window/size/viewport_height=360
 window/stretch/mode="viewport"
+window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/canvas_transform_menu/plugin.cfg", "res://addons/dual_grid_tile_map_layer/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/SignalVisualizer/plugin.cfg", "res://addons/canvas_transform_menu/plugin.cfg", "res://addons/dual_grid_tile_map_layer/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg")
 
 [global_group]
 
@@ -43,6 +46,8 @@ penguin=""
 flow_field_manager=""
 target=""
 interactable_tile_map=""
+raft=""
+fire_source=""
 
 [gui]
 
@@ -139,6 +144,21 @@ speed_increase={
 speed_decrease={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":47,"key_label":0,"unicode":45,"location":0,"echo":false,"script":null)
+]
+}
+debug_spawn_penguin={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":49,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+debug_spawn_item={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":50,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+debug_spawn_enemy={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":51,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 

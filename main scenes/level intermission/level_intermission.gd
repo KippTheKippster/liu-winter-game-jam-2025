@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var penguin_sprite: AnimatedSprite2D = %PenguinSprite
 
 func _ready() -> void:
+	print(get_tree().paused)
 	var tween := create_tween()
 	tween.tween_property(penguin_sprite, "position", penguin_sprite.position + 66 * Vector2.RIGHT, 4.0)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dofjqsq6jc4oy"]
+[gd_scene load_steps=6 format=3 uid="uid://dofjqsq6jc4oy"]
 
 [ext_resource type="Script" uid="uid://cut3epyn4bthq" path="res://entities/effects/ecliptic canvas modulate/ecliptic_canvas_modulate.gd" id="1_mxlxj"]
 
@@ -7,7 +7,50 @@ interpolation_mode = 2
 offsets = PackedFloat32Array(0, 0.333333, 0.471861, 0.584416, 0.748918, 0.87013, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 0.839216, 0.811765, 1, 1, 0.839216, 0.811765, 1, 0.823529, 0.501961, 0.878431, 1, 0.82324, 0.5016, 0.88, 1, 0.4464, 0.46464, 0.72, 1)
 
+[sub_resource type="Animation" id="Animation_mxlxj"]
+resource_name = "progress"
+loop_mode = 2
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_pt6j4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_36o08"]
+_data = {
+&"RESET": SubResource("Animation_pt6j4"),
+&"progress": SubResource("Animation_mxlxj")
+}
+
 [node name="EclipticCanvasModulate" type="CanvasModulate"]
 script = ExtResource("1_mxlxj")
 duration = 120.0
 color_range = SubResource("Gradient_pt6j4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_36o08")
+}

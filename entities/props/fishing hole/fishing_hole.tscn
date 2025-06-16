@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cb418taoi0lmu"]
+[gd_scene load_steps=23 format=3 uid="uid://cb418taoi0lmu"]
 
 [ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="1_6e1ve"]
 [ext_resource type="Script" uid="uid://dcn1sww4vmul3" path="res://entities/props/fishing hole/fishing_hole.gd" id="1_fhw1b"]
@@ -19,6 +19,26 @@ radius = 3.0
 radius = 3.0
 height = 16.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_urh2d"]
+atlas = ExtResource("1_iymk4")
+region = Rect2(0, 27, 23, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wubc2"]
+atlas = ExtResource("1_iymk4")
+region = Rect2(0, 18, 23, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8vitu"]
+atlas = ExtResource("1_iymk4")
+region = Rect2(23, 18, 23, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0li2b"]
+atlas = ExtResource("1_iymk4")
+region = Rect2(0, 9, 23, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4206"]
+atlas = ExtResource("1_iymk4")
+region = Rect2(23, 9, 23, 9)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_iymk4"]
 atlas = ExtResource("1_iymk4")
 region = Rect2(0, 0, 23, 9)
@@ -31,13 +51,43 @@ region = Rect2(23, 0, 23, 9)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_urh2d")
+}],
+"loop": true,
+"name": &"0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wubc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8vitu")
+}],
+"loop": true,
+"name": &"1",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0li2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4206")
+}],
+"loop": true,
+"name": &"2",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_iymk4")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6e1ve")
 }],
 "loop": true,
-"name": &"default",
+"name": &"3",
 "speed": 1.0
 }]
 
@@ -71,7 +121,6 @@ shape = SubResource("CapsuleShape2D_6e1ve")
 position = Vector2(-7.5, 1.5)
 script = ExtResource("4_urh2d")
 size = 6.0
-range = 6.0
 singular = true
 metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
 
@@ -87,8 +136,9 @@ gizmo_extents = 5.0
 
 [node name="HoleSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_iuctg")
-autoplay = "default"
-frame_progress = 0.527054
+animation = &"3"
+autoplay = "3"
+frame_progress = 0.9885548
 
 [node name="CarriableLauncher" type="Node2D" parent="."]
 script = ExtResource("4_iuctg")

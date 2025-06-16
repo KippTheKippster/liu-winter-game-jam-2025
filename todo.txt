@@ -22,10 +22,24 @@ Return boffus to start point?
 #Penguin should jump in to the boat
 #Disable depart menu
 #Check igloo carriables
+#Smooth tilemap corners
+#BUG: IGLOO ITEMS
+#Drop Equipment on death
+#Panning broken?
+#Revert panic to action?
+#Allow to move penguin 1 pixel
+#Remember hub penguins
 ~Auto pickup items
 ~It auto pick ups igloo items
-Revert panic to action?
-Spread out penguins to circle
+#Spread out penguins to circle
 Show penguin equipment on boat
 Fix penguin pathfinding around corners
-Smooth tilemap corners
+Relection
+Splash effect
+Target area instead of point
+#Show how many fish holes have
+BUG: Sometimes penguins still hold items after dropping them
+Spamming equip can lead to weird results
+Snowballs are weird!
+Night should last longer
+Igloos are broken

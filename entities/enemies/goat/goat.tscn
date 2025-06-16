@@ -164,6 +164,8 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "a18b696b312375d15cf33a74a7387d80"
 
 [node name="DamageArea" type="Area2D" parent="FlipGroup"]
+collision_layer = 0
+collision_mask = 2
 
 [node name="DamageInstance" type="Node2D" parent="FlipGroup/DamageArea"]
 script = ExtResource("7_4t7mx")

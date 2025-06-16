@@ -22,3 +22,17 @@ Kraken bossfight
 Floof (with blur tool and indexed colors)
 Rolly polly that crushes penguins
 Minecart
+Trap that holds penguin
+Scale
+Moving gradient
+Moving ice platforms
+Stackable enemies 
+Penguin sneezing
+Enemy Carrying objects
+Stackable enemies
+Electric enemy
+Electric water
+Flying enemy
+Shielded Enemy
+Burrowing enemy
+Giant that penguin can walk on

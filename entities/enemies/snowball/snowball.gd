@@ -111,3 +111,10 @@ func _on_grow_timer_timeout() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	destroy.call_deferred()
+
+
+func _on_tile_detector_tile_detected(layer: TileMapLayer, coords: Vector2i) -> void:
+	var tile_data := layer.get_cell_tile_data(coords)
+	if tile_data:
+		if tile_data.has_custom_data("water") and tile_data.get_custom_data("water") == true:
+			destroy()
