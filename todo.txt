@@ -43,3 +43,9 @@ Spamming equip can lead to weird results
 Snowballs are weird!
 Night should last longer
 Igloos are broken
+Fix dynamite
+Stacker:
+	Attack penguin holding items
+	Become slower with the size of the stack
+	Run away
+	#Pickup items

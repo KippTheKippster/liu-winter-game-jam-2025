@@ -917,6 +917,7 @@ texture = ExtResource("1_r5j68")
 offset = Vector2(-0.5, -2.5)
 hframes = 5
 vframes = 4
+frame = 1
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": true,
@@ -945,6 +946,7 @@ texture = ExtResource("9_5wlyb")
 offset = Vector2(-0.5, -2.5)
 hframes = 4
 vframes = 3
+frame = 1
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "pending_changes": {}
@@ -1017,6 +1019,9 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_uw7px")
+}
 tree_root = ExtResource("13_ouyml")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")

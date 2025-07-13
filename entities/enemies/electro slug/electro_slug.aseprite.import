@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b0ylex15g6qk7"
+path="res://.godot/imported/electro_slug.aseprite-4855d96f7369ab152c380db75466a0d9.res"
+
+[deps]
+
+source_file="res://entities/enemies/electro slug/electro_slug.aseprite"
+dest_files=["res://.godot/imported/electro_slug.aseprite-4855d96f7369ab152c380db75466a0d9.res"]
+
+[params]
+

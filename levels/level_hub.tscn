@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://cti12nwlj0c2n"]
+[gd_scene load_steps=26 format=4 uid="uid://cti12nwlj0c2n"]
 
 [ext_resource type="PackedScene" uid="uid://c4vwlvp4nkygl" path="res://levels/level_template.tscn" id="1_4jq56"]
 [ext_resource type="PackedScene" uid="uid://cyveeyyam4oky" path="res://levels/tile map layers/water_tile_map_layer.tscn" id="2_yi7iw"]
@@ -14,10 +14,15 @@
 [ext_resource type="PackedScene" uid="uid://byrpgpbqmjh38" path="res://entities/props/igloo/igloo.tscn" id="10_xxvjo"]
 [ext_resource type="PackedScene" uid="uid://b5r0uj8kkk6es" path="res://entities/props/scale/scale.tscn" id="11_ao5h8"]
 [ext_resource type="PackedScene" uid="uid://hya1a4703i6q" path="res://entities/props/breakable_wall.tscn" id="13_0iyjg"]
+[ext_resource type="Resource" uid="uid://u0nsf50run60" path="res://entities/carry objects/carry object types/food_shrimp.tres" id="14_xhsun"]
+[ext_resource type="Resource" uid="uid://be1c6v2dam34l" path="res://entities/carry objects/carry object types/tool_dynamite.tres" id="15_p12uj"]
 [ext_resource type="PackedScene" uid="uid://rs8xh0o3okgv" path="res://entities/props/campfire/campfire.tscn" id="16_kxdh1"]
+[ext_resource type="PackedScene" uid="uid://d0htrdo7jff8v" path="res://entities/enemies/fire cloud/fire_cloud.tscn" id="16_p12uj"]
 [ext_resource type="PackedScene" uid="uid://0jov05s13xnq" path="res://levels/special_spawn_marker.tscn" id="17_f84fs"]
+[ext_resource type="PackedScene" uid="uid://cowvagrpdw1pr" path="res://entities/enemies/stacker/stacker.tscn" id="17_fi8ra"]
+[ext_resource type="Resource" uid="uid://460toaio7pbp" path="res://entities/carry objects/carry object types/food_fish.tres" id="18_fi8ra"]
 
-[sub_resource type="Image" id="Image_kxdh1"]
+[sub_resource type="Image" id="Image_lbpcy"]
 data = {
 "data": PackedByteArray("a5zH/2ucx/9rnMf/a5zH/2ucx/9rnMf/a5zH/2ucx/8AAAD/AAAA/wAAAP8AAAD//xST//8Uk///FJP//xST/2ucx/9rnMf/a5zH/2ucx/9rnMf/a5zH/2ucx/9rnMf/AAAA/wAAAP8AAAD/AAAA//8Uk///FJP//xST//8Uk/9rnMf/a5zH/2ucx/9rnMf/a5zH/2ucx/9rnMf/a5zH/wAAAP8AAAD/AAAA/wAAAP//FJP//xST//8Uk///FJP/a5zH/2ucx/9rnMf/a5zH/2ucx/9rnMf/a5zH/2ucx/8AAAD/AAAA/wAAAP8AAAD//xST//8Uk///FJP//xST/2ucx/9rnMf/a5zH/2ucx/9rnMf/a5zH/2ucx/9rnMf//xST//8Uk///FJP//xST/wAAAP8AAAD/AAAA/wAAAP9rnMf/a5zH/2ucx/9rnMf/a5zH/2ucx/9rnMf/a5zH//8Uk///FJP//xST//8Uk/8AAAD/AAAA/wAAAP8AAAD/a5zH/2ucx/9rnMf/a5zH/2ucx/9rnMf/a5zH/2ucx///FJP//xST//8Uk///FJP/AAAA/wAAAP8AAAD/AAAA/2ucx/9rnMf/a5zH/2ucx/9rnMf/a5zH/2ucx/9rnMf//xST//8Uk///FJP//xST/wAAAP8AAAD/AAAA/wAAAP8="),
 "format": "RGBA8",
@@ -26,12 +31,12 @@ data = {
 "width": 16
 }
 
-[sub_resource type="ImageTexture" id="ImageTexture_f84fs"]
-image = SubResource("Image_kxdh1")
+[sub_resource type="ImageTexture" id="ImageTexture_jhdoh"]
+image = SubResource("Image_lbpcy")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_puml1"]
 resource_name = "Dual Grid System"
-texture = SubResource("ImageTexture_f84fs")
+texture = SubResource("ImageTexture_jhdoh")
 texture_region_size = Vector2i(8, 8)
 0:0/0 = 0
 1:0/0 = 0
@@ -165,6 +170,20 @@ position = Vector2(12, 172)
 position = Vector2(24, 120)
 carry_object_type = ExtResource("8_h38bk")
 
+[node name="CoalCarryObject2" parent="World/InteractableObjects" index="7" instance=ExtResource("7_puml1")]
+position = Vector2(-44, 116)
+carry_object_type = ExtResource("14_xhsun")
+
+[node name="CoalCarryObject3" parent="World/InteractableObjects" index="8" instance=ExtResource("7_puml1")]
+position = Vector2(-36, 100)
+
+[node name="CoalCarryObject4" parent="World/InteractableObjects" index="9" instance=ExtResource("7_puml1")]
+position = Vector2(-28, 108)
+carry_object_type = ExtResource("15_p12uj")
+
+[node name="FireCloud" parent="World/InteractableObjects/CoalCarryObject4" index="3" instance=ExtResource("16_p12uj")]
+position = Vector2(15.819252, -34.85929)
+
 [node name="Levels" type="Node2D" parent="." index="2"]
 
 [node name="Level1" type="Node2D" parent="Levels" index="0"]
@@ -269,3 +288,8 @@ scale = Vector2(0.99999994, 0.99999994)
 position = Vector2(-28, 52)
 scale = Vector2(0.99999994, 0.99999994)
 action = 1
+
+[node name="Stacker" parent="." index="5" instance=ExtResource("17_fi8ra")]
+position = Vector2(-28, 100)
+start_height = 5
+carriable_type = ExtResource("18_fi8ra")

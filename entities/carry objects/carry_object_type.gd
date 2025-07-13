@@ -16,5 +16,10 @@ func apply(carriable: Carriable) -> void:
 		instance.applied.emit(carriable)
 
 
+func apply_to_sprite(sprite: Sprite2D) -> void:
+	sprite.texture = texture
+	sprite.offset = offset
+
+
 func is_food() -> bool:
 	return Utils.get_bitmask_layer_value(layer, 1)

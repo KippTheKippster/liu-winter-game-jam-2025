@@ -1,0 +1,158 @@
+[gd_scene load_steps=16 format=3 uid="uid://cowvagrpdw1pr"]
+
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="1_h0p4e"]
+[ext_resource type="Script" uid="uid://d1ipnpaid76tr" path="res://entities/enemies/stacker/stacker.gd" id="1_sas4m"]
+[ext_resource type="Texture2D" uid="uid://cu8vql7bxwrdj" path="res://entities/enemies/stacker/stacker.png" id="1_vgcy6"]
+[ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_7oxm5"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="4_agqmf"]
+[ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="5_m8mi4"]
+[ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="6_rs8bc"]
+[ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="7_7uguu"]
+[ext_resource type="Script" uid="uid://bbsfd24w06hq0" path="res://entities/penguin/target_detector.gd" id="7_08wmo"]
+[ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="8_fsywt"]
+[ext_resource type="Script" uid="uid://dyi7lv20qiks3" path="res://addons/godot_state_charts/atomic_state.gd" id="9_n03n5"]
+[ext_resource type="Script" uid="uid://br85gcxolt6xv" path="res://addons/godot_state_charts/expression_guard.gd" id="10_5ogdx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h0p4e"]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_agqmf"]
+radius = 3.0
+
+[sub_resource type="Resource" id="Resource_m8mi4"]
+script = ExtResource("10_5ogdx")
+expression = "on_floor == true"
+metadata/_custom_type_script = "uid://br85gcxolt6xv"
+
+[node name="Stacker" type="CharacterBody2D" groups=["stacker"]]
+collision_layer = 4
+script = ExtResource("1_sas4m")
+start_height = null
+height_offset = null
+explode_speed = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_h0p4e")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_agqmf")
+
+[node name="Target" type="Node2D" parent="Area2D" node_paths=PackedStringArray("holder")]
+unique_name_in_owner = true
+script = ExtResource("4_agqmf")
+size = 7.0
+holder = NodePath("../HealthInstance")
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="HealthInstance" type="Node2D" parent="Area2D"]
+unique_name_in_owner = true
+script = ExtResource("3_7oxm5")
+base_health = 10.0
+damage_mask = 0
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
+
+[node name="VerticalGroup" type="Node2D" parent="."]
+script = ExtResource("1_h0p4e")
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
+
+[node name="FlipGroup" type="Node2D" parent="VerticalGroup"]
+unique_name_in_owner = true
+script = ExtResource("5_m8mi4")
+metadata/_custom_type_script = "uid://bhjyv2astlcwo"
+
+[node name="StackerSprite" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
+texture = ExtResource("1_vgcy6")
+offset = Vector2(0, -4)
+
+[node name="CarriableSprite" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
+unique_name_in_owner = true
+position = Vector2(0, -10)
+
+[node name="TargetDetector" type="Node2D" parent="."]
+script = ExtResource("7_08wmo")
+mask = 10
+metadata/_custom_type_script = "uid://bbsfd24w06hq0"
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("6_rs8bc")
+initial_expression_properties = {
+&"on_floor": true
+}
+metadata/_custom_type_script = "uid://cwgjtd2qwnb20"
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("7_7uguu")
+initial_state = NodePath("Idle")
+
+[node name="RequestStack" type="Node" parent="StateChart/Root"]
+script = ExtResource("8_fsywt")
+to = NodePath("../Stack")
+event = &"request_in_stack"
+delay_in_seconds = "0.0"
+
+[node name="RequestPanic" type="Node" parent="StateChart/Root"]
+script = ExtResource("8_fsywt")
+to = NodePath("../Panic")
+event = &"request_panic"
+delay_in_seconds = "0.0"
+
+[node name="Idle" type="Node" parent="StateChart/Root"]
+script = ExtResource("9_n03n5")
+
+[node name="RequestFall" type="Node" parent="StateChart/Root/Idle"]
+script = ExtResource("8_fsywt")
+to = NodePath("../../Fall")
+event = &"request_fall"
+delay_in_seconds = "0.0"
+
+[node name="Stun" type="Node" parent="StateChart/Root"]
+script = ExtResource("9_n03n5")
+
+[node name="Wait" type="Node" parent="StateChart/Root/Stun"]
+script = ExtResource("8_fsywt")
+to = NodePath("../../Search")
+delay_in_seconds = "randf_range(0.8, 1.2)"
+
+[node name="Fall" type="Node" parent="StateChart/Root"]
+script = ExtResource("9_n03n5")
+
+[node name="OnFloor" type="Node" parent="StateChart/Root/Fall"]
+script = ExtResource("8_fsywt")
+to = NodePath("../../Stun")
+guard = SubResource("Resource_m8mi4")
+delay_in_seconds = "0.0"
+
+[node name="Panic" type="Node" parent="StateChart/Root"]
+script = ExtResource("9_n03n5")
+
+[node name="Search" type="Node" parent="StateChart/Root"]
+script = ExtResource("9_n03n5")
+
+[node name="RequestFetch" type="Node" parent="StateChart/Root/Search"]
+script = ExtResource("8_fsywt")
+to = NodePath("../../Fetch")
+event = &"request_fetch"
+delay_in_seconds = "0.0"
+
+[node name="Fetch" type="Node" parent="StateChart/Root"]
+script = ExtResource("9_n03n5")
+
+[node name="Stack" type="Node" parent="StateChart/Root"]
+script = ExtResource("9_n03n5")
+
+[node name="RequestSolo" type="Node" parent="StateChart/Root/Stack"]
+script = ExtResource("8_fsywt")
+to = NodePath("../../Idle")
+event = &"request_solo"
+delay_in_seconds = "0.0"
+
+[connection signal="died" from="Area2D/HealthInstance" to="." method="_on_health_instance_died"]
+[connection signal="state_exited" from="StateChart/Root/Stun" to="." method="_on_stun_state_exited"]
+[connection signal="state_exited" from="StateChart/Root/Fall" to="." method="_on_fall_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Panic" to="." method="_on_panic_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Panic" to="." method="_on_panic_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Search" to="." method="_on_search_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Search" to="." method="_on_search_state_physics_processing"]
+[connection signal="state_processing" from="StateChart/Root/Fetch" to="." method="_on_fetch_state_processing"]
