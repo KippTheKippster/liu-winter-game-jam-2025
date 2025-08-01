@@ -23,7 +23,7 @@ func _ready() -> void:
 	y_sort_enabled = true
 	start_position = main_start_marker.global_position
 	if get_tree().current_scene == self:
-		print(scene_file_path)
+		#print(scene_file_path)
 		Game.current_level_path = scene_file_path
 		get_tree().change_scene_to_file.call_deferred("uid://doiwfgk1hy5nb")
 

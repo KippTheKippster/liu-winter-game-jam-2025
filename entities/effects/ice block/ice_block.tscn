@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://bytktwybc6ovk"]
+
+[ext_resource type="Script" uid="uid://odnsdurildvo" path="res://entities/effects/ice block/ice_block.gd" id="1_64yvo"]
+[ext_resource type="Texture2D" uid="uid://ca6peepebwyxx" path="res://entities/effects/ice block/ice_block.png" id="1_vnyey"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="2_0bcel"]
+[ext_resource type="AudioStream" uid="uid://dv8uqox0cnf7n" path="res://audio/ice_break_randomizer.tres" id="2_hrj87"]
+[ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="4_mco0q"]
+[ext_resource type="PackedScene" uid="uid://flwgcy34fwt3" path="res://entities/effects/snow explosion/snow_explosion.tscn" id="6_cys72"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vnyey"]
+radius = 6.0
+
+[node name="IceBlock" type="CharacterBody2D"]
+collision_mask = 0
+script = ExtResource("1_64yvo")
+break_scene = ExtResource("6_cys72")
+break_audio = ExtResource("2_hrj87")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["internal"]]
+shape = SubResource("CircleShape2D_vnyey")
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["internal"]]
+z_index = 1
+texture = ExtResource("1_vnyey")
+offset = Vector2(0, -4)
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Area2D" type="Area2D" parent="." groups=["internal"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_vnyey")
+
+[node name="Target" type="Node2D" parent="Area2D" node_paths=PackedStringArray("holder")]
+script = ExtResource("2_0bcel")
+size = 8.0
+holder = NodePath("../HealthInstance")
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="HealthInstance" type="Node2D" parent="Area2D"]
+script = ExtResource("4_mco0q")
+base_health = 30.0
+damage_mask = 0
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
+
+[connection signal="died" from="Area2D/HealthInstance" to="." method="_on_health_instance_died"]

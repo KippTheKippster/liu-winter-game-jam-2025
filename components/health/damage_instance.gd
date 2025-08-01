@@ -6,7 +6,8 @@ class_name DamageInstance
 enum Effect {
 	NONE,
 	FIRE,
-	ICE
+	ICE,
+	ELECTRICITY,
 }
 
 const DAMAGE_LAYER_HINT_STRING = "World,Enemy,Penguin"
@@ -14,6 +15,8 @@ const DAMAGE_LAYER_HINT_STRING = "World,Enemy,Penguin"
 signal damage_dealt(result: DamageResult)
 
 @export var enabled: bool = true
+@export var ignore_immunity_time: bool = false
+@export var apply_knockback: bool = true
 @export_range(0.0, 5.0, 0.001, "or_greater") var base_damage: float = 1.0
 
 var area: Area2D

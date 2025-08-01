@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqf68rbynoisk"]
+
+[ext_resource type="PackedScene" uid="uid://c7hpad4xy14l2" path="res://entities/penguin/penguin.tscn" id="1_6uqi0"]
+[ext_resource type="PackedScene" uid="uid://dr33x6ampm00h" path="res://entities/props/bridge/bridge_tile_pile.tscn" id="2_ppyta"]
+[ext_resource type="PackedScene" uid="uid://ddqdx7efqw453" path="res://entities/props/bridge/bridge.tscn" id="3_ykrsh"]
+[ext_resource type="Script" uid="uid://drtrpfwntdaa2" path="res://components/flow field/flow_field_manager.gd" id="4_ppyta"]
+[ext_resource type="PackedScene" uid="uid://bwf71bc7425hy" path="res://main scenes/game/command_area.tscn" id="5_ykrsh"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Penguin" parent="." instance=ExtResource("1_6uqi0")]
+position = Vector2(3, 0)
+
+[node name="BridgeTilePile" parent="." node_paths=PackedStringArray("bridge") instance=ExtResource("2_ppyta")]
+position = Vector2(20, 1)
+bridge = NodePath("../Bridge")
+
+[node name="Bridge" parent="." instance=ExtResource("3_ykrsh")]
+position = Vector2(42, 2)
+tile_amount = 1
+start_amount = 0
+max_length = 1
+max_height = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="FlowFieldManager" type="Node2D" parent="." node_paths=PackedStringArray("flood_start_marker")]
+position = Vector2(-1, 0)
+script = ExtResource("4_ppyta")
+flood_start_marker = NodePath("Marker2D")
+metadata/_custom_type_script = "uid://drtrpfwntdaa2"
+
+[node name="Marker2D" type="Marker2D" parent="FlowFieldManager"]
+position = Vector2(4, -3)
+
+[node name="CommandArea" parent="." instance=ExtResource("5_ykrsh")]

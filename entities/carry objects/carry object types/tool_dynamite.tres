@@ -5,11 +5,8 @@
 
 [resource]
 script = ExtResource("1_yi0lt")
-carry_object_type_instance_path = ""
 carriable_scene_path = "uid://cmyuoffo3bnki"
 edible = false
 penguin_interest = false
 texture = ExtResource("2_i8t0a")
-offset = Vector2(0, 0)
-layer = 8
 metadata/_custom_type_script = "uid://dya4eivvy77v4"

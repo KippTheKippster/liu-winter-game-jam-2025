@@ -1,18 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://cyveeyyam4oky"]
+[gd_scene load_steps=5 format=3 uid="uid://cyveeyyam4oky"]
 
 [ext_resource type="Texture2D" uid="uid://bexgwtdo1isx1" path="res://levels/assets/water_tile_atlas.png" id="1_phrve"]
+[ext_resource type="Script" uid="uid://qjdinj4kuqis" path="res://levels/tile map layers/tile_map_layer_difference.gd" id="2_hed4o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sop0g"]
 texture = ExtResource("1_phrve")
 texture_region_size = Vector2i(8, 8)
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 0:0/0/custom_data_0 = true
 1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 1:0/0/custom_data_0 = true
 1:0/0/custom_data_1 = true
 
 [sub_resource type="TileSet" id="TileSet_5yd65"]
 tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 0
 custom_data_layer_0/name = "water"
 custom_data_layer_0/type = 1
 custom_data_layer_1/name = "deep_water"
@@ -22,4 +27,5 @@ sources/0 = SubResource("TileSetAtlasSource_sop0g")
 [node name="WaterTileMapLayer" type="TileMapLayer" groups=["interactable_tile_map"]]
 z_index = -2
 tile_set = SubResource("TileSet_5yd65")
-collision_enabled = false
+navigation_enabled = false
+script = ExtResource("2_hed4o")

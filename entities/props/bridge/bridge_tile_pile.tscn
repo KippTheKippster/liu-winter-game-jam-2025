@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dr33x6ampm00h"]
+
+[ext_resource type="Script" uid="uid://bonppi2orhad8" path="res://entities/props/bridge/bridge_tile_pile.gd" id="1_lybxb"]
+[ext_resource type="Texture2D" uid="uid://bub2rt3kyvgh1" path="res://entities/props/bridge/bridge_tile.png" id="2_7mssg"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="3_x17qp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7mssg"]
+radius = 8.0
+
+[node name="BridgeTilePile" type="Node2D"]
+script = ExtResource("1_lybxb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_7mssg")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_7mssg")
+
+[node name="Target" type="Node2D" parent="Area2D" node_paths=PackedStringArray("holder", "highlight_node")]
+script = ExtResource("3_x17qp")
+holder = NodePath("../..")
+highlight_node = NodePath("../..")
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"

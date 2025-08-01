@@ -38,7 +38,7 @@ func _ready() -> void:
 		var amount := point_amounts[i]
 		for j in amount:
 			COMMAND_POSITION_OFFSETS[index] = i * 8.0 * Vector2.from_angle(TAU * ((float(j)) / float(amount)))
-			print(COMMAND_POSITION_OFFSETS[index], ": ", COMMAND_POSITION_OFFSETS[index].length())
+			#print(COMMAND_POSITION_OFFSETS[index], ": ", COMMAND_POSITION_OFFSETS[index].length())
 			index += 1
 	
 	circle_shape = collision_shape_2d.shape
@@ -131,10 +131,12 @@ func update_lists() -> void:
 			trooper.listening = true
 			trooper_list.append(trooper)
 		
-		var target := Utils.find_child_of_class(area, "Target") as Target
-		if target and target.active and target.layer & 1 == 0:
-			#target.highlight = true
-			target_list.append(target)
+		#var target := Utils.find_child_of_class(area, "Target") as Target
+		var targets := Utils.get_children_of_class(area, "Target", false)
+		for target in targets:
+			if target and target.active and target.layer & 1 == 0:
+				#target.highlight = true
+				target_list.append(target)
 	
 	target_list.sort_custom(sort_closest.bind(global_position))
 	for i in min(trooper_list.size(), target_list.size()):
@@ -166,11 +168,12 @@ func sort_closest(a: Target, b: Target, point: Vector2) -> bool:
 
 func get_command_position(count: int) -> Vector2:
 	return global_position + COMMAND_POSITION_OFFSETS[count]
+	"""
 	var log_4 := log(count) / log(4)
 	var radius_index := ceili(log_4)
 	var angle := TAU * fmod(log_4, 4) 
 	return global_position + Vector2.from_angle(angle) * 8.0 * radius_index
-
+	"""
 
 func apply_command() -> void:
 	#target_list.sort_custom(sort_closest.bind(global_position))
@@ -189,7 +192,7 @@ func apply_command() -> void:
 				var left := trooper_list[j]
 				var right := trooper_list[j + 1]
 				if is_instance_valid(left) and is_instance_valid(right):
-					if right.is_target_prioritized(target, left):
+					if right.is_target_prioritized(target, left) or not left.is_target_valid(target):
 						trooper_list[j] = right
 						trooper_list[j + 1] = left
 						change_occured = true
@@ -201,7 +204,11 @@ func apply_command() -> void:
 			var trooper := trooper_list[0]
 			trooper_list.remove_at(0)
 			if  is_instance_valid(trooper) and trooper.responsive:
-				trooper.command_applied.emit(global_position, COMMAND_POSITION_OFFSETS[count], target)
+				if trooper.is_target_valid(target): # TODO Maybe find more efficient way to do this
+					trooper.command_applied.emit(global_position, COMMAND_POSITION_OFFSETS[count], target)
+				else:
+					trooper.command_applied.emit(global_position, COMMAND_POSITION_OFFSETS[count], null)
+				
 				trooper.listening = false
 				count += 1
 				if target.singular:

@@ -36,3 +36,28 @@ Flying enemy
 Shielded Enemy
 Burrowing enemy
 Giant that penguin can walk on
+Sine wave enemy
+Electric eels sound really cool ("https://www.tiktok.com/@thekingofdiyofficial/video/7495881241686985990")
+
+Peakmin
+	Intro
+	Smaller rewards that take time to get (like fishing holes)
+	Heavy objects/Things that require multiple penguins
+	More things that take time (bridges, walls, etc.)
+	Key items to collect (things to "complete" a level)
+	More dense levels (not so much empty space/less water and thinner walls)
+	A good filler enemy (like bulborb)
+
+Peak level:
+	Are more penguins needed?
+	More big tasks/auto tasks (such as building bridges)
+	Bad:
+		Bottom too empty and big
+		Top too small and cluttered
+		Enemies need more health
+		No need to multitask
+		Feels more like ticking check boxes rather than completing a task 
+	Good:
+		Player needs to pay attention to tree mimic
+		Its fun spreading penguins across map and multitasking
+		Combining enemies makes it more difficult and interesting

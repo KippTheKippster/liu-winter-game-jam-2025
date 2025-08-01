@@ -63,6 +63,8 @@ func add_user_to_flow_field(target_coords: Vector2i) -> FlowField:
 	flow_field_user_list.get_or_add(target_coords, 0)
 	flow_field_user_list[target_coords] += 1
 	
+	#print(target_coords, ": ", flow_field_user_list[target_coords], " '+'")
+	
 	if flow_field_list.has(target_coords):
 		return flow_field_list[target_coords]
 	
@@ -85,6 +87,7 @@ func add_user_to_flow_field(target_coords: Vector2i) -> FlowField:
 
 func remove_user_from_flow_field(target_coords: Vector2i) -> void:
 	flow_field_user_list[target_coords] -= 1
+	#print(target_coords, ": ", flow_field_user_list[target_coords], " '-'")
 	if flow_field_user_list[target_coords] == 0:
 		var flow_field := flow_field_list[target_coords]
 		flow_field.queue_free() # Should they be removed or reused?

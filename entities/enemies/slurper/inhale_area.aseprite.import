@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bevhp4tygwah8"
+path="res://.godot/imported/inhale_area.aseprite-6bec5c02ae16e646d5c1f630b2f8f27a.res"
+
+[deps]
+
+source_file="res://entities/enemies/slurper/inhale_area.aseprite"
+dest_files=["res://.godot/imported/inhale_area.aseprite-6bec5c02ae16e646d5c1f630b2f8f27a.res"]
+
+[params]
+

@@ -1,7 +1,10 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=38 format=3 uid="uid://b0nfx46nxw3r5"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=41 format=3 uid="uid://b0nfx46nxw3r5"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qqawb"]
 animation = &"die"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y2nhe"]
+animation = &"electricity"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cpt7u"]
 animation = &"equip"
@@ -136,11 +139,17 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_r24b7"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ldyrw"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_owk3w"]
+
 [resource]
 states/End/position = Vector2(731, 100)
 states/Start/position = Vector2(271, 100)
 states/die/node = SubResource("AnimationNodeAnimation_qqawb")
 states/die/position = Vector2(537, 193)
+states/electricity/node = SubResource("AnimationNodeAnimation_y2nhe")
+states/electricity/position = Vector2(446, -44)
 states/equip/node = SubResource("AnimationNodeAnimation_cpt7u")
 states/equip/position = Vector2(626, 100)
 states/fish/node = SubResource("AnimationNodeAnimation_l4dxa")
@@ -151,5 +160,5 @@ states/sleep/node = SubResource("AnimationNodeAnimation_woodo")
 states/sleep/position = Vector2(350, 193)
 states/stun/node = SubResource("AnimationNodeAnimation_2j07w")
 states/stun/position = Vector2(537, 9)
-transitions = ["fish", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_by88t"), "idle_blend_tree", "fish", SubResource("AnimationNodeStateMachineTransition_4jlwr"), "stun", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_n4hji"), "idle_blend_tree", "stun", SubResource("AnimationNodeStateMachineTransition_140e0"), "idle_blend_tree", "die", SubResource("AnimationNodeStateMachineTransition_p7wcb"), "die", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_cpt7u"), "idle_blend_tree", "sleep", SubResource("AnimationNodeStateMachineTransition_ufc7y"), "sleep", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_6y7c0"), "Start", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_0lgqk"), "idle_blend_tree", "equip", SubResource("AnimationNodeStateMachineTransition_p1ii7"), "equip", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_r24b7")]
-graph_offset = Vector2(-31, -21)
+transitions = ["fish", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_by88t"), "idle_blend_tree", "fish", SubResource("AnimationNodeStateMachineTransition_4jlwr"), "stun", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_n4hji"), "idle_blend_tree", "stun", SubResource("AnimationNodeStateMachineTransition_140e0"), "idle_blend_tree", "die", SubResource("AnimationNodeStateMachineTransition_p7wcb"), "die", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_cpt7u"), "idle_blend_tree", "sleep", SubResource("AnimationNodeStateMachineTransition_ufc7y"), "sleep", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_6y7c0"), "Start", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_0lgqk"), "idle_blend_tree", "equip", SubResource("AnimationNodeStateMachineTransition_p1ii7"), "equip", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_r24b7"), "idle_blend_tree", "electricity", SubResource("AnimationNodeStateMachineTransition_ldyrw"), "electricity", "idle_blend_tree", SubResource("AnimationNodeStateMachineTransition_owk3w")]
+graph_offset = Vector2(-185, -65)

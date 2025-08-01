@@ -32,20 +32,28 @@ Return boffus to start point?
 ~Auto pickup items
 ~It auto pick ups igloo items
 #Spread out penguins to circle
+#Fix dynamite
+#Show how many fish holes have
+#Snowballs are weird!
+#Flowfieldwalker sometimes gets a null flowfield
+#Spamming equip can lead to weird results
+#Fix penguin pathfinding around corners
+#Water collision
+#If penguins are carrying and heavy object and get snowballed the stun will be ignored
+~Igloos are broken
+Fix fishing hole timings
+If penguin drops a tile then it should go back to the pile
+#Penguins should auto build bridges (go back and forward)
+Pengiuns should auto attack
 Show penguin equipment on boat
-Fix penguin pathfinding around corners
 Relection
 Splash effect
 Target area instead of point
-#Show how many fish holes have
 BUG: Sometimes penguins still hold items after dropping them
-Spamming equip can lead to weird results
-Snowballs are weird!
 Night should last longer
-Igloos are broken
-Fix dynamite
 Stacker:
 	Attack penguin holding items
-	Become slower with the size of the stack
-	Run away
+	#Animation
+	#Become slower with the size of the stack
+	#Run away
 	#Pickup items

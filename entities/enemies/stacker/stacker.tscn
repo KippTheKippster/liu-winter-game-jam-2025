@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://cowvagrpdw1pr"]
+[gd_scene load_steps=36 format=3 uid="uid://cowvagrpdw1pr"]
 
 [ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="1_h0p4e"]
 [ext_resource type="Script" uid="uid://d1ipnpaid76tr" path="res://entities/enemies/stacker/stacker.gd" id="1_sas4m"]
 [ext_resource type="Texture2D" uid="uid://cu8vql7bxwrdj" path="res://entities/enemies/stacker/stacker.png" id="1_vgcy6"]
 [ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_7oxm5"]
+[ext_resource type="Script" uid="uid://dci6sv2mtg2l1" path="res://components/flow field/flow_field_walker.gd" id="3_7sxfw"]
 [ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="4_agqmf"]
 [ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="5_m8mi4"]
 [ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="6_rs8bc"]
@@ -12,12 +13,184 @@
 [ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="8_fsywt"]
 [ext_resource type="Script" uid="uid://dyi7lv20qiks3" path="res://addons/godot_state_charts/atomic_state.gd" id="9_n03n5"]
 [ext_resource type="Script" uid="uid://br85gcxolt6xv" path="res://addons/godot_state_charts/expression_guard.gd" id="10_5ogdx"]
+[ext_resource type="Script" uid="uid://c3lw5rmdqjrw5" path="res://addons/godot_state_charts/animation_tree_state.gd" id="12_u2u6i"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h0p4e"]
 radius = 3.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_agqmf"]
 radius = 3.0
+
+[sub_resource type="Animation" id="Animation_7sxfw"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VerticalGroup/FlipGroup/TopMarker:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VerticalGroup/FlipGroup/StackerSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_kxvt3"]
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VerticalGroup/FlipGroup/TopMarker:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, -6), Vector2(1, -5), Vector2(0, -6), Vector2(-1, -5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VerticalGroup/FlipGroup/StackerSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 2, 4]
+}
+
+[sub_resource type="Animation" id="Animation_u2u6i"]
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VerticalGroup/FlipGroup/StackerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_gi3vu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VerticalGroup/FlipGroup/TopMarker:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -5)]
+}
+
+[sub_resource type="Animation" id="Animation_68s6m"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VerticalGroup/FlipGroup/StackerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_1trv2"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VerticalGroup/FlipGroup/StackerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gi3vu"]
+_data = {
+&"RESET": SubResource("Animation_gi3vu"),
+&"air": SubResource("Animation_68s6m"),
+&"idle": SubResource("Animation_7sxfw"),
+&"stun": SubResource("Animation_1trv2"),
+&"walk": SubResource("Animation_kxvt3"),
+&"walk_2": SubResource("Animation_u2u6i")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gi3vu"]
+animation = &"air"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7sxfw"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u2u6i"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_kxvt3"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_7sxfw")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_u2u6i")
+blend_point_1/pos = 1.0
+min_space = 0.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kxvt3"]
+animation = &"stun"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gi3vu"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_68s6m"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7sxfw"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1trv2"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g2lr7"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_7sxfw"]
+states/air/node = SubResource("AnimationNodeAnimation_gi3vu")
+states/air/position = Vector2(405, 199)
+states/idle_blend_space/node = SubResource("AnimationNodeBlendSpace1D_kxvt3")
+states/idle_blend_space/position = Vector2(405, 100)
+states/stun/node = SubResource("AnimationNodeAnimation_kxvt3")
+states/stun/position = Vector2(598, 100)
+transitions = ["Start", "idle_blend_space", SubResource("AnimationNodeStateMachineTransition_gi3vu"), "idle_blend_space", "stun", SubResource("AnimationNodeStateMachineTransition_68s6m"), "stun", "idle_blend_space", SubResource("AnimationNodeStateMachineTransition_7sxfw"), "idle_blend_space", "air", SubResource("AnimationNodeStateMachineTransition_1trv2"), "air", "idle_blend_space", SubResource("AnimationNodeStateMachineTransition_g2lr7")]
+graph_offset = Vector2(-36, 19)
 
 [sub_resource type="Resource" id="Resource_m8mi4"]
 script = ExtResource("10_5ogdx")
@@ -26,10 +199,26 @@ metadata/_custom_type_script = "uid://br85gcxolt6xv"
 
 [node name="Stacker" type="CharacterBody2D" groups=["stacker"]]
 collision_layer = 4
+collision_mask = 9
 script = ExtResource("1_sas4m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_h0p4e")
+
+[node name="DangerTargetDetector" type="Node2D" parent="."]
+script = ExtResource("7_08wmo")
+mask = 1
+metadata/_custom_type_script = "uid://bbsfd24w06hq0"
+
+[node name="TargetDetector" type="Node2D" parent="."]
+script = ExtResource("7_08wmo")
+mask = 10
+metadata/_custom_type_script = "uid://bbsfd24w06hq0"
+
+[node name="FlowFieldWalker" type="Node2D" parent="."]
+script = ExtResource("3_7sxfw")
+max_path_follow_length = 2
+metadata/_custom_type_script = "uid://dci6sv2mtg2l1"
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -60,17 +249,51 @@ script = ExtResource("5_m8mi4")
 metadata/_custom_type_script = "uid://bhjyv2astlcwo"
 
 [node name="StackerSprite" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
+texture_filter = 1
 texture = ExtResource("1_vgcy6")
 offset = Vector2(0, -4)
+hframes = 3
+vframes = 3
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/enemies/stacker/stacker.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "3b3bdddf13e9b9ccad56812a0b5e95fd"
 
 [node name="CarriableSprite" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
 unique_name_in_owner = true
 position = Vector2(0, -10)
 
-[node name="TargetDetector" type="Node2D" parent="."]
-script = ExtResource("7_08wmo")
-mask = 10
-metadata/_custom_type_script = "uid://bbsfd24w06hq0"
+[node name="TopMarker" type="Marker2D" parent="VerticalGroup/FlipGroup"]
+position = Vector2(0, -5)
+gizmo_extents = 1.0
+
+[node name="TopTransform" type="RemoteTransform2D" parent="VerticalGroup/FlipGroup/TopMarker"]
+unique_name_in_owner = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_gi3vu")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_gi3vu")
+}
+tree_root = SubResource("AnimationNodeStateMachine_7sxfw")
+anim_player = NodePath("../AnimationPlayer")
+parameters/idle_blend_space/blend_position = -0.009411764
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("6_rs8bc")
@@ -95,16 +318,16 @@ to = NodePath("../Panic")
 event = &"request_panic"
 delay_in_seconds = "0.0"
 
-[node name="RequestFetch" type="Node" parent="StateChart/Root"]
+[node name="RequestItemSearch" type="Node" parent="StateChart/Root"]
 script = ExtResource("8_fsywt")
-to = NodePath("../Fetch")
-event = &"request_fetch"
+to = NodePath("../ItemSearch")
+event = &"request_item_search"
 delay_in_seconds = "0.0"
 
 [node name="RequestSearch" type="Node" parent="StateChart/Root"]
 script = ExtResource("8_fsywt")
-to = NodePath("../Search")
-event = &"request_search"
+to = NodePath("../LeaderSearch")
+event = &"request_leader_search"
 delay_in_seconds = "0.0"
 
 [node name="RequestDecide" type="Node" parent="StateChart/Root"]
@@ -114,7 +337,9 @@ event = &"request_decide"
 delay_in_seconds = "0.0"
 
 [node name="Idle" type="Node" parent="StateChart/Root"]
-script = ExtResource("9_n03n5")
+script = ExtResource("12_u2u6i")
+animation_tree = NodePath("../../../AnimationTree")
+state_name = &"idle_blend_space"
 
 [node name="RequestFall" type="Node" parent="StateChart/Root/Idle"]
 script = ExtResource("8_fsywt")
@@ -123,7 +348,9 @@ event = &"request_fall"
 delay_in_seconds = "0.0"
 
 [node name="Stun" type="Node" parent="StateChart/Root"]
-script = ExtResource("9_n03n5")
+script = ExtResource("12_u2u6i")
+animation_tree = NodePath("../../../AnimationTree")
+state_name = &"stun"
 
 [node name="Wait" type="Node" parent="StateChart/Root/Stun"]
 script = ExtResource("8_fsywt")
@@ -131,7 +358,9 @@ to = NodePath("../../Decide")
 delay_in_seconds = "randf_range(0.8, 1.2)"
 
 [node name="Fall" type="Node" parent="StateChart/Root"]
-script = ExtResource("9_n03n5")
+script = ExtResource("12_u2u6i")
+animation_tree = NodePath("../../../AnimationTree")
+state_name = &"air"
 
 [node name="OnFloor" type="Node" parent="StateChart/Root/Fall"]
 script = ExtResource("8_fsywt")
@@ -140,32 +369,42 @@ guard = SubResource("Resource_m8mi4")
 delay_in_seconds = "0.0"
 
 [node name="Decide" type="Node" parent="StateChart/Root"]
-script = ExtResource("9_n03n5")
+script = ExtResource("12_u2u6i")
+animation_tree = NodePath("../../../AnimationTree")
+state_name = &"idle_blend_space"
 
 [node name="Panic" type="Node" parent="StateChart/Root"]
 script = ExtResource("9_n03n5")
 
-[node name="Search" type="Node" parent="StateChart/Root"]
+[node name="Wait" type="Node" parent="StateChart/Root/Panic"]
+script = ExtResource("8_fsywt")
+to = NodePath("../../Idle")
+delay_in_seconds = "randf_range(1.0, 2.0)"
+
+[node name="LeaderSearch" type="Node" parent="StateChart/Root"]
 script = ExtResource("9_n03n5")
 
-[node name="Fetch" type="Node" parent="StateChart/Root"]
+[node name="ItemSearch" type="Node" parent="StateChart/Root"]
 script = ExtResource("9_n03n5")
 
 [node name="Stack" type="Node" parent="StateChart/Root"]
 script = ExtResource("9_n03n5")
 
-[node name="RequestSolo" type="Node" parent="StateChart/Root/Stack"]
+[node name="RequestIdle" type="Node" parent="StateChart/Root/Stack"]
 script = ExtResource("8_fsywt")
 to = NodePath("../../Idle")
-event = &"request_solo"
+event = &"request_idle"
 delay_in_seconds = "0.0"
 
 [connection signal="died" from="Area2D/HealthInstance" to="." method="_on_health_instance_died"]
+[connection signal="state_physics_processing" from="StateChart/Root/Idle" to="." method="_on_idle_state_physics_processing"]
 [connection signal="state_exited" from="StateChart/Root/Stun" to="." method="_on_stun_state_exited"]
 [connection signal="state_exited" from="StateChart/Root/Fall" to="." method="_on_fall_state_exited"]
 [connection signal="state_entered" from="StateChart/Root/Decide" to="." method="_on_decide_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Panic" to="." method="_on_panic_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Panic" to="." method="_on_panic_state_exited"]
 [connection signal="state_physics_processing" from="StateChart/Root/Panic" to="." method="_on_panic_state_physics_processing"]
-[connection signal="state_entered" from="StateChart/Root/Search" to="." method="_on_search_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/Root/Search" to="." method="_on_search_state_physics_processing"]
-[connection signal="state_processing" from="StateChart/Root/Fetch" to="." method="_on_fetch_state_processing"]
+[connection signal="state_physics_processing" from="StateChart/Root/LeaderSearch" to="." method="_on_search_state_physics_processing"]
+[connection signal="state_physics_processing" from="StateChart/Root/LeaderSearch" to="." method="_on_leader_search_state_physics_processing"]
+[connection signal="state_processing" from="StateChart/Root/ItemSearch" to="." method="_on_item_search_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Stack" to="." method="_on_stack_state_entered"]

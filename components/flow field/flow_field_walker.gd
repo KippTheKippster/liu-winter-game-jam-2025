@@ -3,10 +3,11 @@ class_name FlowFieldWalker
 
 @export var active: bool = true
 @export var reverse_path: bool
-@export var max_path_follow_length: int = 10
+@export var max_path_follow_length: int = 4
 @export var cell_margin: float = 2.0
 
 var used: bool
+var force_center: bool = false
 
 var flow_field_manager: FlowFieldManager
 var flow_field: FlowField
@@ -17,26 +18,26 @@ var target_coords: Vector2i:
 		if not active:
 			return Vector2i.ZERO
 		
-		return flow_field_manager.point_to_coords(target_point)
+		return target_coords
 	set(value):
 		if not active:
 			return
 		
-		target_point = flow_field_manager.coords_to_point(value)
+		var old := target_coords
+		target_coords = value
+		if target_coords != old or flow_field == null:
+			force_center = false
+			if flow_field:
+				flow_field_manager.remove_user_from_flow_field(old)
+			
+			flow_field = flow_field_manager.add_user_to_flow_field(target_coords)
 
 
 var target_point: Vector2:
 	set(value): 
 		used = true
-		var old_coords := target_coords
 		target_point = value
-		var new_coords := target_coords
-		if old_coords != new_coords:
-			if flow_field:
-				flow_field_manager.remove_user_from_flow_field(old_coords)
-				flow_field = null
-			
-			flow_field = flow_field_manager.add_user_to_flow_field(new_coords)
+		target_coords = flow_field_manager.point_to_coords(target_point)
 
 var target_point_offset: Vector2
 
@@ -80,6 +81,19 @@ func get_direction() -> Vector2:
 		cell_path.reverse()
 		direction_sign = -1
 	
+	# Forces the walker to go the center of the next cell if of only one cell is valid (this prevents the walker to be snagged on corners)
+	if cell_path.size() == 1 or force_center: 
+		force_center = true
+		var center := Vector2(flow_field_manager.coords_to_point(coords + cell_path[0]))
+		direction = center - global_position
+		if global_position.distance_squared_to(center) < 4.0 or cell_path.size() > 3:
+			force_center = false
+		
+		if direction.length_squared() < 4.0:
+			return Vector2.ZERO
+		else:
+			return direction.normalized()
+	
 	for i in cell_path.size():
 		direction += Vector2(cell_path[i]).normalized() * direction_sign
 	
@@ -88,17 +102,23 @@ func get_direction() -> Vector2:
 		return Vector2.ZERO 
 	
 	if direction == Vector2.ZERO or cell_value < max_path_follow_length:
-		if cell_path.size() == max_path_follow_length: # Check if path has been truncated (meaning interpolation will hit a wall)
+		if cell_path.size() == max_path_follow_length: # Check if path has not been truncated (meaning interpolation will hit a wall)
 			direction += ((target_point + target_point_offset) - global_position).normalized() * direction_sign
 	
 	return direction.normalized()
 
 
+
 func get_cell_path(start_cell: Vector2i) -> Array[Vector2i]:
 	var current_cell: Vector2i = start_cell
+	if flow_field == null:
+		var backtraces := Engine.capture_script_backtraces(true)
+		print(backtraces)
+	
 	var cell_path: Array[Vector2i] = [flow_field.get_cell_direction(current_cell, true)]
 	cell_path.resize(max_path_follow_length)
 	var used_directions: Array[Vector2i] = []
+	used_directions.resize(8)
 	
 	# Stores cells that will be used for traversel and stores which directions will be used
 	for i in range(1, max_path_follow_length):

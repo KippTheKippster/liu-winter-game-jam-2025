@@ -109,3 +109,13 @@ static func call_delayed(node: Node, delay: float, method: Callable) -> void:
 
 static func seconds_to_string(seconds: float) -> String:
 	return "%02d:%02d" % [seconds, fmod(seconds, 1) * 100]
+
+
+static func play_audio_2d(stream: AudioStream, point: Vector2, parent: Node, bus: StringName = "Effects") -> AudioStreamPlayer2D:
+	var audio := AudioStreamPlayer2D.new()
+	audio.stream = stream
+	audio.autoplay = true
+	audio.finished.connect(audio.queue_free)
+	audio.bus = bus
+	parent.add_sibling(audio)
+	return audio

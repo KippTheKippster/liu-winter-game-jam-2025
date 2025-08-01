@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbus3cgnm88dh"]
+
+[ext_resource type="Script" uid="uid://cra16gl13nqjh" path="res://entities/carry objects/heavy_carriable.gd" id="1_e1qnc"]
+[ext_resource type="Texture2D" uid="uid://cdp4y3p62mh0h" path="res://icon.svg" id="1_f771g"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="2_lvsjq"]
+[ext_resource type="Script" uid="uid://dci6sv2mtg2l1" path="res://components/flow field/flow_field_walker.gd" id="3_oygma"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lvsjq"]
+radius = 12.0
+
+[node name="HeavyCarriable" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_e1qnc")
+max_carriers = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lvsjq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.18749999, 0.18749999)
+texture = ExtResource("1_f771g")
+
+[node name="FlowFieldWalker" type="Node2D" parent="."]
+script = ExtResource("3_oygma")
+metadata/_custom_type_script = "uid://dci6sv2mtg2l1"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_lvsjq")
+
+[node name="Target" type="Node2D" parent="Area2D"]
+position = Vector2(20, -4)
+script = ExtResource("2_lvsjq")
+singular = true
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="Target2" type="Node2D" parent="Area2D"]
+position = Vector2(-20, 4)
+script = ExtResource("2_lvsjq")
+singular = true
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="Target3" type="Node2D" parent="Area2D"]
+position = Vector2(-4, -20)
+script = ExtResource("2_lvsjq")
+singular = true
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="Target4" type="Node2D" parent="Area2D"]
+position = Vector2(4, 20)
+script = ExtResource("2_lvsjq")
+singular = true
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "20/20"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true

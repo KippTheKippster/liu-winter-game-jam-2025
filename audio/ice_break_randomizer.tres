@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://dv8uqox0cnf7n"]
+
+[ext_resource type="AudioStream" uid="uid://cg6jcpxsq3k76" path="res://audio/ice_break.wav" id="1_u5det"]
+[ext_resource type="AudioStream" uid="uid://bmvtlc6s0m1v3" path="res://audio/ice_break_2.wav" id="2_a7ief"]
+
+[resource]
+random_pitch = 1.2
+random_volume_offset_db = 2.0
+streams_count = 2
+stream_0/stream = ExtResource("1_u5det")
+stream_1/stream = ExtResource("2_a7ief")

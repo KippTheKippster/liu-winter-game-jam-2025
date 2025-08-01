@@ -20,12 +20,14 @@ const SNOW_EXPLOSION_SCENE = preload("res://entities/effects/snow explosion/snow
 
 @export var sprites: Array[Sprite2D]
 
+var destroyed: bool
+
 var caught_penguins: Array[Penguin]:
 	set(value):
 		caught_penguins = value
 		for i in sprites.size():
 			sprites[i].visible = i <= caught_penguins.size()
-			print(i, ": ", sprites[i].visible)
+			#print(i, ": ", sprites[i].visible)
 
 
 var penguin_limit: int = 1
@@ -80,6 +82,12 @@ func _process(delta: float) -> void:
 
 
 func destroy() -> void:
+	if destroyed:
+		return
+	
+	destroyed = true
+	set_process(false)
+	
 	for penguin in caught_penguins:
 		add_sibling(penguin)
 		var launch_direction := Vector2.from_angle(2.0 * PI * randf())

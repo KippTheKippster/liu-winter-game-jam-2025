@@ -158,6 +158,7 @@ metadata/_custom_type_script = "uid://1ce5wdegx8y"
 
 [node name="DamageInstance" type="Node2D" parent="."]
 script = ExtResource("3_yk20s")
+ignore_immunity_time = true
 base_damage = 0.0
 metadata/_custom_type_script = "uid://dd5wfdkuccdar"
 

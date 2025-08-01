@@ -40,7 +40,7 @@ func damage(damage_instance: DamageInstance, damage_direction: Vector2 = Vector2
 	if not damage_instance:
 		return null
 	
-	if active_immunity_time > 0:
+	if active_immunity_time > 0 and not damage_instance.ignore_immunity_time:
 		return null
 	
 	active_immunity_time = max_immnuity_time

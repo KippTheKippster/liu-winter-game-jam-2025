@@ -21,7 +21,7 @@ func jump_to_point(point: Vector2) -> void:
 	var dif := point - global_position
 	horizontal_velocity = (dif / time) 
 	Utils.call_delayed(self, time, func() -> void: landed.emit())
-	print(time)
+	#print(time)
 
 
 func copy_carry_object_sprite(type: CarryObjectType) -> void:

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CarryObjectType" load_steps=5 format=3 uid="uid://bnyh58x0lgqdx"]
+
+[ext_resource type="AudioStream" uid="uid://bd48eujeko7ii" path="res://audio/bridge_pickup_randomizer.tres" id="1_cr7hn"]
+[ext_resource type="Script" uid="uid://b4d3ek51qeeju" path="res://entities/carry objects/carry_object_type.gd" id="1_h8k65"]
+[ext_resource type="AudioStream" uid="uid://c68ct610ykphl" path="res://audio/bridge_place_randomizer.tres" id="2_cr7hn"]
+[ext_resource type="Texture2D" uid="uid://bub2rt3kyvgh1" path="res://entities/props/bridge/bridge_tile.png" id="2_j3u0u"]
+
+[resource]
+script = ExtResource("1_h8k65")
+edible = false
+texture = ExtResource("2_j3u0u")
+offset = Vector2(-1, -3)
+pickup_audio = ExtResource("1_cr7hn")
+place_audio = ExtResource("2_cr7hn")
+metadata/_custom_type_script = "uid://b4d3ek51qeeju"

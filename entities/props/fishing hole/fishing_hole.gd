@@ -1,3 +1,4 @@
+@icon("res://entities/props/fishing hole/fishing_hole_icon.png")
 extends Node2D
 class_name FishingHole
 
@@ -9,6 +10,8 @@ signal finished
 @onready var seat_marker: Marker2D = %SeatMarker
 @onready var target: Target = $Area2D/Target
 @onready var hole_sprite: AnimatedSprite2D = $HoleSprite
+
+@export var fish_count: int = 3
 
 var caught_count: int = 0
 
@@ -23,6 +26,12 @@ var occupant: Node2D:
 
 func _ready() -> void:
 	hole_sprite.play()
+	
+	caught_count = clamp(carriable_launcher.carriables.size() - fish_count, 0, 3)
+	for i in caught_count:
+		var carriable := carriable_launcher.carriables.pop_back() as Carriable
+		carriable.queue_free()
+	
 	update_animation()
 
 
@@ -47,5 +56,5 @@ func reset_timer() -> void:
 		catch_timer.stop()
 	
 	catch_timer.wait_time = randf_range(10.0, 15.0) * (caught_count + 1)
-	print("Final wait time: ", catch_timer.wait_time)
+	#print("Final wait time: ", catch_timer.wait_time)
 	catch_timer.start()

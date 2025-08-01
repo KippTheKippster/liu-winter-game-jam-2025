@@ -1,0 +1,380 @@
+[gd_scene load_steps=34 format=3 uid="uid://c3b03delambm1"]
+
+[ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="1_cmg07"]
+[ext_resource type="Script" uid="uid://iginbki3wvl" path="res://entities/enemies/slurper/slurper.gd" id="1_hrk2u"]
+[ext_resource type="Script" uid="uid://bbsfd24w06hq0" path="res://entities/penguin/target_detector.gd" id="2_0pght"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="2_3yg6a"]
+[ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_hrk2u"]
+[ext_resource type="AudioStream" uid="uid://cxxqxw1fl0cbm" path="res://audio/penguin_scared_randomizer.tres" id="3_rwfrd"]
+[ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="4_0pght"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="5_rwfrd"]
+[ext_resource type="Texture2D" uid="uid://byfvbslnq1fvh" path="res://entities/enemies/slurper/slurper.png" id="6_cmg07"]
+[ext_resource type="Texture2D" uid="uid://ckilpk806nudr" path="res://entities/enemies/slurper/inhale_area.png" id="7_qlpjk"]
+[ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="7_xk750"]
+[ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="8_mwdx0"]
+[ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="12_0pght"]
+[ext_resource type="Script" uid="uid://c3lw5rmdqjrw5" path="res://addons/godot_state_charts/animation_tree_state.gd" id="12_rwfrd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cugw3"]
+radius = 4.12311
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cmg07"]
+radius = 4.12311
+
+[sub_resource type="Animation" id="Animation_0pght"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/VerticalGroup/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_xk750"]
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/VerticalGroup/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_hrk2u"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/VerticalGroup/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qlpjk"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InhaleArea/CollisionPolygon2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlipGroup/VerticalGroup/Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("InhaleArea/InhaleAreaSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_rwfrd"]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InhaleArea/CollisionPolygon2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlipGroup/VerticalGroup/Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("InhaleArea/InhaleAreaSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_mwdx0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InhaleArea/CollisionPolygon2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("InhaleArea/InhaleAreaSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hrk2u"]
+_data = {
+&"RESET": SubResource("Animation_mwdx0"),
+&"chew": SubResource("Animation_0pght"),
+&"cute": SubResource("Animation_xk750"),
+&"idle": SubResource("Animation_hrk2u"),
+&"inhale": SubResource("Animation_qlpjk"),
+&"inhale_intro": SubResource("Animation_rwfrd")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mwdx0"]
+animation = &"chew"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_slqng"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qlpjk"]
+animation = &"inhale"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rwfrd"]
+animation = &"inhale_intro"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qlpjk"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xk750"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_slqng"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mwdx0"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dj728"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_rwfrd"]
+states/End/position = Vector2(771, 148)
+states/Start/position = Vector2(283, 148)
+states/chew/node = SubResource("AnimationNodeAnimation_mwdx0")
+states/chew/position = Vector2(581, 148)
+states/idle/node = SubResource("AnimationNodeAnimation_slqng")
+states/idle/position = Vector2(456, 148)
+states/inhale/node = SubResource("AnimationNodeAnimation_qlpjk")
+states/inhale/position = Vector2(581, 33)
+states/inhale_intro/node = SubResource("AnimationNodeAnimation_rwfrd")
+states/inhale_intro/position = Vector2(456, 33)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_qlpjk"), "idle", "inhale_intro", SubResource("AnimationNodeStateMachineTransition_xk750"), "chew", "idle", SubResource("AnimationNodeStateMachineTransition_slqng"), "inhale_intro", "inhale", SubResource("AnimationNodeStateMachineTransition_mwdx0"), "inhale", "chew", SubResource("AnimationNodeStateMachineTransition_dj728")]
+
+[node name="Slurper" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_hrk2u")
+inhale_force = 22.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cugw3")
+
+[node name="TargetDetector" type="Node2D" parent="."]
+script = ExtResource("2_0pght")
+mask = 1
+metadata/_custom_type_script = "uid://bbsfd24w06hq0"
+
+[node name="EatTargetDetector" type="Node2D" parent="."]
+script = ExtResource("2_0pght")
+detection_range = 8.0
+mask = 1
+metadata/_custom_type_script = "uid://bbsfd24w06hq0"
+
+[node name="PenguinScaredAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_rwfrd")
+pitch_scale = 1.2
+
+[node name="EnemyArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyArea"]
+shape = SubResource("CircleShape2D_cmg07")
+
+[node name="Creature" type="Node2D" parent="EnemyArea"]
+unique_name_in_owner = true
+script = ExtResource("1_cmg07")
+creature_layer = 1
+creature_mask = 2
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="Target" type="Node2D" parent="EnemyArea" node_paths=PackedStringArray("holder")]
+script = ExtResource("2_3yg6a")
+size = 12.0
+holder = NodePath("../HealthInstance")
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="HealthInstance" type="Node2D" parent="EnemyArea"]
+script = ExtResource("3_hrk2u")
+base_health = 40.0
+damage_mask = 4
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
+
+[node name="InhaleArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="InhaleArea"]
+polygon = PackedVector2Array(4, 0, 40, -24, 40, 24)
+disabled = true
+
+[node name="InhaleAreaSprite" type="Sprite2D" parent="InhaleArea"]
+visible = false
+position = Vector2(22, 0)
+texture = ExtResource("7_qlpjk")
+
+[node name="FlipGroup" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_0pght")
+metadata/_custom_type_script = "uid://bhjyv2astlcwo"
+
+[node name="VerticalGroup" type="Node2D" parent="FlipGroup"]
+script = ExtResource("5_rwfrd")
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
+
+[node name="Sprite2D" type="Sprite2D" parent="FlipGroup/VerticalGroup"]
+texture_filter = 1
+texture = ExtResource("6_cmg07")
+offset = Vector2(0, -6)
+hframes = 3
+vframes = 2
+frame = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/enemies/slurper/slurper.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "2aa5266340e188c2b0b4db271b311214"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hrk2u")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hrk2u")
+}
+tree_root = SubResource("AnimationNodeStateMachine_rwfrd")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("7_xk750")
+metadata/_custom_type_script = "uid://cwgjtd2qwnb20"
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("8_mwdx0")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root"]
+script = ExtResource("12_rwfrd")
+animation_tree = NodePath("../../../AnimationTree")
+state_name = &"idle"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Idle"]
+script = ExtResource("12_0pght")
+to = NodePath("../../Inhale")
+delay_in_seconds = "4.0"
+
+[node name="Inhale" type="Node" parent="StateChart/Root"]
+script = ExtResource("12_rwfrd")
+animation_tree = NodePath("../../../AnimationTree")
+state_name = &"inhale"
+
+[node name="RequestChew" type="Node" parent="StateChart/Root/Inhale"]
+script = ExtResource("12_0pght")
+to = NodePath("../../Chew")
+event = &"request_chew"
+delay_in_seconds = "0.0"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Inhale"]
+script = ExtResource("12_0pght")
+to = NodePath("../../Idle")
+delay_in_seconds = "5.0"
+
+[node name="Chew" type="Node" parent="StateChart/Root"]
+script = ExtResource("12_rwfrd")
+animation_tree = NodePath("../../../AnimationTree")
+state_name = &"chew"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Chew"]
+script = ExtResource("12_0pght")
+to = NodePath("../../Idle")
+delay_in_seconds = "3.0"
+
+[connection signal="died" from="EnemyArea/HealthInstance" to="." method="_on_health_instance_died"]
+[connection signal="state_physics_processing" from="StateChart/Root/Idle" to="." method="_on_idle_state_physics_processing"]
+[connection signal="state_physics_processing" from="StateChart/Root/Inhale" to="." method="_on_inhale_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Chew" to="." method="_on_chew_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Chew" to="." method="_on_chew_state_exited"]

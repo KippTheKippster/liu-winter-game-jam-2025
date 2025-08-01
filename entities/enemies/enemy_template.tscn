@@ -1,0 +1,111 @@
+[gd_scene load_steps=13 format=3 uid="uid://61vx3w6pig0b"]
+
+[ext_resource type="Script" uid="uid://1ce5wdegx8y" path="res://components/creature/creature.gd" id="1_56l2g"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="2_2ktux"]
+[ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_qr033"]
+[ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="4_xkuwy"]
+[ext_resource type="Script" uid="uid://cxr4pmgh416yt" path="res://components/vertical group/vertical_group.gd" id="5_uwiqo"]
+[ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="7_d1m7j"]
+[ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="8_x16su"]
+[ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="9_axj52"]
+[ext_resource type="Script" uid="uid://dtvh4vikgt2v" path="res://addons/godot_state_charts/animation_player_state.gd" id="10_dw2wg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ymhe"]
+radius = 4.12311
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iru8w"]
+radius = 4.12311
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ayrcy"]
+size = Vector2(6, 5)
+
+[node name="EnemyTemplate" type="CharacterBody2D"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0ymhe")
+
+[node name="EnemyArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyArea"]
+shape = SubResource("CircleShape2D_iru8w")
+
+[node name="Creature" type="Node2D" parent="EnemyArea"]
+unique_name_in_owner = true
+script = ExtResource("1_56l2g")
+creature_layer = 1
+creature_mask = 2
+metadata/_custom_type_script = "uid://1ce5wdegx8y"
+
+[node name="Target" type="Node2D" parent="EnemyArea" node_paths=PackedStringArray("holder", "highlight_node")]
+script = ExtResource("2_2ktux")
+size = 12.0
+holder = NodePath("../HealthInstance")
+highlight_node = NodePath("../..")
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="HealthInstance" type="Node2D" parent="EnemyArea"]
+script = ExtResource("3_qr033")
+base_health = 10.0
+damage_mask = 4
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
+
+[node name="FlipGroup" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_xkuwy")
+metadata/_custom_type_script = "uid://bhjyv2astlcwo"
+
+[node name="VerticalGroup" type="Node2D" parent="FlipGroup"]
+script = ExtResource("5_uwiqo")
+metadata/_custom_type_script = "uid://cxr4pmgh416yt"
+
+[node name="Sprite2D" type="Sprite2D" parent="FlipGroup/VerticalGroup"]
+texture_filter = 1
+offset = Vector2(0, -4)
+hframes = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/enemies/goat/goat.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "a18b696b312375d15cf33a74a7387d80"
+
+[node name="DamageArea" type="Area2D" parent="FlipGroup"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="DamageInstance" type="Node2D" parent="FlipGroup/DamageArea"]
+script = ExtResource("7_d1m7j")
+damage_layer = 2
+metadata/_custom_type_script = "uid://dd5wfdkuccdar"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlipGroup/DamageArea"]
+position = Vector2(8, -1.5)
+shape = SubResource("RectangleShape2D_ayrcy")
+disabled = true
+debug_color = Color(0.99, 0, 0.231, 0.12549)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("8_x16su")
+metadata/_custom_type_script = "uid://cwgjtd2qwnb20"
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("9_axj52")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root"]
+script = ExtResource("10_dw2wg")
+animation_player = NodePath("../../../AnimationPlayer")

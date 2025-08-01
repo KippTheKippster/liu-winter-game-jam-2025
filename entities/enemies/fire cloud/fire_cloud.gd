@@ -19,14 +19,6 @@ func _ready() -> void:
 		direction = Vector2.LEFT
 
 
-func apply_effect_fire(body: Node2D) -> void:
-	return
-	if body is Penguin:
-		body.danger_target = target
-		body.effect_fire_active = true
-		body.state_chart.send_event("request_task_panic")
-
-
 func _on_tile_detector_tile_detected(layer: TileMapLayer, coords: Vector2i) -> void:
 	var tile_data := layer.get_cell_tile_data(coords)
 	if tile_data and tile_data.has_custom_data("water"):
@@ -46,14 +38,6 @@ func _on_chase_state_processing(delta: float) -> void:
 	
 	if dif.length_squared() < pow(puff_distance, 2):
 		state_chart.send_event("request_puff")
-
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	apply_effect_fire(body)
-
-
-func _on_puff_area_body_entered(body: Node2D) -> void:
-	apply_effect_fire(body)
 
 
 func _on_flee_state_entered() -> void:

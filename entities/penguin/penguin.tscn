@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://c7hpad4xy14l2"]
+[gd_scene load_steps=65 format=3 uid="uid://c7hpad4xy14l2"]
 
 [ext_resource type="Script" uid="uid://brvh5lksny7bm" path="res://entities/penguin/penguin.gd" id="1_a0yya"]
 [ext_resource type="Texture2D" uid="uid://i4w0p1oyi77" path="res://entities/penguin/assets/penguin.png" id="1_r5j68"]
@@ -27,14 +27,29 @@
 [ext_resource type="AudioStream" uid="uid://cjmsjcp8wuc8p" path="res://audio/penguin_die.wav" id="13_elkqi"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://b0nfx46nxw3r5" path="res://entities/penguin/animation nodes/penguin_root_state_machine.tres" id="13_ouyml"]
 [ext_resource type="AudioStream" uid="uid://cxxqxw1fl0cbm" path="res://audio/penguin_scared_randomizer.tres" id="13_ploiq"]
+[ext_resource type="Texture2D" uid="uid://bprg2ejinqqu3" path="res://entities/effects/electricity smoke/electricy_smoket.png" id="16_ploiq"]
 [ext_resource type="Script" uid="uid://c3lw5rmdqjrw5" path="res://addons/godot_state_charts/animation_tree_state.gd" id="16_qqawb"]
+[ext_resource type="AudioStream" uid="uid://bsqq2ve66ow7c" path="res://audio/electricity.wav" id="20_elkqi"]
 [ext_resource type="Script" uid="uid://br85gcxolt6xv" path="res://addons/godot_state_charts/expression_guard.gd" id="23_u5wb6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tbc83"]
-radius = 1.5
+radius = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_84b7u"]
 radius = 2.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5wlyb"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4nswe"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 4.0
+gravity = Vector3(0, -6, 0)
+anim_offset_max = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wmjeh"]
 random_pitch = 1.5
@@ -126,6 +141,22 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [10]
+}
+
+[sub_resource type="Animation" id="Animation_4nswe"]
+length = 0.15
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VerticalGroup/FlipGroup/PenguinSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.075),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [20, 1]
 }
 
 [sub_resource type="Animation" id="Animation_ploiq"]
@@ -782,6 +813,7 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_gbc55"),
 &"die": SubResource("Animation_u5wb6"),
+&"electricity": SubResource("Animation_4nswe"),
 &"equip": SubResource("Animation_ploiq"),
 &"equip_static": SubResource("Animation_bdfa7"),
 &"fish": SubResource("Animation_l4dxa"),
@@ -860,6 +892,7 @@ metadata/_custom_type_script = "uid://btqcj8uotschi"
 
 [node name="DamageInstance" type="Node2D" parent="."]
 script = ExtResource("4_lsgwc")
+apply_knockback = false
 metadata/_custom_type_script = "uid://dd5wfdkuccdar"
 
 [node name="PenguinArea" type="Area2D" parent="."]
@@ -916,7 +949,7 @@ texture_filter = 1
 texture = ExtResource("1_r5j68")
 offset = Vector2(-0.5, -2.5)
 hframes = 5
-vframes = 4
+vframes = 5
 frame = 1
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
@@ -936,7 +969,7 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "res://entities/penguin/assets/penguin.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "2a2acf68063062c93832762840dedea1"
+metadata/_aseprite_wizard_source_file_hash_ = "33a03e61a821422a5796c556b7efbe38"
 
 [node name="EquipmentSprite" type="Sprite2D" parent="VerticalGroup/FlipGroup"]
 unique_name_in_owner = true
@@ -973,13 +1006,21 @@ texture = ExtResource("11_gbc55")
 offset = Vector2(0, -1)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="VerticalGroup/FlipGroup"]
-remote_path = NodePath("../../../Effects/FireParticles")
+remote_path = NodePath("../../../Effects")
 
 [node name="Effects" type="Node2D" parent="."]
 
 [node name="FireParticles" parent="Effects" instance=ExtResource("9_ploiq")]
 unique_name_in_owner = true
 emitting = false
+
+[node name="SmokeParticles" type="GPUParticles2D" parent="Effects"]
+unique_name_in_owner = true
+material = SubResource("CanvasItemMaterial_5wlyb")
+emitting = false
+amount = 10
+texture = ExtResource("16_ploiq")
+process_material = SubResource("ParticleProcessMaterial_4nswe")
 
 [node name="Audio" type="Node2D" parent="."]
 
@@ -1006,6 +1047,11 @@ bus = &"Effects"
 unique_name_in_owner = true
 stream = ExtResource("13_ploiq")
 pitch_scale = 1.2
+bus = &"Effects"
+
+[node name="ElectricityAudio" type="AudioStreamPlayer2D" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("20_elkqi")
 bus = &"Effects"
 
 [node name="DieAudio" type="AudioStreamPlayer2D" parent="Audio"]
@@ -1051,11 +1097,26 @@ script = ExtResource("5_28o2q")
 script = ExtResource("4_uw7px")
 initial_state = NodePath("Command Free")
 
+[node name="Request Command Free" type="Node" parent="StateChart/Root/Command"]
+script = ExtResource("7_ci46k")
+to = NodePath("../Command Free")
+event = &"request_command_free"
+delay_in_seconds = "0.0"
+
 [node name="Command Free" type="Node" parent="StateChart/Root/Command"]
 script = ExtResource("5_vskbl")
 
+[node name="Request Command BuildBridge" type="Node" parent="StateChart/Root/Command/Command Free"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Command BuildBridge")
+event = &"request_command_build_bridge"
+delay_in_seconds = "0.0"
+
 [node name="Command InteractWithTarget" type="Node" parent="StateChart/Root/Command"]
 script = ExtResource("4_uw7px")
+
+[node name="Command BuildBridge" type="Node" parent="StateChart/Root/Command"]
+script = ExtResource("5_vskbl")
 
 [node name="Task" type="Node" parent="StateChart/Root"]
 script = ExtResource("4_uw7px")
@@ -1090,6 +1151,12 @@ to = NodePath("../Task Idle")
 event = &"request_task_idle"
 delay_in_seconds = "0.0"
 
+[node name="Request Task InteractWithTarget" type="Node" parent="StateChart/Root/Task"]
+script = ExtResource("7_ci46k")
+to = NodePath("../Task InteractWithTarget")
+event = &"request_task_interact_with_target"
+delay_in_seconds = "0.0"
+
 [node name="Request Task Panic" type="Node" parent="StateChart/Root/Task"]
 script = ExtResource("7_ci46k")
 to = NodePath("../Task Panic")
@@ -1100,12 +1167,6 @@ delay_in_seconds = "0.0"
 script = ExtResource("7_ci46k")
 to = NodePath("../Task MoveToTarget")
 event = &"request_task_move_to_target"
-delay_in_seconds = "0.0"
-
-[node name="Request Task InteractWithTarget" type="Node" parent="StateChart/Root/Task"]
-script = ExtResource("7_ci46k")
-to = NodePath("../Task InteractWithTarget")
-event = &"request_task_interact_with_target"
 delay_in_seconds = "0.0"
 
 [node name="Action" type="Node" parent="StateChart/Root"]
@@ -1249,15 +1310,56 @@ to = NodePath("../../Action Idle")
 event = &"cancel_action_equip"
 delay_in_seconds = "0.0"
 
-[node name="DamageRecieved" type="Node" parent="StateChart/Root/Action/Controllable"]
+[node name="Action HeavyCarry" type="Node" parent="StateChart/Root/Action/Controllable"]
+script = ExtResource("16_qqawb")
+animation_tree = NodePath("../../../../../AnimationTree")
+state_name = &"idle_blend_tree"
+
+[node name="TreeExiting" type="Node" parent="StateChart/Root/Action/Controllable/Action HeavyCarry"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Action Idle/Action IdleStand")
+event = &"tree_exiting"
+delay_in_seconds = "0.0"
+
+[node name="Cancel Action HeavyCarry" type="Node" parent="StateChart/Root/Action/Controllable/Action HeavyCarry"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Action Idle/Action IdleStand")
+event = &"cancel_action_heavy_carry"
+delay_in_seconds = "0.0"
+
+[node name="DamageReceived" type="Node" parent="StateChart/Root/Action/Controllable"]
 script = ExtResource("7_ci46k")
 to = NodePath("../../Uncontrollable/Action Knockback")
-event = &"damage_recieved"
+event = &"damage_received"
+delay_in_seconds = "0.0"
+
+[node name="ElectricityReceived" type="Node" parent="StateChart/Root/Action/Controllable"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Uncontrollable/Action Electricity")
+event = &"electricity_received"
+delay_in_seconds = "0.0"
+
+[node name="Request Action Knockback" type="Node" parent="StateChart/Root/Action/Controllable"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Uncontrollable/Action Knockback")
+event = &"request_action_knockback"
+delay_in_seconds = "0.0"
+
+[node name="Request Action HeavyCarry" type="Node" parent="StateChart/Root/Action/Controllable"]
+script = ExtResource("7_ci46k")
+to = NodePath("../Action HeavyCarry")
+event = &"request_action_heavy_carry"
 delay_in_seconds = "0.0"
 
 [node name="Uncontrollable" type="Node" parent="StateChart/Root/Action"]
 script = ExtResource("4_uw7px")
 initial_state = NodePath("Action Knockback")
+
+[node name="Request Action Knockback" type="Node" parent="StateChart/Root/Action/Uncontrollable"]
+script = ExtResource("7_ci46k")
+to = NodePath("../Action Knockback")
+event = &"request_action_knockback"
+delay_in_seconds = "0.0"
 
 [node name="Action Knockback" type="Node" parent="StateChart/Root/Action/Uncontrollable"]
 script = ExtResource("16_qqawb")
@@ -1271,6 +1373,7 @@ guard = SubResource("Resource_gbc55")
 delay_in_seconds = "0.0"
 
 [node name="Action Stun" type="Node" parent="StateChart/Root/Action/Uncontrollable"]
+unique_name_in_owner = true
 script = ExtResource("16_qqawb")
 animation_tree = NodePath("../../../../../AnimationTree")
 state_name = &"stun"
@@ -1280,11 +1383,21 @@ script = ExtResource("7_ci46k")
 to = NodePath("../../../Controllable/Action Idle")
 delay_in_seconds = "4.0"
 
-[node name="DamageRecieved" type="Node" parent="StateChart/Root/Action/Uncontrollable/Action Stun"]
+[node name="DamageReceived" type="Node" parent="StateChart/Root/Action/Uncontrollable/Action Stun"]
 script = ExtResource("7_ci46k")
 to = NodePath("../../Action Die")
-event = &"damage_recieved"
+event = &"damage_received"
 delay_in_seconds = "0.0"
+
+[node name="Action Electricity" type="Node" parent="StateChart/Root/Action/Uncontrollable"]
+script = ExtResource("16_qqawb")
+animation_tree = NodePath("../../../../../AnimationTree")
+state_name = &"electricity"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Action/Uncontrollable/Action Electricity"]
+script = ExtResource("7_ci46k")
+to = NodePath("../../Action Knockback")
+delay_in_seconds = "0.5"
 
 [node name="Action Die" type="Node" parent="StateChart/Root/Action/Uncontrollable"]
 script = ExtResource("16_qqawb")
@@ -1320,11 +1433,14 @@ script = ExtResource("5_vskbl")
 [node name="Equipment PoolRing" type="Node" parent="StateChart/Root/Equipment/Equipment Equipped"]
 script = ExtResource("5_vskbl")
 
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="tile_detected" from="TileDetector" to="." method="_on_tile_detector_tile_detected"]
 [connection signal="damage_dealt" from="DamageInstance" to="Audio/PunchAudio" method="play" unbinds=1]
 [connection signal="command_applied" from="PenguinArea/Trooper" to="." method="_on_trooper_command_applied"]
 [connection signal="selected" from="PenguinArea/Trooper" to="." method="_on_trooper_selected"]
 [connection signal="damage_received" from="PenguinArea/HealthInstance" to="." method="_on_health_instance_damage_received"]
+[connection signal="state_entered" from="StateChart/Root/Command/Command BuildBridge" to="." method="_on_command_build_bridge_state_entered"]
+[connection signal="state_processing" from="StateChart/Root/Command/Command BuildBridge" to="." method="_on_command_build_bridge_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Task/Task Idle" to="." method="_on_task_idle_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Task/Task Idle" to="." method="_on_task_idle_state_exited"]
 [connection signal="state_processing" from="StateChart/Root/Task/Task Idle" to="." method="_on_task_idle_state_processing"]
@@ -1343,9 +1459,14 @@ script = ExtResource("5_vskbl")
 [connection signal="state_exited" from="StateChart/Root/Action/Controllable/Action Fish" to="." method="_on_action_fish_state_exited"]
 [connection signal="state_entered" from="StateChart/Root/Action/Controllable/Action Equip" to="." method="_on_action_equip_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Action/Controllable/Action Equip" to="." method="_on_action_equip_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Action/Controllable/Action HeavyCarry" to="." method="_on_action_heavy_carry_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Action/Controllable/Action HeavyCarry" to="." method="_on_action_heavy_carry_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Action/Controllable/Action HeavyCarry" to="." method="_on_action_heavy_carry_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Action/Uncontrollable/Action Knockback" to="." method="_on_action_knockback_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Action/Uncontrollable/Action Knockback" to="." method="_on_action_knockback_state_exited"]
 [connection signal="state_exited" from="StateChart/Root/Action/Uncontrollable/Action Stun" to="." method="_on_action_stun_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Action/Uncontrollable/Action Electricity" to="." method="_on_action_electricity_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Action/Uncontrollable/Action Electricity" to="." method="_on_action_electricity_state_exited"]
 [connection signal="state_entered" from="StateChart/Root/Action/Uncontrollable/Action Die" to="." method="_on_action_die_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Equipment/Equipment Equipped" to="." method="_on_equipment_equipped_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Equipment/Equipment Equipped" to="." method="_on_equipment_equipped_state_exited"]

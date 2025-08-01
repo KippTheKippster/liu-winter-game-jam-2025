@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Feed Seal Boffus"
-run/main_scene="uid://doiwfgk1hy5nb"
+run/main_scene="uid://b2lbfr316lk6l"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://yhjpfck7w0md"
 
@@ -167,11 +167,11 @@ debug_spawn_enemy={
 2d_physics/layer_1="World"
 2d_physics/layer_2="Penguin"
 2d_physics/layer_3="Enemy"
+2d_physics/layer_4="Water"
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-environment/defaults/default_clear_color=Color(0.133333, 0.12549, 0.203922, 1)
 
 [shader_globals]
 

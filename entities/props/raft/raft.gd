@@ -12,11 +12,15 @@ signal left
 @onready var transition_timer: Timer = $TransitionTimer
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var horn_audio: AudioStreamPlayer2D = $HornAudio
+@onready var up_marker: Marker2D = %UpMarker
+@onready var down_marker: Marker2D = %DownMarker
+@onready var target: Target = %Target
 
 var acceleration: float = 10.0
 var velocity: float = 0.0
 
 @export_file("*.tscn") var next_level_path: String = "uid://cti12nwlj0c2n"
+@export_enum("Up","Down") var target_orientation: int
 @export var fuelled: bool:
 	set(value):
 		var changed := fuelled != value
@@ -40,21 +44,24 @@ func _ready() -> void:
 	#set_deferred("fuelled", fuelled)
 	if fuelled:
 		animation_player.play("roll")
+	
+	if target_orientation == 0:
+		target.global_position = up_marker.global_position
+	else:
+		target.global_position = down_marker.global_position
 
 
 func add_penguin(penguin: Penguin) -> void:
 	penguin.get_parent().remove_child(penguin)
 	penguin_list.append(penguin)
-	var sprite := penguin_sprite_list[penguin_list.size() - 1]
-	sprite.visible = true # TODO Add check
-	#sprite.play(sprite.animation)
+	if penguin_sprite_list.size() > penguin_list.size():
+		var sprite := penguin_sprite_list[penguin_list.size() - 1]
+		sprite.visible = true
 	
 	penguin_boarded.emit(penguin)
 	
 	if get_tree().get_node_count_in_group("penguin") == 0:
 		depart()
-	#if penguin_list.size() == 3:
-		#depart()
 
 
 func provide_fuel(point: Vector2, type: CarryObjectType) -> void:

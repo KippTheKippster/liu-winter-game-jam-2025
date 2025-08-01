@@ -269,6 +269,7 @@ _data = {
 script = ExtResource("1_ty2uq")
 chase_speed = 12.0
 flee_speed = 6.0
+puff_distance = 12.0
 
 [node name="TargetDetector" type="Node2D" parent="."]
 script = ExtResource("4_cbds5")
@@ -288,6 +289,7 @@ shape = SubResource("CircleShape2D_jtda5")
 
 [node name="DamageInstance" type="Node2D" parent="FireCloudArea"]
 script = ExtResource("4_0rwkf")
+apply_knockback = false
 base_damage = 0.0
 effect = 1
 damage_layer = 2
@@ -303,6 +305,7 @@ disabled = true
 
 [node name="DamageInstance" type="Node2D" parent="PuffArea"]
 script = ExtResource("4_0rwkf")
+apply_knockback = false
 base_damage = 0.0
 effect = 1
 damage_layer = 2

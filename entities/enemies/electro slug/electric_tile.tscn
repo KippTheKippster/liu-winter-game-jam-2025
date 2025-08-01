@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://qhe1y6we7y2n"]
+
+[ext_resource type="Texture2D" uid="uid://7f3ubgfpycap" path="res://entities/enemies/electro slug/electric_tile.png" id="1_4uo10"]
+[ext_resource type="Script" uid="uid://dd5wfdkuccdar" path="res://components/health/damage_instance.gd" id="1_fku3r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fku3r"]
+size = Vector2(8, 8)
+
+[node name="ElectricTile" type="Node2D"]
+z_index = -1
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_fku3r")
+
+[node name="DamageInstance" type="Node2D" parent="Area2D"]
+script = ExtResource("1_fku3r")
+base_damage = 0.0
+effect = 3
+damage_layer = 7
+metadata/_custom_type_script = "uid://dd5wfdkuccdar"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_4uo10")

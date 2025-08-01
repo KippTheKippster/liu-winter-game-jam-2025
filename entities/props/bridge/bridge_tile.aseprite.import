@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c31rjv8mi07vl"
+path="res://.godot/imported/bridge_tile.aseprite-6c60ac5b7a1473b1fbdd60c1a73c217e.res"
+
+[deps]
+
+source_file="res://entities/props/bridge/bridge_tile.aseprite"
+dest_files=["res://.godot/imported/bridge_tile.aseprite-6c60ac5b7a1473b1fbdd60c1a73c217e.res"]
+
+[params]
+

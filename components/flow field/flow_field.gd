@@ -1,7 +1,7 @@
 extends Node2D
 class_name FlowField
 
-@export var label_settings: LabelSettings
+@export var label_settings: LabelSettings = LabelSettings.new()
 
 var labels: Array[Label]
 var color_rects: Array[ColorRect]
@@ -23,6 +23,9 @@ const NeighborVectorsIncludeSub: Array[Vector2i] = [
 
 
 var cells: Dictionary[Vector2i, int]
+
+func _ready() -> void:
+	label_settings.font_size = 4
 
 #func _ready() -> void:
 #	for i in range(-24, 24):
@@ -87,34 +90,37 @@ func set_target_coords(target_coords: Vector2i) -> void:
 		color_rects.clear()
 	
 		for cell in cells.keys():
+			var color := Color.from_hsv((cells[cell] % 16) / 16.0, 1, 1, 1)
+			
+			
+			"""
 			var sprite := Sprite2D.new()
 			sprite.texture = preload("res://components/flow field/assets/arrow.png")
 			sprite.position = Vector2(cell * cell_size) + sprite.texture.get_size() / 2
 			sprite.z_index = -1
 			sprite.rotation = Vector2(get_cell_direction(cell, true)).angle()
-			sprite.modulate = Color(1.0, 1.0, 1.0, 0.5)
+			sprite.modulate = color
+			sprite.modulate.a = 0.5
 			if cells[cell] == 0:
 				sprite.visible = false
 			add_child(sprite)
+			"""
+			var label := Label.new()
+			add_child(label)
+			
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			label.text = str(cells.get(cell, NAN))
+			label.position = cell * cell_size
+			label.label_settings = label_settings
+			label.set_deferred("size", Vector2.ONE * cell_size)
+			label.modulate = color
+			labels.append(label)
 
 
 func propogate_cells(propogating_cells: Array[Vector2i]) -> void:
 	var valid_neighbors: Array[Vector2i]
 	for cell in propogating_cells:
-		"""
-		var label := Label.new()
-		add_child(label)
-		
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		label.text = str(cells.get(cell, NAN))
-		label.position = cell * cell_size
-		label.label_settings = label_settings
-		label.set_deferred("size", Vector2.ONE * cell_size)
-		labels.append(label)
-		"""
-
-		
 		for vector in NeighborVectors:
 			var neighbor_cell = cell + vector
 			if cells.has(neighbor_cell) and cells[neighbor_cell] == -1 and is_cell_valid(neighbor_cell):

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://tvcny2ed2orh"
+path="res://.godot/imported/gate.aseprite-1868a0b0604878e8e642991a1152f1db.res"
+
+[deps]
+
+source_file="res://entities/props/gate/gate.aseprite"
+dest_files=["res://.godot/imported/gate.aseprite-1868a0b0604878e8e642991a1152f1db.res"]
+
+[params]
+

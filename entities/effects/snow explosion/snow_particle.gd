@@ -33,7 +33,6 @@ func _ready() -> void:
 	sprite_2d.frame_coords.x = size
 
 
-
 func _process(delta: float) -> void:
 	position += direction * speed * delta
 	if vertical_group.is_on_floor():

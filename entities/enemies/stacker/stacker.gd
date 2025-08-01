@@ -4,19 +4,25 @@ const Stacker = preload("uid://d1ipnpaid76tr")
 const STACKER_SCENE = preload("uid://cowvagrpdw1pr")
 
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var danger_target_detector: TargetDetector = $DangerTargetDetector
+@onready var target_detector: TargetDetector = $TargetDetector
+@onready var flow_field_walker: FlowFieldWalker = $FlowFieldWalker
 @onready var self_target: Target = %Target
 @onready var health_instance: HealthInstance = %HealthInstance
 @onready var vertical_group: VerticalGroup = $VerticalGroup
 @onready var flip_group: FlipGroup = %FlipGroup
 @onready var carriable_sprite: Sprite2D = %CarriableSprite
-@onready var target_detector: TargetDetector = $TargetDetector
+@onready var top_transform: RemoteTransform2D = %TopTransform
+@onready var animation_tree: AnimationTree = $AnimationTree
 @onready var state_chart: StateChart = $StateChart
 
 @export_range(0, 10, 1, "or_greater") var start_height = 0
 @export var height_offset: float = 5.0
 @export var explode_speed: float = 20.0
 @export var max_speed: float = 16.0
+var current_speed: float = 16.0
 @export var carriable_type: CarryObjectType
+var danger_target: Target
 
 var leader: Stacker
 var leader_priority: int = 0
@@ -26,9 +32,14 @@ var top: Stacker = null
 var bottom: Stacker = null
 
 func _ready() -> void:
+	current_speed = max_speed
 	if start_height > 0:
 		set_in_stack(false)
 		spawn_stack.call_deferred()
+
+
+func _process(delta: float) -> void:
+	animation_tree.set("parameters/idle_blend_space/blend_position", float(velocity.length() > 0.0))
 
 
 func _physics_process(delta: float) -> void:
@@ -91,12 +102,16 @@ func add_to_stack(stacker: Stacker) -> void:
 	if stacker.get_parent() != null:
 		stacker.get_parent().remove_child(stacker)
 	top_stacker.add_child(stacker)
-	stacker.set_in_stack(true)
+	stacker.set_in_stack.call_deferred(true)
 	top_stacker.top = stacker
+	top_stacker.top_transform.remote_path = stacker.get_path()
 	stacker.bottom = top_stacker
 	stacker.global_position = top_stacker.global_position + Vector2.UP * height_offset
 	if top_stacker.carriable_type != null:
 		top_stacker.pass_item()
+	
+	var bottom_stacker := get_bottom()
+	bottom_stacker.current_speed *= 0.75
 
 
 func set_in_stack(in_stack: bool) -> void:
@@ -105,7 +120,7 @@ func set_in_stack(in_stack: bool) -> void:
 	if in_stack:
 		state_chart.send_event("request_in_stack")
 	else:
-		state_chart.send_event("request_solo")
+		state_chart.send_event("request_idle")
 
 
 func break_stack(root: Stacker, explode: bool = true) -> void:
@@ -115,6 +130,9 @@ func break_stack(root: Stacker, explode: bool = true) -> void:
 	top = null
 	bottom = null
 	health_instance.current_health = health_instance.base_health
+	
+	current_speed = max_speed
+	top_transform.remote_path = ""
 	
 	if root != self:
 		reparent(root.get_parent())
@@ -154,8 +172,25 @@ func _on_stun_state_exited() -> void:
 	vertical_group.jump(60.0)
 
 
+func _on_idle_state_physics_processing(delta: float) -> void:
+	danger_target = danger_target_detector.get_next_target()
+	if is_instance_valid(danger_target):
+		state_chart.send_event("request_panic")
+
+
 func _on_panic_state_entered() -> void:
-	velocity = Vector2.from_angle(randf() * TAU) * 8.0
+	flow_field_walker.reverse_path = true
+
+
+func _on_panic_state_exited() -> void:
+	flow_field_walker.reverse_path = false
+	danger_target = null
+
+
+func _on_panic_state_physics_processing(delta: float) -> void:
+	if is_instance_valid(danger_target):
+		flow_field_walker.target_point = danger_target.global_position
+		velocity = flow_field_walker.get_direction() * current_speed
 
 
 func _on_fall_state_exited() -> void:
@@ -178,10 +213,11 @@ func find_leader() -> Stacker:
 	return next_leader
 
 
-func update_leader() -> void:
+func decide() -> void:
 	var next_leader := find_leader()
 	var next_target := target_detector.get_next_target()
 	if has_stack_item():
+		state_chart.send_event("request_panic")
 		next_target = null
 	
 	target = null
@@ -197,44 +233,57 @@ func update_leader() -> void:
 		global_position.distance_squared_to(next_target.global_position) <
 		global_position.distance_squared_to(next_leader.global_position)):
 		target = next_target
-		state_chart.send_event("request_fetch")
+		state_chart.send_event("request_item_search")
 	else:
 		leader = next_leader
-		state_chart.send_event("request_search")
+		state_chart.send_event("request_leader_search")
 
 
 func _on_decide_state_entered() -> void:
-	update_leader()
+	decide()
 
-func _on_search_state_physics_processing(delta: float) -> void:
+
+func move_to_node(node: Node2D, callable: Callable) -> void:
+	flow_field_walker.reverse_path = false
+	flow_field_walker.target_point = node.global_position
+	velocity = flow_field_walker.get_direction() * current_speed
+	var dif := node.global_position - global_position
+	#velocity = dif.normalized() * 16.0 
+	if dif.length_squared() < 4.0 and vertical_group.is_on_floor():
+		callable.call()
+
+
+func _on_leader_search_state_physics_processing(delta: float) -> void:
 	if not is_instance_valid(leader) or (has_stack_item() and leader.has_stack_item()):
 		state_chart.send_event("request_decide")
 		return
 	
-	var dif := leader.global_position - global_position
-	velocity = dif.normalized() * 16.0 
-	if dif.length_squared() < 4.0 and vertical_group.is_on_floor():
+	move_to_node(leader, func():
 		vertical_group.jump()
 		vertical_group.landed.connect(func ():
-			#var dif := leader.global_position - global_position
-			#if dif.length_squared() < 4.0:
-			if is_instance_valid(leader):
-				leader.add_to_stack(self)
-				leader = null
-				velocity = Vector2.ZERO
-			, ConnectFlags.CONNECT_ONE_SHOT)
+			if is_instance_valid(leader) and leader.is_inside_tree():
+				var dif := leader.global_position - global_position
+				if dif.length_squared() < 4.0:
+					if is_instance_valid(leader):
+						leader.add_to_stack(self)
+						leader = null
+						velocity = Vector2.ZERO
+					, ConnectFlags.CONNECT_ONE_SHOT)
+	)
 
-
-func _on_fetch_state_processing(delta: float) -> void:
+func _on_item_search_state_processing(delta: float) -> void:
 	if (is_instance_valid(target) and target.is_inside_tree() and target.holder is Carriable) == false:
 		state_chart.send_event("request_decide")
 		return
 	
-	var dif := target.global_position - global_position
-	velocity = dif.normalized() * 16.0 
-	if dif.length_squared() < 4.0 and vertical_group.is_on_floor():
+	move_to_node(target, func():
 		var carriable := target.holder as Carriable
 		carriable_type = carriable.carry_object_type
 		pass_item()
 		carriable.get_parent().remove_child(carriable)
 		carriable.queue_free()
+	)
+
+
+func _on_stack_state_entered() -> void:
+	velocity = Vector2.ZERO

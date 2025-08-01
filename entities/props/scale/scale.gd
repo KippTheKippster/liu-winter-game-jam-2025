@@ -1,6 +1,7 @@
 extends Node2D
 
 signal threshold_reached
+signal threshold_lost
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var label: Label = $Label
@@ -23,6 +24,8 @@ var penguin_count: int = 0:
 		
 		if penguin_count == threshold and old < threshold:
 			threshold_reached.emit()
+		elif penguin_count < threshold and old == threshold:
+			threshold_lost.emit()
 
 
 func _ready() -> void:

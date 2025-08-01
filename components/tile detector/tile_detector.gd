@@ -3,6 +3,8 @@ class_name TileDetector
 
 signal tile_detected(layer: TileMapLayer, coords: Vector2i)
 
+@export var auto_detect: bool = true
+
 var tile_map_layer_list: Array[TileMapLayer]
 #var tile_map: TileMapLayer
 #var current_coords: Vector2i:
@@ -20,6 +22,8 @@ func _ready() -> void:
 		if node is TileMapLayer:
 			tile_map_layer_list.push_back(node)
 	
+	set_process(auto_detect)
+	
 	#for node in get_tree().get_nodes_in_group("interactable_tile_map"):
 	#	if node is TileMapLayer:
 	#		tile_map_list.append(node)
@@ -28,6 +32,28 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	detected_tile_map_layer()
 	#for tile_map in tile_map_list:
+
+
+func get_tile_custom_data(layer: TileMapLayer, coords: Vector2i, layer_name: StringName) -> Variant:
+	var tile_data := layer.get_cell_tile_data(coords)
+	if tile_data:
+		if tile_data.has_custom_data(layer_name):
+			return tile_data.get_custom_data(layer_name)
+	
+	return null
+
+
+func has_tile_custom_data(layer: TileMapLayer, coords: Vector2i, layer_name: StringName) -> bool:
+	return get_tile_custom_data(layer, coords, layer_name) != null
+
+
+func get_current_tile_custom_data(layer_name: StringName) -> Variant:
+	return get_tile_custom_data(current_layer, current_coords, layer_name)
+
+
+func has_current_tile_custom_data(layer_name: StringName) -> bool:
+	return has_tile_custom_data(current_layer, current_coords, layer_name)
+
 
 
 func detected_tile_map_layer() -> void:

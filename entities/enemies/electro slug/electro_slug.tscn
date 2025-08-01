@@ -1,0 +1,202 @@
+[gd_scene load_steps=19 format=3 uid="uid://b0airqwcf7c48"]
+
+[ext_resource type="Script" uid="uid://bhjyv2astlcwo" path="res://components/flip group/flip_group.gd" id="1_4hknm"]
+[ext_resource type="Script" uid="uid://6frj7hoshth1" path="res://entities/enemies/electro slug/electro_slug.gd" id="1_b0jst"]
+[ext_resource type="Script" uid="uid://xtcqp3h7d5p4" path="res://entities/penguin/target.gd" id="2_c2vyf"]
+[ext_resource type="Script" uid="uid://bbsfd24w06hq0" path="res://entities/penguin/target_detector.gd" id="2_ii3hh"]
+[ext_resource type="Texture2D" uid="uid://qern4hb8jkr5" path="res://entities/enemies/electro slug/electro_slug.png" id="2_uno45"]
+[ext_resource type="Script" uid="uid://dvljb35mh14xv" path="res://components/health/health_instance.gd" id="3_71s86"]
+[ext_resource type="Script" uid="uid://btqcj8uotschi" path="res://components/tile detector/tile_detector.gd" id="3_uno45"]
+[ext_resource type="Script" uid="uid://cwgjtd2qwnb20" path="res://addons/godot_state_charts/state_chart.gd" id="5_3n4hb"]
+[ext_resource type="Script" uid="uid://dedvko4r5uop7" path="res://addons/godot_state_charts/compound_state.gd" id="6_s72ij"]
+[ext_resource type="Script" uid="uid://dyi7lv20qiks3" path="res://addons/godot_state_charts/atomic_state.gd" id="7_wtf86"]
+[ext_resource type="Script" uid="uid://dexbj1hgvxsoe" path="res://addons/godot_state_charts/transition.gd" id="9_jeg56"]
+[ext_resource type="Script" uid="uid://dci6sv2mtg2l1" path="res://components/flow field/flow_field_walker.gd" id="10_hv1dr"]
+[ext_resource type="Script" uid="uid://dtvh4vikgt2v" path="res://addons/godot_state_charts/animation_player_state.gd" id="10_yickr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4hknm"]
+radius = 2.236068
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_71s86"]
+radius = 5.0
+
+[sub_resource type="Animation" id="Animation_b0jst"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_4hknm"]
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlipGroup/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3n4hb"]
+_data = {
+&"idle": SubResource("Animation_b0jst"),
+&"shock": SubResource("Animation_4hknm")
+}
+
+[node name="ElectroSlug" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_b0jst")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4hknm")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_71s86")
+
+[node name="Target" type="Node2D" parent="Area2D" node_paths=PackedStringArray("holder", "highlight_node")]
+script = ExtResource("2_c2vyf")
+holder = NodePath("../HealthInstance")
+highlight_node = NodePath("../..")
+metadata/_custom_type_script = "uid://xtcqp3h7d5p4"
+
+[node name="HealthInstance" type="Node2D" parent="Area2D"]
+script = ExtResource("3_71s86")
+base_health = 10.0
+damage_mask = 4
+metadata/_custom_type_script = "uid://dvljb35mh14xv"
+
+[node name="DangerTargetDetector" type="Node2D" parent="."]
+script = ExtResource("2_ii3hh")
+detection_range = 32.0
+mask = 1
+metadata/_custom_type_script = "uid://bbsfd24w06hq0"
+
+[node name="TileDetector" type="Node2D" parent="."]
+script = ExtResource("3_uno45")
+metadata/_custom_type_script = "uid://btqcj8uotschi"
+
+[node name="FlowFieldWalker" type="Node2D" parent="."]
+script = ExtResource("10_hv1dr")
+max_path_follow_length = 2
+metadata/_custom_type_script = "uid://dci6sv2mtg2l1"
+
+[node name="FlipGroup" type="Node2D" parent="."]
+script = ExtResource("1_4hknm")
+metadata/_custom_type_script = "uid://bhjyv2astlcwo"
+
+[node name="Sprite" type="Sprite2D" parent="FlipGroup"]
+texture_filter = 1
+texture = ExtResource("2_uno45")
+offset = Vector2(-2, -4)
+hframes = 2
+vframes = 2
+frame = 3
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://entities/enemies/electro slug/electro_slug.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "967143e5828309a616e8cacff389ded7"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3n4hb")
+}
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("5_3n4hb")
+metadata/_custom_type_script = "uid://cwgjtd2qwnb20"
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("6_s72ij")
+initial_state = NodePath("SearchDanger")
+
+[node name="Request Shock" type="Node" parent="StateChart/Root"]
+script = ExtResource("9_jeg56")
+to = NodePath("../Shock")
+event = &"request_shock"
+delay_in_seconds = "0.0"
+
+[node name="SearchDanger" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_s72ij")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root/SearchDanger"]
+script = ExtResource("10_yickr")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"idle"
+
+[node name="Return" type="Node" parent="StateChart/Root/SearchDanger"]
+script = ExtResource("7_wtf86")
+
+[node name="Request Idle" type="Node" parent="StateChart/Root/SearchDanger/Return"]
+script = ExtResource("9_jeg56")
+to = NodePath("../../Idle")
+event = &"request_idle"
+delay_in_seconds = "0.0"
+
+[node name="Request FindWater" type="Node" parent="StateChart/Root/SearchDanger"]
+script = ExtResource("9_jeg56")
+to = NodePath("../../FindWater")
+event = &"request_find_water"
+delay_in_seconds = "0.0"
+
+[node name="FindWater" type="Node" parent="StateChart/Root"]
+script = ExtResource("7_wtf86")
+
+[node name="Shock" type="Node" parent="StateChart/Root"]
+script = ExtResource("10_yickr")
+animation_player = NodePath("../../../AnimationPlayer")
+animation_name = &"shock"
+
+[node name="Wait" type="Node" parent="StateChart/Root/Shock"]
+script = ExtResource("9_jeg56")
+to = NodePath("../../Recharge")
+delay_in_seconds = "4.0"
+
+[node name="Recharge" type="Node" parent="StateChart/Root"]
+script = ExtResource("10_yickr")
+animation_player = NodePath("../../../AnimationPlayer")
+animation_name = &"idle"
+
+[node name="Request Return" type="Node" parent="StateChart/Root/Recharge"]
+script = ExtResource("9_jeg56")
+to = NodePath("../../SearchDanger/Return")
+event = &"request_return"
+delay_in_seconds = "0.0"
+
+[connection signal="tile_detected" from="TileDetector" to="." method="_on_tile_detector_tile_detected"]
+[connection signal="state_physics_processing" from="StateChart/Root/SearchDanger" to="." method="_on_search_danger_state_physics_processing"]
+[connection signal="state_physics_processing" from="StateChart/Root/SearchDanger/Idle" to="." method="_on_idle_state_physics_processing"]
+[connection signal="state_physics_processing" from="StateChart/Root/SearchDanger/Return" to="." method="_on_return_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/FindWater" to="." method="_on_find_water_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/FindWater" to="." method="_on_find_water_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Shock" to="." method="_on_shock_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Recharge" to="." method="_on_recharge_state_entered"]

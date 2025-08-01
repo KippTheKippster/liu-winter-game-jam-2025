@@ -26,4 +26,7 @@ func get_next_target() -> Target:
 				closest_distance = distance
 				closest_target = target
 	
+	
+	AudioServer
+	
 	return closest_target

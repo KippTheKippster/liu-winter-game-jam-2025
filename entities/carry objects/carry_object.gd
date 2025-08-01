@@ -1,4 +1,5 @@
 @tool
+@icon("res://entities/carry objects/assets/meat_big.png")
 extends Carriable
 
 @onready var target: Target = $Area2D/Target
@@ -36,6 +37,16 @@ func update_sprite() -> void:
 
 
 func _on_placed(height: float, new_velocity: Vector2) -> void:
+	#3place_audio.play()
 	velocity = new_velocity
 	vertical_group.height = height
 	vertical_group.jump()
+	if carry_object_type.place_audio:
+		Utils.play_audio_2d(carry_object_type.place_audio, global_position, old_owner_parent)
+
+
+func pickup() -> void:
+	super.pickup()
+	if carry_object_type.pickup_audio:
+		Utils.play_audio_2d(carry_object_type.pickup_audio, global_position, old_owner_parent)
+	#pickup_audio.play()

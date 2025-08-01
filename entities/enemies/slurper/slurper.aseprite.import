@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dv6816yjyppmi"
+path="res://.godot/imported/slurper.aseprite-774de01cdc605f9dbd908215ea1b4f28.res"
+
+[deps]
+
+source_file="res://entities/enemies/slurper/slurper.aseprite"
+dest_files=["res://.godot/imported/slurper.aseprite-774de01cdc605f9dbd908215ea1b4f28.res"]
+
+[params]
+

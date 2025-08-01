@@ -48,4 +48,5 @@ texture = ExtResource("4_fm0f1")
 offset = Vector2(0, -2)
 
 [connection signal="carry_object_type_changed" from="." to="." method="_on_carry_object_type_changed"]
+[connection signal="picked_up" from="." to="." method="_on_picked_up"]
 [connection signal="placed" from="." to="." method="_on_placed"]

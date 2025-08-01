@@ -1,3 +1,4 @@
+@icon("uid://yhjpfck7w0md")
 class_name Penguin
 extends CharacterBody2D
 
@@ -5,8 +6,13 @@ const CarryObject = preload("res://entities/carry objects/carry_object.gd")
 const CARRY_OBJECT_SCENE = preload("res://entities/carry objects/carry_object.tscn")
 
 const TOOL_DYNAMITE = preload("uid://be1c6v2dam34l")
+const TOOL_BRIDGE_TILE = preload("uid://bnyh58x0lgqdx")
 
 const Raft = preload("res://entities/props/raft/raft.gd")
+const Bridge = preload("uid://bftktmcermlew")
+const BridgeTilePile = preload("uid://bonppi2orhad8")
+
+var current_bridge_tile_pile: BridgeTilePile
 
 @onready var flow_field_walker: FlowFieldWalker = $FlowFieldWalker
 @onready var danger_target_detector: TargetDetector = $DangerTargetDetector
@@ -20,14 +26,18 @@ const Raft = preload("res://entities/props/raft/raft.gd")
 @onready var equipment_sprite: Sprite2D = %EquipmentSprite
 @onready var carry_object_sprite: Sprite2D = %CarryObjectSprite
 @onready var fire_particles: GPUParticles2D = %FireParticles
+@onready var smoke_particles: GPUParticles2D = %SmokeParticles
 @onready var damaged_audio: AudioStreamPlayer2D = $Audio/DamagedAudio
 @onready var scared_audio: AudioStreamPlayer2D = %ScaredAudio
+@onready var electricity_audio: AudioStreamPlayer2D = %ElectricityAudio
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var state_chart: StateChart = $StateChart
-
+@onready var action_stun_state: AnimationTreeState = %"Action Stun"
 
 @export var walk_speed: float = 20.0
 @export var extra_interaction_range: float = 24.0
+
+var external_velocity: Vector2
 
 var allow_ineraction: bool = true
 
@@ -50,6 +60,10 @@ var carriable: Carriable:
 		animation_tree.set("parameters/idle_blend_tree/walk_carry_blend/blend_amount", blend_amount)
 		animation_tree.set("parameters/idle_blend_tree/swim_carry_blend/blend_amount", blend_amount)
 		animation_tree.set("parameters/idle_blend_tree/jump_carry_blend/blend_amount", blend_amount)
+
+var heavy_carriable_target: Target
+
+var lock_carriable: bool = false
 
 @export var equipment_type: CarryObjectTypeEquipment
 
@@ -158,7 +172,7 @@ func _ready() -> void:
 				
 				if not raft.fuel_object_types.has(carriable.carry_object_type):
 					return false
-			
+		
 		if holder is Igloo:
 			if not carriable:
 				return false
@@ -168,11 +182,25 @@ func _ready() -> void:
 		if holder is Boffus and not carriable:
 			return false
 		
+		if holder is Carriable:
+			if holder.carry_object_type == equipment_type:
+				return false
+		
+		if holder is HeavyCarriable:
+			if heavy_carriable_target and heavy_carriable_target.holder == holder:
+				return false
+		
+		if holder is Bridge:
+			if not carriable or carriable.carry_object_type != TOOL_BRIDGE_TILE:
+				return false
+		
 		return true
 
 
 func _process(delta: float) -> void:
-	state_chart.set_expression_property("on_floor", vertical_group.is_on_floor() and vertical_group.velocity <= 0)
+	var on_floor := vertical_group.is_on_floor() and vertical_group.velocity <= 0
+	if state_chart.get_expression_property("on_floor") != on_floor:
+		state_chart.set_expression_property("on_floor", on_floor)
 	
 	penguin_sprite.self_modulate = Color.WHITE.lerp(Color.hex(0x523722ff), effect_fire_time_left / effect_fire_wait_time)
 	
@@ -182,7 +210,7 @@ func _process(delta: float) -> void:
 			effect_fire_time_left = effect_fire_wait_time
 			state_chart.send_event("request_action_die")
 	
-	if velocity.is_zero_approx():
+	if (velocity + external_velocity).is_zero_approx():
 		animation_tree.set("parameters/idle_blend_tree/idle_walk_blend/blend_amount", 0.0)
 	else:
 		animation_tree.set("parameters/idle_blend_tree/idle_walk_blend/blend_amount", 1.0)
@@ -195,7 +223,14 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	var pre := velocity
+	velocity = pre + external_velocity
 	move_and_slide()
+	velocity = pre
+	external_velocity = Vector2.ZERO
+	
+	if is_on_wall():
+		flow_field_walker.force_center = true
 	
 	danger_target = danger_target_detector.get_next_target()
 	if danger_target != null:
@@ -257,29 +292,40 @@ func is_ranged_interaction_allowed(target: Target) -> bool:
 func interact_with_target(target: Target) -> void:
 	var holder := target.holder
 	if holder is Carriable:
-		if carriable:
-			throw_carriable()
-		
-		state_chart.send_event("cancel_action_equip")
-		
-		carriable = holder
-		carriable.pickup()
-		state_chart.send_event("request_task_idle")
-		carriable_target_detector.active = false
-		if carriable.carry_object_type is CarryObjectTypeEquipment:
-			state_chart.send_event("unequip")
-			carry_object_sprite.visible = false
-			#equipment_type = carriable.carry_object_type
-			state_chart.send_event("request_action_equip") # DANGER Could be interrupted
-		
-		return
+		if equipment_type != holder.carry_object_type and not lock_carriable:
+			if carriable:
+				throw_carriable()
+			
+			state_chart.send_event("cancel_action_equip")
+			
+			carriable = holder
+			carriable.pickup()
+			state_chart.send_event("request_task_idle")
+			carriable_target_detector.active = false
+			if carriable .carry_object_type is CarryObjectTypeEquipment:
+				state_chart.send_event("unequip") # Does this achieve anything?
+				carry_object_sprite.visible = false
+				#equipment_type = carriable.carry_object_type
+				state_chart.send_event("request_action_equip") # DANGER Could be interrupted
+			
+			return
 	
-	#var health_instance := Utils.find_child_of_class(holder, "HealthInstance") as HealthInstance
+	if holder is HeavyCarriable:
+		if holder.add_carrier(self):
+			heavy_carriable_target = target
+			target.occupant = self
+			state_chart.send_event("request_action_heavy_carry")
+			return
+	
 	if holder is HealthInstance:
 		if carriable and carriable.carry_object_type == TOOL_DYNAMITE:
 			var dir = (holder.global_position - global_position).normalized()
 			var thrown_carriable := throw_carriable(dir * 24.0)
 			thrown_carriable.position += dir * 2.0
+			if not thrown_carriable.ignite:
+				var backtraces = Engine.capture_script_backtraces()
+				print(backtraces)
+			
 			thrown_carriable.ignite()
 		else:
 			enemy_health_instance = holder
@@ -330,6 +376,26 @@ func interact_with_target(target: Target) -> void:
 				#holder.add_penguin(self)
 		
 		return
+	
+	if holder is Bridge:
+		if carriable and carriable.carry_object_type == TOOL_BRIDGE_TILE:
+			if holder.tile_amount != holder.get_max_amount():
+				carriable.place(global_position, 0.0)
+				holder.tile_amount += 1
+				carriable.queue_free()
+				carriable = null
+				return
+	
+	if holder is BridgeTilePile:
+		if carriable:
+			throw_carriable()
+		
+		if not holder.is_empty():
+			carriable = holder.take_tile()
+			
+			return
+			#current_bridge_tile_pile = holder
+		#if carriable # TODO Add check!
 
 
 func is_command_target_valid() -> bool:
@@ -354,6 +420,14 @@ func _on_trooper_command_applied(point: Vector2, offset: Vector2, target: Target
 	command_point = point + offset
 	#command_point_offset = Vector2.RIGHT * 8.0 # offset FIXME
 	
+	if command_target:
+		var holder := command_target.holder
+		if holder is BridgeTilePile:
+			current_bridge_tile_pile = holder
+			state_chart.send_event("request_command_build_bridge")
+			return
+	
+	state_chart.send_event("request_command_free")
 	state_chart.send_event("request_task_move_to_target")
 
 
@@ -363,10 +437,16 @@ func _on_health_instance_damage_received(result: DamageResult) -> void:
 		danger_point = result.damage_instance.global_position
 		state_chart.send_event("request_task_panic")
 		effect_fire_active = true
+	elif recieved_damage_result.damage_instance.effect == DamageInstance.Effect.ELECTRICITY:
+		state_chart.send_event("electricity_received")
+		return
 	
 	if recieved_damage_result.final_damage > 0:
-		damaged_audio.play()
-		state_chart.send_event("damage_recieved")
+		state_chart.send_event("damage_received")
+		damaged_audio.play() 
+	elif result.damage_instance.apply_knockback:
+		state_chart.send_event("request_action_knockback")
+		damaged_audio.play() 
 
 
 func _on_tile_detector_tile_detected(layer: TileMapLayer, coords: Vector2i) -> void:
@@ -387,6 +467,28 @@ func _on_tile_detector_tile_detected(layer: TileMapLayer, coords: Vector2i) -> v
 func _on_trooper_selected() -> void:
 	state_chart.send_event("selected")
 
+
+func _on_tree_exiting() -> void:
+	state_chart.send_event("tree_exiting")
+
+#region Command States
+func _on_command_build_bridge_state_entered() -> void:
+	state_chart.send_event("request_task_move_to_target")
+
+
+func _on_command_build_bridge_state_processing(delta: float) -> void:
+	if not carriable or carriable.carry_object_type != TOOL_BRIDGE_TILE:
+		if current_bridge_tile_pile.is_empty():
+			state_chart.send_event("request_command_free")
+			state_chart.send_event("request_task_idle")
+			state_chart.send_event("request_action_idle")
+			return
+		
+		command_target = current_bridge_tile_pile.target
+	else:
+		command_target = current_bridge_tile_pile.bridge.target
+
+#endregion
 
 #region Task States
 
@@ -535,16 +637,20 @@ func _on_action_fish_state_exited() -> void:
 # Equip
 func _on_action_equip_state_entered() -> void:
 	carry_object_sprite.visible = true
+	lock_carriable = true
 
 
 func _on_action_equip_state_exited() -> void:
 	if equipment_type:
 		throw_new_carriable(equipment_type)
+		equipment_type = null
 	
-	if carriable and carriable.carry_object_type is CarryObjectTypeEquipment: # HACK BRUH
+	if carriable: # and carriable.carry_object_type is CarryObjectTypeEquipment: # HACK BRUH
 		equip(carriable.carry_object_type)
 		carriable.queue_free()
 		carriable = null
+	
+	lock_carriable = false
 
 
 # Knockback
@@ -564,6 +670,20 @@ func _on_action_stun_state_exited() -> void:
 	vertical_group.jump(vertical_group.jump_speed * 0.75)
 
 
+# Electricity
+func _on_action_electricity_state_entered() -> void:
+	velocity = Vector2.ZERO
+	health_instance.enabled = false
+	electricity_audio.play()
+	scared_audio.play()
+	smoke_particles.emitting = true
+
+
+func _on_action_electricity_state_exited() -> void:
+	health_instance.enabled = true
+	vertical_group.landed.connect(func(): smoke_particles.emitting = false, ConnectFlags.CONNECT_ONE_SHOT)
+
+
 # Die
 func _on_action_die_state_entered() -> void:
 	Utils.call_delayed(self, 2.0, kill)
@@ -575,6 +695,28 @@ func _on_action_die_state_entered() -> void:
 	trooper.responsive = false
 	health_instance.immortal = false
 	health_instance.current_health = 0.0
+
+# Heavy Carriable
+func _on_action_heavy_carry_state_entered() -> void:
+	pass
+	#state_chart.send_event("request_task_idle")
+	#trooper.command_applied.connect(state_chart.send_event.bind("cancel_action_heavy_carry"), ConnectFlags.CONNECT_ONE_SHOT)
+
+
+func _on_action_heavy_carry_state_exited() -> void:
+	#if is_instance_valid(heavy_carriable):
+	var heavy_carriable := heavy_carriable_target.holder as HeavyCarriable
+	heavy_carriable.remove_carrier(self)
+	heavy_carriable_target.occupant = null
+	heavy_carriable_target = null
+
+
+func _on_action_heavy_carry_state_physics_processing(delta: float) -> void:
+	if heavy_carriable_target == command_target:
+		global_position = command_target.global_position
+	else:
+		state_chart.send_event("cancel_action_heavy_carry")
+
 
 #endregion
 
